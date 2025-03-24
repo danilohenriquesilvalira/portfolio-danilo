@@ -9,14 +9,15 @@ export const experiences: Experience[] = [
     iconBg: "#E6DEDD",
     date: "jun de 2024 - o momento (10 meses)",
     points: [
-      "Desenvolvimento de projetos de automação industrial",
-      "Implementação de sistemas de controle e monitoramento",
-      "Programação de PLCs e interfaces homem-máquina",
-      "Automação de processos industriais",
-      "Integração de sistemas e equipamentos"
+      "Desenvolvimento de projetos de automação industrial para clientes de diversos setores",
+      "Implementação de sistemas de controle e monitoramento baseados em Siemens S7-1500",
+      "Programação de interfaces homem-máquina (HMI) para operação intuitiva",
+      "Integração de sistemas SCADA com bancos de dados para análise de desempenho",
+      "Desenvolvimento de soluções de Internet das Coisas Industrial (IIoT)"
     ],
     location: "Lisboa, Portugal",
-    technologies: ["Siemens", "Automação de processos", "Controle industrial", "PLCs", "HMI"]
+    technologies: ["Siemens S7", "SCADA", "HMI", "OPC UA", "IIoT", "Node-RED", "SQL"],
+    categories: ["automacao", "desenvolvimento", "industria40"]
   },
   {
     title: "Técnico Automação / Elétrica",
@@ -25,14 +26,15 @@ export const experiences: Experience[] = [
     iconBg: "#383E56",
     date: "dez de 2023 - jun de 2024 (7 meses)",
     points: [
-      "Automação e automação de processos",
-      "Manutenção de sistemas de controle",
-      "Implementação de melhorias nos processos produtivos",
-      "Suporte técnico às linhas de produção",
-      "Desenvolvimento e implementação de soluções de automação"
+      "Manutenção corretiva e preventiva em linhas de produção de alta velocidade",
+      "Diagnóstico e solução de problemas em sistemas de controle automatizados",
+      "Implementação de melhorias nos processos produtivos aumentando OEE em 12%",
+      "Configuração e otimização de parâmetros em equipamentos de envase",
+      "Coordenação com equipes de produção para minimizar tempo de inatividade"
     ],
     location: "Portugal",
-    technologies: ["Automação", "Automação de processos", "Elétrica", "PLCs", "Instrumentação"]
+    technologies: ["Allen-Bradley", "Siemens S7", "Instrumentação", "Elétrica Industrial", "Manutenção"],
+    categories: ["automacao", "industria"]
   },
   {
     title: "Técnico de automação",
@@ -41,14 +43,15 @@ export const experiences: Experience[] = [
     iconBg: "#E6DEDD",
     date: "jul de 2023 - dez de 2023 (6 meses)",
     points: [
-      "Manutenção de equipamentos",
-      "Instrumentação",
-      "Automação de processos industriais",
-      "Diagnóstico e resolução de problemas em sistemas automatizados",
-      "Implementação de melhorias e otimizações"
+      "Manutenção de equipamentos em linhas de produção de bebidas",
+      "Implementação de sistemas de instrumentação para controle de qualidade",
+      "Desenvolvimento de procedimentos de manutenção preventiva",
+      "Diagnóstico e solução de problemas complexos em sistemas automatizados",
+      "Treinamento de operadores para uso adequado de equipamentos"
     ],
     location: "Santarém, Portugal",
-    technologies: ["Manutenção de equipamentos", "Instrumentação", "Automação", "PLCs"]
+    technologies: ["PLCs", "Instrumentação", "Pneumática", "Hidráulica", "Sensores"],
+    categories: ["automacao", "industria"]
   },
   {
     title: "Técnico de automação",
@@ -57,14 +60,15 @@ export const experiences: Experience[] = [
     iconBg: "#383E56",
     date: "fev de 2023 - mar de 2023 (2 meses)",
     points: [
-      "Manutenção de equipamentos", 
-      "Instrumentação",
-      "Programação de PLCs",
-      "Implementação de sistemas de automação",
-      "Comissionamento de sistemas"
+      "Implementação de projetos de automação para clientes industriais",
+      "Programação e configuração de PLCs para controle de processos",
+      "Desenvolvimento de interfaces SCADA para monitoramento em tempo real",
+      "Integração de sensores e atuadores em sistemas de controle",
+      "Comissionamento e testes de sistemas automatizados"
     ],
     location: "Recife, Pernambuco, Brasil",
-    technologies: ["Manutenção de equipamentos", "Instrumentação", "Automação", "PLCs", "SCADA"]
+    technologies: ["Siemens S7", "Allen-Bradley", "SCADA", "Instrumentação", "Redes Industriais"],
+    categories: ["automacao", "desenvolvimento"]
   },
   {
     title: "Técnico de automação",
@@ -73,14 +77,15 @@ export const experiences: Experience[] = [
     iconBg: "#E6DEDD",
     date: "fev de 2014 - jan de 2023 (9 anos)",
     points: [
-      "Manutenção de equipamentos",
-      "Programação e manutenção de sistemas Allen-Bradley",
-      "Implementação de melhorias nos processos industriais",
-      "Automação de linhas de produção",
-      "Treinamento de equipes técnicas"
+      "Manutenção e reparo de equipamentos em linhas de produção de alta velocidade",
+      "Implementação de melhorias contínuas nos processos produtivos",
+      "Programação e modificação de sistemas de controle Allen-Bradley",
+      "Diagnóstico e solução de problemas complexos em ambiente industrial",
+      "Liderança de projetos de modernização e atualização de equipamentos"
     ],
     location: "Brasil",
-    technologies: ["Allen-Bradley", "Manutenção de equipamentos", "Automação", "PLCs", "SCADA"]
+    technologies: ["Allen-Bradley ControlLogix", "CompactLogix", "FactoryTalk", "RSLogix", "Studio 5000"],
+    categories: ["automacao", "industria"]
   }
 ];
 
@@ -89,7 +94,7 @@ export const education: Education[] = [
     degree: "Tecnologia da Informação/Sistemas da Informação",
     institution: "Estácio",
     date: "abr de 2021 - dez de 2023",
-    description: "Formação em Tecnologia da Informação com foco em Sistemas da Informação, desenvolvendo competências em Data Analysis e MySQL.",
+    description: "Formação em Tecnologia da Informação com foco em Sistemas da Informação, desenvolvendo competências em análise de dados, bancos de dados SQL e integração de sistemas. Projeto final focado na integração entre sistemas industriais e corporativos.",
     icon: "/src/assets/icons/estacio.png",
     iconBg: "#E6DEDD"
   },
@@ -97,7 +102,7 @@ export const education: Education[] = [
     degree: "Técnico Eletromecânico / Automação",
     institution: "SENAI Pernambuco",
     date: "2012 - 2014",
-    description: "Formação técnica em eletromecânica e automação industrial, incluindo pneumática, manutenção preventiva e sistemas de controle.",
+    description: "Formação técnica em eletromecânica e automação industrial, abrangendo pneumática, hidráulica, manutenção preventiva, programação de PLCs, redes industriais e sistemas de controle. Curso com forte ênfase em aplicações práticas em ambiente industrial.",
     icon: "/src/assets/icons/senai.png",
     iconBg: "#383E56"
   }
@@ -105,25 +110,46 @@ export const education: Education[] = [
 
 export const certifications: Certification[] = [
   {
-    title: "Técnico de Automação - RLS automação",
+    title: "Especialista em Programação Siemens",
     organization: "Siemens",
     date: "2024",
     credentialUrl: "#",
     icon: "/src/assets/icons/siemens.png"
   },
   {
-    title: "Especialista em Allen-Bradley",
+    title: "Programador Certificado Allen-Bradley",
     organization: "Rockwell Automation",
     date: "2022",
     credentialUrl: "#",
     icon: "/src/assets/icons/rockwell.png"
   },
   {
-    title: "Manutenção Preventiva Industrial",
+    title: "Especialista em Manutenção Preventiva",
     organization: "SENAI",
     date: "2014",
     credentialUrl: "#",
     icon: "/src/assets/icons/senai.png"
+  },
+  {
+    title: "Redes e Protocolos Industriais",
+    organization: "Profibus Internacional",
+    date: "2019",
+    credentialUrl: "#",
+    icon: "/src/assets/icons/profibus.png"
+  },
+  {
+    title: "Técnico em Sensores e Instrumentação",
+    organization: "IFM",
+    date: "2018",
+    credentialUrl: "#",
+    icon: "/src/assets/icons/ifm.png"
+  },
+  {
+    title: "Fundamentos de Indústria 4.0",
+    organization: "FIEMG",
+    date: "2021",
+    credentialUrl: "#",
+    icon: "/src/assets/icons/fiemg.png"
   }
 ];
 
@@ -159,6 +185,12 @@ export const skills: Skill[] = [
     category: "automacao",
     level: "especialista"
   },
+  {
+    name: "Redes Industriais",
+    icon: "/src/assets/icons/network.png",
+    category: "automacao",
+    level: "avançado"
+  },
   
   // Habilidades de Indústria 4.0
   {
@@ -166,6 +198,12 @@ export const skills: Skill[] = [
     icon: "/src/assets/icons/process.png",
     category: "industria40",
     level: "avançado"
+  },
+  {
+    name: "IIoT",
+    icon: "/src/assets/icons/iot.png",
+    category: "industria40",
+    level: "intermediário"
   },
   {
     name: "Instrumentação",
@@ -186,6 +224,12 @@ export const skills: Skill[] = [
     level: "avançado"
   },
   {
+    name: "Digital Twin",
+    icon: "/src/assets/icons/digital-twin.png",
+    category: "industria40",
+    level: "básico"
+  },
+  {
     name: "Sistemas Elétricos",
     icon: "/src/assets/icons/electrical.png",
     category: "industria40",
@@ -193,6 +237,18 @@ export const skills: Skill[] = [
   },
   
   // Habilidades de Programação
+  {
+    name: "Ladder Logic",
+    icon: "/src/assets/icons/ladder.png",
+    category: "programacao",
+    level: "especialista"
+  },
+  {
+    name: "Structured Text",
+    icon: "/src/assets/icons/structured-text.png",
+    category: "programacao",
+    level: "avançado"
+  },
   {
     name: "Data Analysis",
     icon: "/src/assets/icons/dataanalysis.png",
@@ -206,10 +262,10 @@ export const skills: Skill[] = [
     level: "intermediário"
   },
   {
-    name: "Ladder Logic",
-    icon: "/src/assets/icons/ladder.png",
+    name: "Node-RED",
+    icon: "/src/assets/icons/nodered.png",
     category: "programacao",
-    level: "especialista"
+    level: "intermediário"
   },
   {
     name: "Sistemas de Automação",
