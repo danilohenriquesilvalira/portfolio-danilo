@@ -38,6 +38,39 @@ export const projects: Project[] = [
     featured: true // Mark as featured project
   },
   {
+    id: "estacao-cip",
+    title: "Estação CIP para Indústria de Bebidas",
+    description: "Sistema automatizado de limpeza CIP (Clean-in-Place) para indústria de bebidas, otimizando processos de sanitização e reduzindo consumo de água e químicos.",
+    image: "/src/assets/images/estacao-cip.jpg", // You'll need to add this image
+    tags: ["Automação Industrial", "CIP", "Indústria 4.0", "Instrumentação"],
+    technologies: [
+      { name: "Siemens S7-1500", icon: "siemens", color: "#0072BB" },
+      { name: "Instrumentação", icon: "instrument", color: "#39B54A" },
+      { name: "SCADA", icon: "scada", color: "#6E44FF" },
+      { name: "Controle de Processo", icon: "process", color: "#FF5722" },
+      { name: "React", icon: "react", color: "#61DAFB" }
+    ],
+    category: "automacao",
+    highlights: [
+      "Sistema completo de limpeza CIP multi-fase",
+      "Interface gráfica intuitiva para monitoramento em tempo real",
+      "Controle avançado de válvulas e bombas",
+      "Otimização de consumo de água e produtos químicos"
+    ],
+    demoUrl: "/hmi-cip", // Link to the HMI simulation
+    details: {
+      challenge: "Desenvolver um sistema automatizado de limpeza CIP para uma linha de produção de bebidas, garantindo sanitização adequada dos equipamentos, reduzindo o consumo de água e produtos químicos, e minimizando o tempo de inatividade da linha durante os processos de limpeza.",
+      solution: "Implementação de um sistema CIP completo com controle através de PLC Siemens S7-1500, integrando tanques de soluções, bombas, válvulas e instrumentação para monitoramento em tempo real. O sistema foi projetado com cinco etapas sequenciais: pré-enxágue, limpeza cáustica, enxágue intermediário, limpeza ácida e enxágue final, com recuperação e reúso de soluções quando possível.",
+      results: "O sistema reduziu o consumo de água em 30%, diminuiu o uso de produtos químicos em 25% e aumentou a eficiência do processo de limpeza, reduzindo o tempo total em 20%. A interface de monitoramento permite acompanhar cada fase do processo e realizar ajustes em tempo real quando necessário.",
+      images: [
+        "/src/assets/images/estacao-cip.jpg",
+        "/src/assets/images/cip-dashboard.jpg",
+        "/src/assets/images/cip-piping.jpg"
+      ]
+    },
+    featured: true // Mark as featured project
+  },
+  {
     id: "automacao-linha-producao",
     title: "Automação de Linha de Produção Completa",
     description: "Sistema de automação completo para linha de produção com integração IoT, coleta de dados em tempo real e dashboard de análise de performance.",

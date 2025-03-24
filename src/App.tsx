@@ -14,6 +14,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import HmiPage from './pages/HmiPage';
+import HmiCipPage from './pages/HmiCipPage';
 
 // Categorias de projetos
 import AutomationProjects from './pages/categories/AutomationProjects';
@@ -46,6 +47,7 @@ function App() {
           
           {/* Página HMI especial */}
           <Route path="/hmi-transporte" element={<HmiPage />} />
+          <Route path="/hmi-cip" element={<HmiCipPage />} />
           
           {/* Fallback para rotas não encontradas */}
           <Route path="*" element={<NotFound />} />
