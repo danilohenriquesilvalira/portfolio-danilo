@@ -2,9 +2,9 @@
 import React from 'react';
 
 // Importações dos componentes
-import Motors from "@/components/hmi/Motors";
-import Pallets from "@/components/hmi/Pallets";
-import Sensors from "@/components/hmi/Sensors";
+import Motors from "@/components/hmi_Transporte/Motors";
+import Pallets from "@/components/hmi_Transporte/Pallets";
+import Sensors from "@/components/hmi_Transporte/Sensors";
 
 // Em vez de importar SVGs diretamente, use caminhos URL para a pasta public
 // Não precisamos importar arquivos da pasta public - usamos os caminhos diretos

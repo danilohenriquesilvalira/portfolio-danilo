@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowLeft, FaPlay, FaGithub, FaExternalLinkAlt, FaTimes, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaArrowLeft, FaPlay, FaGithub, FaExternalLinkAlt, FaTimes, FaChevronLeft, FaChevronRight, FaArrowRight, FaCogs } from 'react-icons/fa';
 
 import { projects } from '@/data/projects';
 import { Project } from '@/types/project';
@@ -370,11 +370,18 @@ const ProjectDetail = () => {
               </a>
             )}
             
-            {project.demoUrl && (
+            {project.demoUrl && project.id === "transporte-paletes" ? (
+              <Link
+                to="/hmi-transporte"
+                className="flex items-center gap-2 py-2.5 px-5 bg-industry-green rounded-lg text-white hover:opacity-90 transition-colors"
+              >
+                <FaCogs /> Acessar Simulação
+              </Link>
+            ) : project.demoUrl && (
               <a
                 href={project.demoUrl}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer" 
                 className="flex items-center gap-2 py-2.5 px-5 bg-tertiary rounded-lg text-white hover:bg-tech-blue transition-colors"
               >
                 <FaExternalLinkAlt /> Ver Demo

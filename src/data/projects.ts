@@ -5,6 +5,39 @@ const PLACEHOLDER_IMAGE = '/src/assets/images/placeholder.jpg';
 
 export const projects: Project[] = [
   {
+    id: "transporte-paletes",
+    title: "Sistema de Transporte Automatizado de Paletes",
+    description: "Desenvolvimento de um sistema de automação para transporte de paletes com controle em tempo real, utilizando sensores, atuadores e técnicas de controle industrial.",
+    image: "/src/assets/images/transporte-paletes.jpg", // You'll need to add this image
+    tags: ["Automação Industrial", "HMI/SCADA", "PLC", "Sensores"],
+    technologies: [
+      { name: "Siemens S7-1500", icon: "siemens", color: "#0072BB" },
+      { name: "HMI", icon: "hmi", color: "#39B54A" },
+      { name: "Sensores", icon: "sensors", color: "#FF5722" },
+      { name: "React", icon: "react", color: "#61DAFB" },
+      { name: "Node-RED", icon: "nodered", color: "#FF0000" }
+    ],
+    category: "automacao",
+    highlights: [
+      "Simulação interativa do sistema real",
+      "Interface gráfica para monitoramento em tempo real",
+      "Controle completo do ciclo de produção",
+      "Parâmetros configuráveis de velocidade e tempo de ciclo"
+    ],
+    demoUrl: "/hmi-transporte", // Link to the HMI simulation
+    details: {
+      challenge: "Desenvolver um sistema de transporte automatizado para paletes em uma linha de produção, garantindo o controle preciso da movimentação entre diferentes estações de trabalho e a integração com outros sistemas da fábrica.",
+      solution: "Implementação de um sistema de controle baseado em PLC Siemens S7-1500 com sensores de presença estrategicamente posicionados. Foi criada uma interface HMI intuitiva para operação e monitoramento, além de uma simulação interativa para testes e treinamento dos operadores.",
+      results: "O sistema aumentou a eficiência do transporte em 35%, reduziu paradas não programadas em 25% e melhorou significativamente a visibilidade do processo. A simulação desenvolvida tornou-se uma ferramenta valiosa para treinamento e testes de novos cenários operacionais.",
+      images: [
+        "/src/assets/images/transporte-paletes.jpg",
+        "/src/assets/images/transporte-simulation.jpg",
+        "/src/assets/images/transporte-dashboard.jpg"
+      ]
+    },
+    featured: true // Mark as featured project
+  },
+  {
     id: "automacao-linha-producao",
     title: "Automação de Linha de Produção Completa",
     description: "Sistema de automação completo para linha de produção com integração IoT, coleta de dados em tempo real e dashboard de análise de performance.",
