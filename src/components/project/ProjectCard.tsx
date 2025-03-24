@@ -67,12 +67,12 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
     >
       <Link to={`/projeto/${project.id}`} className="block">
         <div className="relative h-[220px] overflow-hidden">
-          <img 
-            src={project.image} 
-            alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700 ease-in-out"
-            style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)' }}
-          />
+          {/* Usando um div de fallback em vez da imagem que pode estar ausente */}
+          <div className="w-full h-full bg-black-200 flex items-center justify-center">
+            <div className="text-3xl font-bold text-tech-blue">
+              {project.title.slice(0, 2).toUpperCase()}
+            </div>
+          </div>
           
           {/* Overlay gradiente superior para melhor legibilidade das tags */}
           <div className="absolute inset-0 bg-gradient-to-t from-transparent to-black opacity-50"></div>

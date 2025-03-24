@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaAngleDown, FaTools, FaIndustry, FaNetworkWired, FaRobot } from 'react-icons/fa';
 import Typed from 'typed.js';
 
-// Componente 3D para o fundo (opcional)
-import AutomationCanvas from '@/components/canvas/AutomationCanvas';
+// Removido: import AutomationCanvas from '@/components/canvas/AutomationCanvas';
 
 // Variantes para animações
 const containerVariants = {
@@ -45,25 +44,27 @@ const Hero = () => {
 
   useEffect(() => {
     // Animação de digitação para especialidades
-    const options = {
-      strings: [
-        'Automação Industrial',
-        'Indústria 4.0',
-        'Programação PLC',
-        'Sistemas SCADA',
-        'Integração de Sistemas'
-      ],
-      typeSpeed: 80,
-      backSpeed: 50,
-      backDelay: 1500,
-      loop: true,
-    };
+    if (typedRef.current) {
+      const options = {
+        strings: [
+          'Automação Industrial',
+          'Indústria 4.0',
+          'Programação PLC',
+          'Sistemas SCADA',
+          'Integração de Sistemas'
+        ],
+        typeSpeed: 80,
+        backSpeed: 50,
+        backDelay: 1500,
+        loop: true,
+      };
 
-    const typed = new Typed(typedRef.current!, options);
+      const typed = new Typed(typedRef.current, options);
 
-    return () => {
-      typed.destroy();
-    };
+      return () => {
+        typed.destroy();
+      };
+    }
   }, []);
 
   return (
@@ -71,9 +72,10 @@ const Hero = () => {
       {/* Gradiente de fundo superior */}
       <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-primary to-transparent z-1"></div>
 
-      {/* Componente 3D Canvas */}
-      <div className="absolute inset-0">
-        <AutomationCanvas />
+      {/* Componente 3D Canvas - REMOVIDO */}
+      <div className="absolute inset-0 bg-primary">
+        {/* Fundo temporário simples em vez do Canvas 3D */}
+        <div className="w-full h-full bg-gradient-to-b from-[#111133] to-primary"></div>
       </div>
 
       {/* Gradiente de overlay para melhorar legibilidade */}
@@ -139,7 +141,7 @@ const Hero = () => {
             </motion.div>
           </div>
 
-          {/* Lado direito - Imagem ou ilustração */}
+          {/* Lado direito - Imagem ou ilustração (comentado temporariamente) */}
           <motion.div
             variants={itemVariants}
             className="hidden lg:flex justify-center items-center"
@@ -148,14 +150,13 @@ const Hero = () => {
               {/* Círculo decorativo pulsante */}
               <div className="absolute inset-0 rounded-full bg-tech-blue opacity-10 animate-tech-pulse"></div>
               
-              {/* Imagem ou ilustração aqui */}
+              {/* Imagem ou ilustração aqui - comentado temporariamente */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-64 h-64 rounded-full p-2 bg-gradient-to-br from-tech-blue to-industry-green overflow-hidden">
-                  <img
-                    src="/src/assets/images/profile.jpg"
-                    alt="Danilo Lira"
-                    className="w-full h-full object-cover rounded-full"
-                  />
+                  {/* Placeholder em vez da imagem */}
+                  <div className="w-full h-full rounded-full bg-tertiary flex items-center justify-center">
+                    <span className="text-3xl font-bold text-white">DL</span>
+                  </div>
                 </div>
               </div>
             </div>

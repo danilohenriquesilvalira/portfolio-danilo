@@ -1,27 +1,5 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import SectionWrapper from '@/components/common/SectionWrapper';
+import React, { useState } from 'react';
 import { FaIndustry, FaNetworkWired, FaRobot, FaChartLine, FaLightbulb, FaTools, FaCode, FaGraduationCap, FaCertificate } from 'react-icons/fa';
-
-// Animações
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 50 }
-  }
-};
 
 // Informações dos cards de especialidades com cores específicas
 const services = [
@@ -80,26 +58,17 @@ const tabs = [
 ];
 
 // Card de serviço com design aprimorado
-const ServiceCard = ({ index, title, icon, description, iconBg }: { 
-  index: number;
-  title: string;
-  icon: React.ReactNode;
-  description: string;
-  iconBg: string;
-}) => (
-  <motion.div
-    variants={itemVariants}
-    className="w-full sm:w-64 p-6 rounded-2xl shadow-lg bg-tertiary hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
-  >
-    <div className="w-full h-48 flex justify-center items-center bg-black-200 rounded-2xl mb-6 overflow-hidden relative group">
-      {/* Círculos decorativos com efeito de hover */}
+const ServiceCard = ({ index, title, icon, description, iconBg }) => (
+  <div className="w-full sm:w-64 p-6 rounded-2xl shadow-lg bg-tertiary hover:shadow-xl transition-all duration-300">
+    <div className="w-full h-48 flex justify-center items-center bg-black-200 rounded-2xl mb-6 overflow-hidden relative">
+      {/* Círculos decorativos */}
       <div 
-        className="absolute w-40 h-40 rounded-full blur-lg opacity-30 group-hover:opacity-60 transition-all duration-700"
+        className="absolute w-40 h-40 rounded-full blur-lg opacity-30"
         style={{ backgroundColor: iconBg }}
       ></div>
       
       <div 
-        className="relative w-24 h-24 flex justify-center items-center rounded-full transition-all duration-300 group-hover:scale-110"
+        className="relative w-24 h-24 flex justify-center items-center rounded-full transition-all duration-300"
         style={{ backgroundColor: iconBg }}
       >
         {icon}
@@ -108,7 +77,7 @@ const ServiceCard = ({ index, title, icon, description, iconBg }: {
 
     <h3 className="text-white text-xl font-bold text-center mb-3">{title}</h3>
     <p className="mt-2 text-secondary text-center">{description}</p>
-  </motion.div>
+  </div>
 );
 
 // Conteúdo da aba de perfil
@@ -216,42 +185,42 @@ const TechTab = () => (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
       <div className="bg-black-200 p-3 rounded-lg flex items-center gap-3">
         <div className="w-10 h-10 bg-tech-blue bg-opacity-20 rounded-lg flex items-center justify-center">
-          <img src="/src/assets/icons/siemens.png" alt="Siemens" className="w-6 h-6" />
+          <span className="text-white font-bold">S7</span>
         </div>
         <span className="text-white">Siemens S7</span>
       </div>
       
       <div className="bg-black-200 p-3 rounded-lg flex items-center gap-3">
         <div className="w-10 h-10 bg-tech-blue bg-opacity-20 rounded-lg flex items-center justify-center">
-          <img src="/src/assets/icons/rockwell.png" alt="Allen Bradley" className="w-6 h-6" />
+          <span className="text-white font-bold">AB</span>
         </div>
         <span className="text-white">Allen Bradley</span>
       </div>
       
       <div className="bg-black-200 p-3 rounded-lg flex items-center gap-3">
         <div className="w-10 h-10 bg-tech-blue bg-opacity-20 rounded-lg flex items-center justify-center">
-          <img src="/src/assets/icons/wincc.png" alt="WinCC" className="w-6 h-6" />
+          <span className="text-white font-bold">WC</span>
         </div>
         <span className="text-white">WinCC</span>
       </div>
       
       <div className="bg-black-200 p-3 rounded-lg flex items-center gap-3">
         <div className="w-10 h-10 bg-tech-blue bg-opacity-20 rounded-lg flex items-center justify-center">
-          <img src="/src/assets/icons/factorytalk.png" alt="FactoryTalk" className="w-6 h-6" />
+          <span className="text-white font-bold">FT</span>
         </div>
         <span className="text-white">FactoryTalk</span>
       </div>
       
       <div className="bg-black-200 p-3 rounded-lg flex items-center gap-3">
         <div className="w-10 h-10 bg-tech-blue bg-opacity-20 rounded-lg flex items-center justify-center">
-          <img src="/src/assets/icons/opcua.png" alt="OPC UA" className="w-6 h-6" />
+          <span className="text-white font-bold">OPC</span>
         </div>
         <span className="text-white">OPC UA</span>
       </div>
       
       <div className="bg-black-200 p-3 rounded-lg flex items-center gap-3">
         <div className="w-10 h-10 bg-tech-blue bg-opacity-20 rounded-lg flex items-center justify-center">
-          <img src="/src/assets/icons/nodered.png" alt="Node-RED" className="w-6 h-6" />
+          <span className="text-white font-bold">NR</span>
         </div>
         <span className="text-white">Node-RED</span>
       </div>
@@ -299,19 +268,19 @@ const EducationTab = () => (
     
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div className="bg-black-200 p-4 rounded-lg">
-        <img src="/src/assets/icons/siemens.png" alt="Siemens" className="w-8 h-8 mb-3" />
+        <span className="text-tech-blue text-3xl font-bold block mb-3">S7</span>
         <h5 className="text-white font-medium">Técnico de Automação - RLS automação</h5>
         <p className="text-secondary text-sm mt-1">Siemens, 2024</p>
       </div>
       
       <div className="bg-black-200 p-4 rounded-lg">
-        <img src="/src/assets/icons/rockwell.png" alt="Rockwell" className="w-8 h-8 mb-3" />
+        <span className="text-tech-blue text-3xl font-bold block mb-3">AB</span>
         <h5 className="text-white font-medium">Especialista em Allen-Bradley</h5>
         <p className="text-secondary text-sm mt-1">Rockwell Automation, 2022</p>
       </div>
       
       <div className="bg-black-200 p-4 rounded-lg">
-        <img src="/src/assets/icons/senai.png" alt="SENAI" className="w-8 h-8 mb-3" />
+        <span className="text-industry-green text-3xl font-bold block mb-3">MP</span>
         <h5 className="text-white font-medium">Manutenção Preventiva Industrial</h5>
         <p className="text-secondary text-sm mt-1">SENAI, 2014</p>
       </div>
@@ -323,121 +292,90 @@ const About = () => {
   const [activeTab, setActiveTab] = useState('profile');
 
   return (
-    <>
-      <motion.div
-        variants={containerVariants}
-        className="text-center"
-      >
-        <motion.p variants={itemVariants} className="section-subheading">Introdução</motion.p>
-        <motion.h2 variants={itemVariants} className="section-heading">Sobre Mim</motion.h2>
-      </motion.div>
+    <section id="about" className="py-20 bg-primary">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10">
+          <p className="text-secondary mb-2">Introdução</p>
+          <h2 className="text-4xl font-bold text-white">Sobre Mim</h2>
+        </div>
 
-      <div className="mt-8 flex flex-col md:flex-row gap-10">
-        <motion.div
-          variants={containerVariants}
-          className="md:w-1/2"
-        >
-          <motion.div variants={itemVariants} className="sticky top-32">
-            <div className="relative">
-              <img
-                src="/src/assets/images/profile.jpg"
-                alt="Danilo Lira"
-                className="w-full h-auto md:max-h-[600px] object-cover rounded-2xl shadow-2xl"
-              />
-              
-              {/* Gradiente de sobreposição */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-transparent to-black opacity-50"></div>
-              
-              {/* Caixa de citação */}
-              <div className="absolute -bottom-10 -right-10 w-3/5 rounded-2xl p-6 bg-tertiary shadow-2xl backdrop-blur-sm bg-opacity-90">
-                <svg className="w-10 h-10 text-tech-blue mb-2 opacity-50" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
-                </svg>
-                <p className="text-white font-semibold italic">
-                  "Automação não é sobre substituir pessoas, mas sim potencializar suas capacidades e permitir que foquem no que realmente importa."
-                </p>
-                <p className="text-secondary mt-2 text-right">- Danilo Lira</p>
+        <div className="mt-8 flex flex-col md:flex-row gap-10">
+          <div className="md:w-1/2">
+            <div className="sticky top-32">
+              <div className="relative">
+                {/* Em vez de uma imagem, usamos um placeholder */}
+                <div className="w-full h-auto md:max-h-[600px] bg-gradient-to-b from-gray-800 to-black rounded-2xl shadow-2xl flex items-center justify-center aspect-[3/4]">
+                  <span className="text-8xl font-bold text-tech-blue opacity-30">DL</span>
+                </div>
+                
+                {/* Gradiente de sobreposição */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-transparent to-black opacity-50"></div>
+                
+                {/* Caixa de citação */}
+                <div className="absolute -bottom-10 -right-10 w-3/5 rounded-2xl p-6 bg-tertiary shadow-2xl backdrop-blur-sm bg-opacity-90">
+                  <svg className="w-10 h-10 text-tech-blue mb-2 opacity-50" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
+                  </svg>
+                  <p className="text-white font-semibold italic">
+                    "Automação não é sobre substituir pessoas, mas sim potencializar suas capacidades e permitir que foquem no que realmente importa."
+                  </p>
+                  <p className="text-secondary mt-2 text-right">- Danilo Lira</p>
+                </div>
+                
+                {/* Elementos decorativos */}
+                <div className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-tech-blue bg-opacity-10 border border-tech-blue border-opacity-30 z-[-1]"></div>
+                <div className="absolute -bottom-4 -left-12 w-24 h-24 rounded-full bg-industry-green bg-opacity-10 border border-industry-green border-opacity-30 z-[-1]"></div>
               </div>
-              
-              {/* Elementos decorativos */}
-              <div className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-tech-blue bg-opacity-10 border border-tech-blue border-opacity-30 z-[-1]"></div>
-              <div className="absolute -bottom-4 -left-12 w-24 h-24 rounded-full bg-industry-green bg-opacity-10 border border-industry-green border-opacity-30 z-[-1]"></div>
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
 
-        <motion.div
-          variants={containerVariants}
-          className="md:w-1/2"
-        >
-          {/* Abas de navegação */}
-          <motion.div 
-            variants={itemVariants}
-            className="bg-black-100 rounded-xl p-1 flex mb-6"
-          >
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  activeTab === tab.id 
-                    ? 'bg-tertiary text-white' 
-                    : 'text-secondary hover:text-white'
-                }`}
-              >
-                {tab.icon}
-                {tab.label}
-              </button>
+          <div className="md:w-1/2">
+            {/* Abas de navegação */}
+            <div className="bg-black-100 rounded-xl p-1 flex mb-6">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                    activeTab === tab.id 
+                      ? 'bg-tertiary text-white' 
+                      : 'text-secondary hover:text-white'
+                  }`}
+                >
+                  {tab.icon}
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            
+            {/* Conteúdo da aba ativa */}
+            <div className="bg-tertiary rounded-xl p-6 shadow-lg">
+              {activeTab === 'profile' && <ProfileTab />}
+              {activeTab === 'skills' && <SkillsTab />}
+              {activeTab === 'tech' && <TechTab />}
+              {activeTab === 'education' && <EducationTab />}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-20">
+          <h3 className="text-3xl font-bold text-center text-white mb-10">
+            Minhas Especialidades
+          </h3>
+
+          <div className="mt-10 flex flex-wrap gap-10 justify-center">
+            {services.map((service, index) => (
+              <ServiceCard 
+                key={service.title} 
+                index={index} 
+                {...service} 
+              />
             ))}
-          </motion.div>
-          
-          {/* Conteúdo da aba ativa */}
-          <motion.div 
-            variants={itemVariants}
-            className="bg-tertiary rounded-xl p-6 shadow-lg"
-            key={activeTab} // Para forçar re-animação quando a aba muda
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                {activeTab === 'profile' && <ProfileTab />}
-                {activeTab === 'skills' && <SkillsTab />}
-                {activeTab === 'tech' && <TechTab />}
-                {activeTab === 'education' && <EducationTab />}
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
-
-      <div className="mt-20">
-        <motion.h3
-          variants={itemVariants}
-          className="text-3xl font-bold text-center text-white mb-10"
-        >
-          Minhas Especialidades
-        </motion.h3>
-
-        <motion.div
-          variants={containerVariants}
-          className="mt-10 flex flex-wrap gap-10 justify-center"
-        >
-          {services.map((service, index) => (
-            <ServiceCard 
-              key={service.title} 
-              index={index} 
-              {...service} 
-            />
-          ))}
-        </motion.div>
-      </div>
-    </>
+    </section>
   );
 };
 
-export default SectionWrapper(About, "about", { staggerChildren: 0.1 });
+export default About;

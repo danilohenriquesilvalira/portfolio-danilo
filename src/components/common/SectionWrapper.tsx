@@ -48,26 +48,32 @@ const SectionWrapper = (
 
     // Detectar quando a seção está visível para iniciar animações
     useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            // Desconectar após tornar visível (executa a animação apenas uma vez)
-            if (sectionRef.current) observer.unobserve(sectionRef.current);
+      // Usando IntersectionObserver se disponível, fallback caso contrário
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setIsVisible(true);
+              // Desconectar após tornar visível (executa a animação apenas uma vez)
+              if (sectionRef.current) observer.unobserve(sectionRef.current);
+            }
+          },
+          {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.25,
           }
-        },
-        {
-          root: null,
-          rootMargin: "0px",
-          threshold: 0.25,
-        }
-      );
+        );
 
-      if (sectionRef.current) observer.observe(sectionRef.current);
+        if (sectionRef.current) observer.observe(sectionRef.current);
 
-      return () => {
-        if (sectionRef.current) observer.unobserve(sectionRef.current);
-      };
+        return () => {
+          if (sectionRef.current) observer.unobserve(sectionRef.current);
+        };
+      } else {
+        // Fallback para navegadores mais antigos sem IntersectionObserver
+        setIsVisible(true);
+      }
     }, []);
 
     return (
