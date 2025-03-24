@@ -370,9 +370,9 @@ const ProjectDetail = () => {
               </a>
             )}
             
-            {project.demoUrl && project.id === "transporte-paletes" ? (
+            {project.demoUrl && project.demoUrl.startsWith("/") ? (
               <Link
-                to="/hmi-transporte"
+                to={project.demoUrl}
                 className="flex items-center gap-2 py-2.5 px-5 bg-industry-green rounded-lg text-white hover:opacity-90 transition-colors"
               >
                 <FaCogs /> Acessar Simulação
@@ -380,7 +380,7 @@ const ProjectDetail = () => {
             ) : project.demoUrl && (
               <a
                 href={project.demoUrl}
-                target="_blank"
+                target="_blank" 
                 rel="noopener noreferrer" 
                 className="flex items-center gap-2 py-2.5 px-5 bg-tertiary rounded-lg text-white hover:bg-tech-blue transition-colors"
               >

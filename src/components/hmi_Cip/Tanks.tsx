@@ -1,4 +1,5 @@
 import React from 'react';
+import Tank from './Tank';
 
 interface TanksProps {
   levels: {
@@ -13,72 +14,36 @@ const Tanks: React.FC<TanksProps> = ({ levels, onTankClick }) => {
   return (
     <div className="flex flex-col justify-center h-full w-[200px]">
       {/* Water Tank */}
-      <div 
-        className="mb-8 cursor-pointer group"
-        onClick={() => onTankClick('water')}
-      >
-        <div className="text-center mb-1 text-blue-400 text-sm font-medium">Água</div>
-        <div className="relative w-full h-28 border-2 border-blue-500 rounded-md bg-slate-700 overflow-hidden">
-          {/* Tank level fill */}
-          <div 
-            className="absolute bottom-0 left-0 right-0 bg-blue-500 transition-all duration-500"
-            style={{ height: `${levels.water}%`, opacity: 0.8 }}
-          ></div>
-          
-          {/* Level indicator */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-white font-bold text-lg">{levels.water}%</span>
-          </div>
-          
-          {/* Hover effect */}
-          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
-        </div>
+      <div className="mb-4">
+        <Tank 
+          level={levels.water}
+          color="#3B82F6" // Azul para água
+          label="Água"
+          onClick={() => onTankClick('water')}
+          className="transform scale-50 origin-top"
+        />
       </div>
       
       {/* Caustic Tank */}
-      <div 
-        className="mb-8 cursor-pointer group"
-        onClick={() => onTankClick('caustic')}
-      >
-        <div className="text-center mb-1 text-yellow-400 text-sm font-medium">Cáustico</div>
-        <div className="relative w-full h-28 border-2 border-yellow-500 rounded-md bg-slate-700 overflow-hidden">
-          {/* Tank level fill */}
-          <div 
-            className="absolute bottom-0 left-0 right-0 bg-yellow-500 transition-all duration-500"
-            style={{ height: `${levels.caustic}%`, opacity: 0.8 }}
-          ></div>
-          
-          {/* Level indicator */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-white font-bold text-lg">{levels.caustic}%</span>
-          </div>
-          
-          {/* Hover effect */}
-          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
-        </div>
+      <div className="mb-4">
+        <Tank 
+          level={levels.caustic}
+          color="#F59E0B" // Amarelo para solução cáustica
+          label="Cáustico"
+          onClick={() => onTankClick('caustic')}
+          className="transform scale-50 origin-top"
+        />
       </div>
       
       {/* Acid Tank */}
-      <div 
-        className="cursor-pointer group"
-        onClick={() => onTankClick('acid')}
-      >
-        <div className="text-center mb-1 text-red-400 text-sm font-medium">Ácido</div>
-        <div className="relative w-full h-28 border-2 border-red-500 rounded-md bg-slate-700 overflow-hidden">
-          {/* Tank level fill */}
-          <div 
-            className="absolute bottom-0 left-0 right-0 bg-red-500 transition-all duration-500"
-            style={{ height: `${levels.acid}%`, opacity: 0.8 }}
-          ></div>
-          
-          {/* Level indicator */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-white font-bold text-lg">{levels.acid}%</span>
-          </div>
-          
-          {/* Hover effect */}
-          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
-        </div>
+      <div>
+        <Tank 
+          level={levels.acid}
+          color="#EF4444" // Vermelho para solução ácida
+          label="Ácido"
+          onClick={() => onTankClick('acid')}
+          className="transform scale-50 origin-top"
+        />
       </div>
     </div>
   );

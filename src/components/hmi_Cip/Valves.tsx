@@ -15,35 +15,59 @@ interface ValvesProps {
 const Valves: React.FC<ValvesProps> = ({ states, onValveClick }) => {
   // Helper function to render a valve
   const renderValve = (id: string, state: boolean, label: string, position: string) => {
+    // Determinar a cor baseada no estado
+    const color = state ? '#22FF00' : '#808080';
+    
     return (
       <div 
         className={`absolute ${position} cursor-pointer group`}
         onClick={() => onValveClick(id)}
       >
-        {/* Valve body */}
-        <div 
-          className={`w-12 h-12 rounded-full border-4 ${
-            state ? 'border-green-500 bg-green-900' : 'border-gray-500 bg-gray-900'
-          } flex items-center justify-center transition-colors duration-300`}
+        {/* Valve SVG */}
+        <svg 
+          width="45" 
+          height="36" 
+          viewBox="0 0 45 36" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          className="transition-all duration-300 hover:scale-110 active:scale-95"
         >
-          {/* Valve handle */}
-          <div 
-            className={`w-8 h-2 ${
-              state ? 'bg-green-400' : 'bg-gray-400'
-            } rounded transition-all duration-300`}
-            style={{ 
-              transform: state ? 'rotate(0deg)' : 'rotate(90deg)',
-            }}
-          ></div>
-          
-          {/* Hover effect */}
-          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity rounded-full"></div>
-        </div>
+          <path 
+            d="M6.125 15.8036L21.5025 24.7119L6.125 33.6202L6.125 15.8036Z" 
+            fill={color} 
+            stroke="black"
+          />
+          <path 
+            d="M38.875 33.6202L23.4975 24.7119L38.875 15.8036L38.875 33.6202Z" 
+            fill={color} 
+            stroke="black"
+          />
+          <path 
+            d="M22.5 24.7116L22.5 9.15234" 
+            stroke="black"
+          />
+          <rect 
+            x="12.6621" 
+            y="0.5" 
+            width="19.6757" 
+            height="8.15251" 
+            fill={color} 
+            stroke="black"
+          />
+        </svg>
+        
+        {/* Hover effect */}
+        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
         
         {/* Valve label */}
         <div className="absolute top-full mt-1 left-1/2 transform -translate-x-1/2 text-xs text-gray-300">
           {label}
         </div>
+        
+        {/* Status indicator */}
+        <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full ${
+          state ? 'bg-green-500' : 'bg-gray-500'
+        }`}></div>
       </div>
     );
   };
