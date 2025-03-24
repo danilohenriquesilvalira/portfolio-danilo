@@ -6,6 +6,7 @@ interface TankProps {
   label?: string; // label do tanque
   onClick?: () => void;
   className?: string;
+  style?: React.CSSProperties; // Additional style for positioning
 }
 
 const Tank: React.FC<TankProps> = ({ 
@@ -13,7 +14,8 @@ const Tank: React.FC<TankProps> = ({
   color = '#3B82F6', // azul padrão 
   label, 
   onClick,
-  className 
+  className,
+  style
 }) => {
   // Garantir que o nível esteja entre 0 e 100
   const normalizedLevel = Math.max(0, Math.min(100, level));
@@ -34,6 +36,7 @@ const Tank: React.FC<TankProps> = ({
     <div 
       className={`relative cursor-pointer group ${className || ''}`}
       onClick={onClick}
+      style={style}
     >
       <div className="relative">
         {/* Container do tanque */}
@@ -69,20 +72,6 @@ const Tank: React.FC<TankProps> = ({
             strokeWidth="2"
             fill="none"
           />
-          
-          {/* Linhas de medição */}
-          <line x1="15" y1="333" x2="25" y2="333" stroke="#888" strokeWidth="1" />
-          <line x1="15" y1="270" x2="25" y2="270" stroke="#888" strokeWidth="1" />
-          <line x1="15" y1="207" x2="25" y2="207" stroke="#888" strokeWidth="1" />
-          <line x1="15" y1="144" x2="25" y2="144" stroke="#888" strokeWidth="1" />
-          <line x1="15" y1="81" x2="25" y2="81" stroke="#888" strokeWidth="1" />
-          
-          {/* Textos das medições (0%, 25%, 50%, 75%, 100%) */}
-          <text x="30" y="336" fill="#888" fontSize="10">0%</text>
-          <text x="30" y="273" fill="#888" fontSize="10">25%</text>
-          <text x="30" y="210" fill="#888" fontSize="10">50%</text>
-          <text x="30" y="147" fill="#888" fontSize="10">75%</text>
-          <text x="30" y="84" fill="#888" fontSize="10">100%</text>
         </svg>
         
         {/* Indicador de nível no centro do tanque */}
@@ -97,11 +86,6 @@ const Tank: React.FC<TankProps> = ({
       {label && (
         <div className="text-center text-white font-medium mt-2">{label}</div>
       )}
-      
-      {/* Tooltip com detalhes */}
-      <div className="absolute -right-4 top-1/2 transform -translate-y-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
-        Nível: {normalizedLevel}%
-      </div>
       
       {/* Alerta para nível baixo */}
       {normalizedLevel < 20 && (

@@ -1,278 +1,146 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 interface InstrumentGaugeProps {
-  // Tipo de instrumento (PIT, FIT, TIT, etc.)
-  type: string;
+  // Tag do instrumento
+  tag: string;
   
-  // Valor atual do instrumento
+  // Valor atual e limites
   value: number;
-  
-  // Valores de escala
   minValue: number;
   maxValue: number;
   
-  // Valores aceitáveis (determinam as cores)
-  acceptableMin?: number;
-  acceptableMax?: number;
+  // Limites para alertas e alarmes
+  warningLow?: number;
+  warningHigh?: number;
+  alarmLow?: number;
+  alarmHigh?: number;
   
-  // Unidade de medida (°C, psi, etc.)
+  // Unidade
   unit: string;
   
-  // Dimensões personalizáveis
+  // Props de estilo
   width?: number;
   height?: number;
-  
-  // Props opcionais
-  showLabels?: boolean;
-  showArrow?: boolean;
+  style?: React.CSSProperties;
   className?: string;
+  backgroundColor?: string;
+  
+  // Callback
   onClick?: () => void;
 }
 
-/**
- * Componente para visualização de instrumentos com indicação de escala e status
- */
 const InstrumentGauge: React.FC<InstrumentGaugeProps> = ({
-  type,
+  tag,
   value,
-  minValue,
+  minValue, 
   maxValue,
-  acceptableMin,
-  acceptableMax,
+  warningLow,
+  warningHigh,
+  alarmLow,
+  alarmHigh,
   unit,
   width = 35,
   height = 167,
-  showLabels = true,
-  showArrow = true,
+  style,
   className = '',
+  backgroundColor = '#1e293b',
   onClick
 }) => {
-  // Definir valores aceitáveis padrão se não forem fornecidos
-  const actualAcceptableMin = acceptableMin ?? minValue;
-  const actualAcceptableMax = acceptableMax ?? maxValue;
+  // Calcular a posição do ponteiro triangular
+  const range = maxValue - minValue;
+  const percentage = (value - minValue) / range;
+  const invertedPercentage = 1 - percentage; // 0 no topo, 1 na base
   
-  // Garantir que o valor esteja dentro dos limites da escala
-  const clampedValue = Math.max(minValue, Math.min(maxValue, value));
+  // Posição Y do triângulo
+  const pointerY = Math.max(0, Math.min(1, invertedPercentage)) * (height - 26) + 13;
   
-  // Calcular a posição vertical da seta e preenchimento
-  const valueRange = maxValue - minValue;
-  const valuePosition = (1 - ((clampedValue - minValue) / valueRange)) * 0.8 * height + 0.1 * height;
+  // Altura do preenchimento
+  const fillHeight = Math.max(0, Math.min(100, percentage * 100));
   
-  // Calcular os valores para as cores de preenchimento
-  const normalizedValue = (clampedValue - minValue) / valueRange;
-  const normalizedAcceptableMin = (actualAcceptableMin - minValue) / valueRange;
-  const normalizedAcceptableMax = (actualAcceptableMax - minValue) / valueRange;
-  
-  // Determinar a cor com base nos limiares
-  const getColor = (value: number, min: number, max: number): string => {
-    const deviation = (max - min) * 0.1; // 10% de desvio
+  // Determinar o estado do instrumento
+  const getStatus = () => {
+    // Verificar alarmes (prioridade mais alta)
+    if (alarmLow !== undefined && value <= alarmLow) return 'alarm';
+    if (alarmHigh !== undefined && value >= alarmHigh) return 'alarm';
     
-    if (value <= max) return '#87CEEB'; // Azul para valores aceitáveis
-    if (value <= max + deviation) return '#FFD700'; // Amarelo para desvio até 10%
-    return '#FF6347'; // Vermelho para desvio maior que 10%
+    // Verificar alertas (prioridade média)
+    if (warningLow !== undefined && value <= warningLow) return 'warning';
+    if (warningHigh !== undefined && value >= warningHigh) return 'warning';
+    
+    // Normal
+    return 'normal';
   };
   
-  // Calcular as alturas dos segmentos coloridos
-  const segments = useMemo(() => {
-    // Altura total do medidor (excluindo uma pequena margem)
-    const gaugeHeight = height * 0.8;
-    const startY = height * 0.1;
-    
-    // Calcular os limites de cada segmento
-    const top = startY;
-    const bottom = startY + gaugeHeight;
-    
-    // Definir segmento mínimo (abaixo do aceitável)
-    const minSegment = {
-      y: bottom - (normalizedAcceptableMin * gaugeHeight),
-      height: normalizedAcceptableMin * gaugeHeight,
-      color: '#D3D3D3' // Cinza claro
-    };
-    
-    // Segmento aceitável (entre min e max aceitáveis)
-    const normalSegment = {
-      y: bottom - (normalizedAcceptableMax * gaugeHeight),
-      height: (normalizedAcceptableMax - normalizedAcceptableMin) * gaugeHeight,
-      color: '#87CEEB' // Azul claro
-    };
-    
-    // Segmento de alerta (10% acima do aceitável)
-    const deviation = (normalizedAcceptableMax - normalizedAcceptableMin) * 0.1;
-    const warningSegment = {
-      y: bottom - ((normalizedAcceptableMax + deviation) * gaugeHeight),
-      height: deviation * gaugeHeight,
-      color: '#FFD700' // Amarelo
-    };
-    
-    // Segmento crítico (acima de 10% do aceitável)
-    const criticalSegment = {
-      y: top,
-      height: (normalizedAcceptableMax + deviation < 1) 
-        ? (1 - normalizedAcceptableMax - deviation) * gaugeHeight
-        : 0,
-      color: '#FF6347' // Vermelho
-    };
-    
-    return { minSegment, normalSegment, warningSegment, criticalSegment, top, bottom, gaugeHeight };
-  }, [height, normalizedAcceptableMin, normalizedAcceptableMax]);
+  // Obter a cor com base no status
+  const getFillColor = () => {
+    const status = getStatus();
+    if (status === 'alarm') return '#ff0000'; // Vermelho para alarme
+    if (status === 'warning') return '#ffcc00'; // Amarelo para alerta
+    return '#3498db'; // Azul para normal
+  };
   
-  // Calcular a altura do preenchimento
-  const fillHeight = (1 - normalizedValue) * segments.gaugeHeight;
-  const fillY = segments.top + fillHeight;
-  
-  // Cor atual do valor
-  const currentColor = getColor(clampedValue, actualAcceptableMin, actualAcceptableMax);
+  // Obter a cor do texto com base no status
+  const getTextColor = () => {
+    const status = getStatus();
+    if (status === 'alarm') return '#ff0000'; // Vermelho para alarme
+    if (status === 'warning') return '#ffcc00'; // Amarelo para alerta
+    return '#3498db'; // Azul para normal
+  };
   
   return (
     <div 
-      className={`relative ${className}`}
+      className={`relative ${className}`} 
+      style={style}
       onClick={onClick}
-      style={{width: `${width + 60}px`, height: `${height + 40}px`}}
     >
-      {/* Título do instrumento */}
-      <div className="absolute text-center font-bold text-gray-700" style={{top: 0, left: 0, width: width + 60}}>
-        {type}
-      </div>
+      {/* Tag do instrumento */}
+      <div className="text-center font-bold mb-1 text-white">{tag}</div>
       
-      <svg 
-        width={width + 60} 
-        height={height + 20} 
-        viewBox={`0 0 ${width + 60} ${height + 20}`} 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute top-5"
-      >
-        {/* Retângulo principal (escala) */}
-        <rect 
-          x={width / 2 + 5} 
-          y={segments.top} 
-          width={width - 10} 
-          height={segments.gaugeHeight} 
-          stroke="black" 
-          fill="none"
-        />
-        
-        {/* Segmentos coloridos de fundo */}
-        {/* Segmento Mínimo */}
-        <rect 
-          x={width / 2 + 5} 
-          y={segments.minSegment.y} 
-          width={width - 10} 
-          height={segments.minSegment.height} 
-          fill={segments.minSegment.color} 
-          stroke="none" 
-        />
-        
-        {/* Segmento Normal */}
-        <rect 
-          x={width / 2 + 5} 
-          y={segments.normalSegment.y} 
-          width={width - 10} 
-          height={segments.normalSegment.height} 
-          fill={segments.normalSegment.color} 
-          stroke="none" 
-        />
-        
-        {/* Segmento de Alerta */}
-        <rect 
-          x={width / 2 + 5} 
-          y={segments.warningSegment.y} 
-          width={width - 10} 
-          height={segments.warningSegment.height} 
-          fill={segments.warningSegment.color} 
-          stroke="none" 
-        />
-        
-        {/* Segmento Crítico */}
-        <rect 
-          x={width / 2 + 5} 
-          y={segments.criticalSegment.y} 
-          width={width - 10} 
-          height={segments.criticalSegment.height} 
-          fill={segments.criticalSegment.color} 
-          stroke="none" 
-        />
-        
-        {/* Seta indicadora */}
-        {showArrow && (
+      <div className="flex items-center">
+        {/* SVG contendo o triângulo e o retângulo */}
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Fundo do retângulo */}
+          <path d={`M${width-13} ${height-0.5}V1H${width-1}V${height-0.5}H${width-13}Z`} fill={backgroundColor} stroke="black"/>
+          
+          {/* Preenchimento colorido */}
+          <rect 
+            x={width-13} 
+            y={height-(height-2)*(fillHeight/100)} 
+            width={12} 
+            height={(height-2)*(fillHeight/100)} 
+            fill={getFillColor()} 
+          />
+          
+          {/* Borda do retângulo */}
+          <path d={`M${width-13} ${height-0.5}V1H${width-1}V${height-0.5}H${width-13}Z`} stroke="black" fill="none"/>
+          
+          {/* Triângulo indicador */}
           <path 
-            d={`M5.5 ${valuePosition}L${width / 2} ${valuePosition - 5}L${width / 2} ${valuePosition + 5}L5.5 ${valuePosition}Z`} 
+            d={`M5.5 ${pointerY-6.5}L${width-15} ${pointerY}L5.5 ${pointerY+6.5}L5.5 ${pointerY-6.5}Z`} 
             fill="#79797A" 
             stroke="black" 
             strokeWidth="0.5"
           />
-        )}
+        </svg>
         
-        {/* Valor atual */}
-        <text 
-          x={width + 15} 
-          y={valuePosition + 5} 
-          fontSize="14" 
-          fontWeight="bold" 
-          fill="#0000AA"
-        >
-          {value}
-        </text>
-        
-        {/* Marcações de escala */}
-        {showLabels && (
-          <>
-            {/* Valor máximo */}
-            <text 
-              x={width + 15} 
-              y={segments.top + 5} 
-              fontSize="12" 
-              fill="#444"
-            >
-              {maxValue}
-            </text>
-            
-            {/* Valor aceitável máximo */}
-            <text 
-              x={width + 15} 
-              y={segments.normalSegment.y + 5} 
-              fontSize="12" 
-              fill="#444"
-            >
-              {actualAcceptableMax}
-            </text>
-            
-            {/* Valor aceitável mínimo (se diferente do mínimo) */}
-            {actualAcceptableMin !== minValue && (
-              <text 
-                x={width + 15} 
-                y={segments.minSegment.y + 5} 
-                fontSize="12" 
-                fill="#444"
-              >
-                {actualAcceptableMin}
-              </text>
-            )}
-            
-            {/* Valor mínimo */}
-            <text 
-              x={width + 15} 
-              y={segments.bottom + 5} 
-              fontSize="12" 
-              fill="#444"
-            >
-              {minValue}
-            </text>
-          </>
-        )}
-        
-        {/* Unidade de medida */}
-        <text 
-          x={width / 2 + (width - 10) / 2} 
-          y={segments.bottom + 20} 
-          fontSize="12" 
-          fontWeight="bold" 
-          textAnchor="middle" 
-          fill="#444"
-        >
-          {unit}
-        </text>
-      </svg>
+        {/* Valores à direita */}
+        <div className="ml-1">
+          <div className="text-xs text-white">{maxValue}</div>
+          <div 
+            className="text-xs font-bold"
+            style={{ 
+              marginTop: pointerY - 18,
+              color: getTextColor()
+            }}
+          >
+            {value}
+          </div>
+          <div className="text-xs text-white" style={{ marginTop: height - pointerY - 32 }}>{minValue}</div>
+        </div>
+      </div>
+      
+      {/* Unidade */}
+      <div className="text-center text-xs mt-1 text-gray-400">{unit}</div>
     </div>
   );
 };

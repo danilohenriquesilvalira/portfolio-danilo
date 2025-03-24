@@ -5,9 +5,18 @@ interface ValveProps {
   onClick?: () => void;
   label?: string;
   className?: string;
+  style?: React.CSSProperties; // Added style prop for positioning
+  rotation?: number; // Added rotation option (0, 90, 180, 270 degrees)
 }
 
-const Valve: React.FC<ValveProps> = ({ status, onClick, label, className }) => {
+const Valve: React.FC<ValveProps> = ({ 
+  status, 
+  onClick, 
+  label, 
+  className,
+  style,
+  rotation = 0
+}) => {
   // Determinar a cor baseada no status
   const getColor = () => {
     switch (status) {
@@ -22,6 +31,7 @@ const Valve: React.FC<ValveProps> = ({ status, onClick, label, className }) => {
     <div 
       className={`relative ${className || ''}`}
       onClick={onClick}
+      style={style}
     >
       <svg 
         width="45" 
@@ -29,7 +39,8 @@ const Valve: React.FC<ValveProps> = ({ status, onClick, label, className }) => {
         viewBox="0 0 45 36" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
-        className={`cursor-pointer ${status === 2 ? 'animate-pulse' : ''}`}
+        className={`cursor-pointer transition-transform ${status === 2 ? 'animate-pulse' : ''}`}
+        style={{ transform: `rotate(${rotation}deg)` }}
       >
         <path 
           d="M6.125 15.8036L21.5025 24.7119L6.125 33.6202L6.125 15.8036Z" 
@@ -55,9 +66,14 @@ const Valve: React.FC<ValveProps> = ({ status, onClick, label, className }) => {
         />
       </svg>
 
-      {/* Label da válvula */}
+      {/* Label da válvula - adjusts based on rotation */}
       {label && (
-        <div className="absolute top-full mt-1 left-1/2 transform -translate-x-1/2 text-xs text-gray-300">
+        <div className={`absolute mt-1 text-xs text-gray-300 whitespace-nowrap ${
+          rotation === 90 ? 'left-full ml-2 top-1/2 -translate-y-1/2' : 
+          rotation === 180 ? 'top-0 -mt-6 left-1/2 -translate-x-1/2' : 
+          rotation === 270 ? 'right-full mr-2 top-1/2 -translate-y-1/2' : 
+          'top-full left-1/2 -translate-x-1/2'
+        }`}>
           {label}
         </div>
       )}

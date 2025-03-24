@@ -4,10 +4,19 @@ interface PumpProps {
   isRunning: boolean | number; // booleano ou 0 = desligado, 1 = ligado, 2 = falha
   onClick?: () => void;
   className?: string;
+  style?: React.CSSProperties; // Added style prop for positioning
   label?: string;
+  rotation?: number; // Added rotation option (0, 90, 180, 270 degrees)
 }
 
-const Pump: React.FC<PumpProps> = ({ isRunning, onClick, className, label }) => {
+const Pump: React.FC<PumpProps> = ({ 
+  isRunning, 
+  onClick, 
+  className, 
+  style,
+  label,
+  rotation = 0
+}) => {
   // Converter diferentes formatos de entrada para um formato padronizado
   const status = typeof isRunning === 'boolean' 
     ? (isRunning ? 1 : 0) 
@@ -41,6 +50,7 @@ const Pump: React.FC<PumpProps> = ({ isRunning, onClick, className, label }) => 
     <div 
       className={`relative cursor-pointer group ${className || ''} ${hasError ? 'animate-pulse' : ''}`}
       onClick={onClick}
+      style={style}
     >
       {/* Pump SVG */}
       <svg 
@@ -50,6 +60,7 @@ const Pump: React.FC<PumpProps> = ({ isRunning, onClick, className, label }) => 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
         className="transition-all duration-300 hover:scale-105 active:scale-95"
+        style={{ transform: `rotate(${rotation}deg)` }}
       >
         <path 
           d="M0.999622 1.46192L56.5381 1.46191L56.5381 26.3081L0.999625 26.3081L0.999622 1.46192Z" 
@@ -78,9 +89,16 @@ const Pump: React.FC<PumpProps> = ({ isRunning, onClick, className, label }) => 
         'bg-red-500 animate-pulse'
       }`}></div>
       
-      {/* Label */}
+      {/* Label - adjusts based on rotation */}
       {label && (
-        <div className="text-center text-xs text-white mt-1">{label}</div>
+        <div className={`absolute text-xs text-white mt-1 whitespace-nowrap ${
+          rotation === 90 ? 'left-full ml-2 top-1/2 -translate-y-1/2' :
+          rotation === 180 ? 'top-0 -mt-6 left-1/2 -translate-x-1/2' :
+          rotation === 270 ? 'right-full mr-2 top-1/2 -translate-y-1/2' :
+          'top-full left-1/2 -translate-x-1/2'
+        }`}>
+          {label}
+        </div>
       )}
       
       {/* Tooltip */}
