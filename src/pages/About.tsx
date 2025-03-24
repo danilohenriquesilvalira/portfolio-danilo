@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaIndustry, FaNetworkWired, FaRobot, FaChartLine, FaLightbulb, FaTools, FaCode, FaGraduationCap, FaCertificate } from 'react-icons/fa';
 
+// Interface para o tipo de serviço
+interface ServiceProps {
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  iconBg: string;
+}
+
 // Informações dos cards de especialidades com cores específicas
-const services = [
+const services: ServiceProps[] = [
   {
     title: "Automação Industrial",
     icon: <FaIndustry className="w-16 h-16 text-white" />,
@@ -33,8 +41,15 @@ const services = [
   },
 ];
 
+// Interface para as abas
+interface TabProps {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+}
+
 // Abas para informações adicionais
-const tabs = [
+const tabs: TabProps[] = [
   { 
     id: 'profile', 
     label: 'Perfil', 
@@ -58,7 +73,7 @@ const tabs = [
 ];
 
 // Card de serviço com design aprimorado
-const ServiceCard = ({ index, title, icon, description, iconBg }) => (
+const ServiceCard = ({ title, icon, description, iconBg }: ServiceProps) => (
   <div className="w-full sm:w-64 p-6 rounded-2xl shadow-lg bg-tertiary hover:shadow-xl transition-all duration-300">
     <div className="w-full h-48 flex justify-center items-center bg-black-200 rounded-2xl mb-6 overflow-hidden relative">
       {/* Círculos decorativos */}
@@ -290,10 +305,47 @@ const EducationTab = () => (
 
 const About = () => {
   const [activeTab, setActiveTab] = useState('profile');
+  
+  // Função para corrigir o scroll suave ao navegar para a seção
+  useEffect(() => {
+    // Ajusta o scroll quando o componente monta
+    const handleHashChange = () => {
+      if (window.location.hash === '#about') {
+        const aboutElement = document.getElementById('about');
+        if (aboutElement) {
+          // Pequeno delay para garantir que qualquer renderização seja concluída
+          setTimeout(() => {
+            // Ajusta o scroll para compensar a navbar fixa
+            const offset = aboutElement.offsetTop - 100;
+            window.scrollTo({
+              top: offset,
+              behavior: 'smooth'
+            });
+          }, 100);
+        }
+      }
+    };
+
+    // Verifica se há hash na URL ao carregar
+    if (window.location.hash === '#about') {
+      handleHashChange();
+    }
+
+    // Adiciona event listener para mudanças de hash
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Cleanup ao desmontar
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
 
   return (
     <section id="about" className="py-20 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Adiciona um div ancorável para melhorar a navegação */}
+        <div id="about-anchor" className="absolute" style={{ top: '-100px' }}></div>
+        
         <div className="text-center mb-10">
           <p className="text-secondary mb-2">Introdução</p>
           <h2 className="text-4xl font-bold text-white">Sobre Mim</h2>
@@ -310,17 +362,6 @@ const About = () => {
                 
                 {/* Gradiente de sobreposição */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-transparent to-black opacity-50"></div>
-                
-                {/* Caixa de citação */}
-                <div className="absolute -bottom-10 -right-10 w-3/5 rounded-2xl p-6 bg-tertiary shadow-2xl backdrop-blur-sm bg-opacity-90">
-                  <svg className="w-10 h-10 text-tech-blue mb-2 opacity-50" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.987 4.145-4.247 5.621.537-.278 1.24-.375 1.929-.311 1.804.167 3.226 1.648 3.226 3.489a3.5 3.5 0 01-3.5 3.5c-1.073 0-2.099-.49-2.748-1.179z"/>
-                  </svg>
-                  <p className="text-white font-semibold italic">
-                    "Automação não é sobre substituir pessoas, mas sim potencializar suas capacidades e permitir que foquem no que realmente importa."
-                  </p>
-                  <p className="text-secondary mt-2 text-right">- Danilo Lira</p>
-                </div>
                 
                 {/* Elementos decorativos */}
                 <div className="absolute -top-4 -left-4 w-16 h-16 rounded-full bg-tech-blue bg-opacity-10 border border-tech-blue border-opacity-30 z-[-1]"></div>
@@ -364,10 +405,9 @@ const About = () => {
           </h3>
 
           <div className="mt-10 flex flex-wrap gap-10 justify-center">
-            {services.map((service, index) => (
+            {services.map((service) => (
               <ServiceCard 
                 key={service.title} 
-                index={index} 
                 {...service} 
               />
             ))}

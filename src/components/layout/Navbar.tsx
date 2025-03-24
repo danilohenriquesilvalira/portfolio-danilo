@@ -1,21 +1,62 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
 
-// Links da navegação
+// Links de navegação
 const navLinks = [
   { title: 'Início', id: 'home', path: '/' },
-  { title: 'Sobre', id: 'about', path: '/#about' },
-  { title: 'Experiência', id: 'experience', path: '/#experience' },
-  { title: 'Habilidades', id: 'skills', path: '/#skills' },
-  { title: 'Projetos', id: 'projects', path: '/#projects' },
-  { title: 'Contato', id: 'contact', path: '/#contact' },
+  { title: 'Sobre', id: 'about', path: '/sobre' },
+  { title: 'Experiência', id: 'experience', path: '/experiencia' },
+  { title: 'Habilidades', id: 'skills', path: '/habilidades' },
+  { title: 'Projetos', id: 'projects', path: '/projetos' },
+  { title: 'Contato', id: 'contact', path: '/contato' },
 ];
 
 const Navbar = () => {
   const [active, setActive] = useState('');
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  // Detectar scroll para mudar aparência da navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 80) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Verificar scroll inicial
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Atualizar aba ativa baseada na rota atual
+  useEffect(() => {
+    // Encontrar qual link corresponde à rota atual
+    const currentPath = location.pathname;
+    
+    // Verificar se a rota atual corresponde a algum dos links
+    const activeLink = navLinks.find(link => {
+      if (link.path === '/') {
+        return currentPath === '/';
+      } else {
+        return currentPath.startsWith(link.path);
+      }
+    });
+    
+    if (activeLink) {
+      setActive(activeLink.id);
+    } else {
+      setActive('');
+    }
+  }, [location]);
 
   // Manipula cliques nos links
   const handleLinkClick = (id) => {
@@ -27,7 +68,7 @@ const Navbar = () => {
     <nav
       className={`w-full flex items-center py-5 fixed top-0 z-20 transition-all duration-300 ${
         scrolled 
-          ? 'bg-gray-900 bg-opacity-95 shadow-md' 
+          ? 'bg-gray-900 bg-opacity-95 shadow-lg border-b border-gray-800' 
           : 'bg-transparent'
       }`}
     >
@@ -55,37 +96,37 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <ul className="list-none hidden md:flex flex-row gap-10 items-center">
+        <ul className="list-none hidden md:flex flex-row gap-8 items-center">
           {navLinks.map((link) => (
             <li
               key={link.id}
               className="relative"
             >
-              <a 
-                href={link.path}
+              <Link 
+                to={link.path}
                 className={`${
                   active === link.id 
                     ? 'text-white' 
-                    : 'text-gray-400'
+                    : 'text-gray-300'
                 } hover:text-white text-[16px] font-medium transition-colors duration-200`}
                 onClick={() => handleLinkClick(link.id)}
               >
                 {link.title}
-              </a>
-              {active === link.id && (
-                <div 
-                  className="absolute -bottom-2 left-0 right-0 h-0.5 bg-blue-500"
-                />
-              )}
+                {active === link.id && (
+                  <div 
+                    className="absolute -bottom-2 left-0 right-0 h-0.5 bg-blue-500"
+                  />
+                )}
+              </Link>
             </li>
           ))}
           
-          <div className="ml-4 flex gap-3 items-center">
+          <div className="ml-6 flex gap-3 items-center border-l border-gray-700 pl-6">
             <a 
               href="https://linkedin.com/in/danilo-lira-82b17516b" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-300 hover:text-white transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800"
               aria-label="LinkedIn"
             >
               <FaLinkedin size={18} />
@@ -94,14 +135,14 @@ const Navbar = () => {
               href="https://github.com/danilohenriquesilvalira" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-300 hover:text-white transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800"
               aria-label="GitHub"
             >
               <FaGithub size={18} />
             </a>
             <a 
               href="mailto:contato@danilolira.com"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="text-gray-300 hover:text-white transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800"
               aria-label="Email"
             >
               <FaEnvelope size={18} />
@@ -122,7 +163,7 @@ const Navbar = () => {
           {/* Mobile Menu */}
           {toggle && (
             <div
-              className="p-6 bg-gray-800 absolute top-24 right-0 mx-4 my-2 min-w-[200px] z-10 rounded-xl shadow-xl"
+              className="p-6 bg-gray-800 absolute top-20 right-0 mx-4 my-2 min-w-[200px] z-10 rounded-xl shadow-xl border border-gray-700"
             >
               <ul className="list-none flex flex-col gap-4">
                 {navLinks.map((link) => (
@@ -133,7 +174,7 @@ const Navbar = () => {
                     } font-medium cursor-pointer text-[16px] border-b border-gray-700 pb-2`}
                     onClick={() => handleLinkClick(link.id)}
                   >
-                    <a href={link.path}>{link.title}</a>
+                    <Link to={link.path}>{link.title}</Link>
                   </li>
                 ))}
                 
@@ -142,7 +183,7 @@ const Navbar = () => {
                     href="https://linkedin.com/in/danilo-lira-82b17516b" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-700"
                     aria-label="LinkedIn"
                   >
                     <FaLinkedin size={20} />
@@ -151,14 +192,14 @@ const Navbar = () => {
                     href="https://github.com/danilohenriquesilvalira" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-700"
                     aria-label="GitHub"
                   >
                     <FaGithub size={20} />
                   </a>
                   <a 
                     href="mailto:contato@danilolira.com"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-700"
                     aria-label="Email"
                   >
                     <FaEnvelope size={20} />
