@@ -2,10 +2,10 @@
 import React from 'react';
 
 // Caminhos diretos para os arquivos SVG na pasta public
-const Motor_Cinza = "/images/hmi/motors/Motor_Cinza.svg";
-const Motor_Vermelho = "/images/hmi/motors/Motor_Vermelho.svg";
-const Motor_Verde = "/images/hmi/motors/Motor_Verde.svg";
-const Motor_Azul = "/images/hmi/motors/Motor_Azul.svg";
+const Motor_Cinza = "/portfolio-automacao/hmi_Transporte/motors/Motor_Cinza.svg";
+const Motor_Vermelho = "/portfolio-automacao/hmi_Transporte/motors/Motor_Vermelho.svg";
+const Motor_Verde = "/portfolio-automacao/hmi_Transporte/motors/Motor_Verde.svg";
+const Motor_Azul = "/portfolio-automacao/hmi_Transporte/motors/Motor_Azul.svg";
 
 type MotorType = 'cinza' | 'vermelho' | 'verde' | 'azul';
 

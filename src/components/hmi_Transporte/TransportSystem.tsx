@@ -8,9 +8,9 @@ import Sensors from "@/components/hmi_Transporte/Sensors";
 
 // Em vez de importar SVGs diretamente, use caminhos URL para a pasta public
 // Não precisamos importar arquivos da pasta public - usamos os caminhos diretos
-const transporteSVGPath = "/images/hmi/transporters/Transporte.svg";
-const transporte2SVGPath = "/images/hmi/transporters/Transporte2.svg";
-const transporte3SVGPath = "/images/hmi/transporters/Transporte3.svg";
+const transporteSVGPath = "/portfolio-automacao/hmi_Transporte/transporters/Transporte.svg";
+const transporte2SVGPath = "/portfolio-automacao/hmi_Transporte/transporters/Transporte2.svg";
+const transporte3SVGPath = "/portfolio-automacao/hmi_Transporte/transporters/Transporte3.svg";
 
 type PalletState = {
   id: number;

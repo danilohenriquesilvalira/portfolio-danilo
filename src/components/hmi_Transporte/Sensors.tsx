@@ -2,8 +2,9 @@
 import React from 'react';
 
 // Caminhos diretos para os arquivos SVG na pasta public
-const Sensor_Verde = "/images/hmi/sensors/Sensor_Verde.svg";
-const Sensor_Cinza = "/images/hmi/sensors/Sensor_Cinza.svg";
+const Sensor_Verde = "/portfolio-automacao/hmi_Transporte/sensors/Sensor_Verde.svg";
+const Sensor_Cinza = "/portfolio-automacao/hmi_Transporte/sensors/Sensor_Cinza.svg";
+
 
 type Sensor = {
   id: number;

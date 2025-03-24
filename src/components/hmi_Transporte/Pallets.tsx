@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Caminho direto para o arquivo SVG na pasta public
-const Palete = "/images/hmi/pallets/Palete.svg";
+const Palete = "/portfolio-automacao/hmi_Transporte/pallets/Palete.svg";
 
 type PalletState = {
   id: number;
