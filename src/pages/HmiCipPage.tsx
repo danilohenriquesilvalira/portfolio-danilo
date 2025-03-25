@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaCog } from 'react-icons/fa';
 
@@ -7,441 +6,17 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/common/ScrollToTop';
 
-// Import modular components
-import CipSystemLayout from '@/components/hmi_Cip/CipSystemLayout';
-import CipDashboard from '@/components/hmi_Cip/CipDashboard';
-import ParametersModal from '@/components/hmi_Cip/ParametersModal';
-import SystemDescription from '@/components/hmi_Cip/SystemDescription';
-import ControlButtons from '@/components/hmi_Cip/ControlButtons';
-
-// Animation variants
-const pageVariants = {
-  initial: { opacity: 0 },
-  animate: { 
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  },
-  exit: { opacity: 0 }
-};
-
-const itemVariants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { 
-    opacity: 1, 
-    y: 0,
-    transition: { type: "spring", stiffness: 100 }
-  }
-};
-
-// Interface for CIP parameters
-interface CipParameters {
-  temperature: number;
-  flowRate: number;
-  cleaningTime: number;
-}
-
-// Interface for component positions
-interface ComponentPositions {
-  mainTank: { top: number; left: number; };
-  valves: {
-    [key: string]: { top: number; left: number; rotation: number; };
-  };
-  modulatingValves: {
-    [key: string]: { top: number; left: number; rotation: number; };
-  };
-  pumps: {
-    [key: string]: { top: number; left: number; rotation: number; };
-  };
-  instruments: {
-    temperature: { top: number; left: number; };
-    pressure: { top: number; left: number; };
-    flow: { top: number; left: number; };
-    level: { top: number; left: number; };
-  };
-}
-
-const HmiCipPage = () => {
-  // CIP system states
-  const [isSystemRunning, setIsSystemRunning] = useState(false);
-  const [currentPhase, setCurrentPhase] = useState<'idle' | 'pre-rinse' | 'caustic' | 'intermediate' | 'acid' | 'final-rinse'>('idle');
-  const [phaseTime, setPhaseTime] = useState(0);
-  const [showDialog, setShowDialog] = useState(false);
-  
-  // System parameters
-  const [cipParameters, setCipParameters] = useState<CipParameters>({
-    temperature: 75,
-    flowRate: 120,
-    cleaningTime: 30
-  });
-
-  // Component states
-  const [tankLevel, setTankLevel] = useState(70);
-  
-  const [valveStates, setValveStates] = useState({
-    v1: false,
-    v2: false,
-    v3: false,
-    v4: false,
-    v5: false,
-    v6: false,
-    v7: false,
-    v8: false,
-    v9: false
-  });
-  
-  // Modulating valve states (0: closed, 1: open, 2: error)
-  const [modulatingValveStates, setModulatingValveStates] = useState({
-    mv1: 0,
-    mv2: 0
-  });
-  
-  const [pumpStates, setPumpStates] = useState({
-    pump1: false,
-    pump2: false
-  });
-
-  // Edit mode for positioning
-  const [isEditMode, setIsEditMode] = useState(false);
-  
-  // Component positions - can be adjusted to move components in the interface
-  const [componentPositions, setComponentPositions] = useState<ComponentPositions>({
-    mainTank: { top: 150, left: 500 },
-    valves: {
-      v1: { top: 400, left: 450, rotation: 90 },
-      v2: { top: 400, left: 600, rotation: 90 },
-      v3: { top: 406, left: 200, rotation: 0 },
-      v4: { top: 406, left: 60, rotation: 0 },
-      v5: { top: 330, left: 136, rotation: 90 },
-      v6: { top: 192, left: 200, rotation: 0 },
-      v7: { top: 220, left: 420, rotation: 0 },
-      v8: { top: 260, left: 620, rotation: 0 },
-      v9: { top: 70, left: 532, rotation: 90 },
-    },
-    modulatingValves: {
-      mv1: { top: 300, left: 350, rotation: 0 },
-      mv2: { top: 150, left: 620, rotation: 90 }
-    },
-    pumps: {
-      pump1: { top: 415, left: 300, rotation: 0 },
-      pump2: { top: 200, left: 300, rotation: 0 }
-    },
-    instruments: {
-      temperature: { top: 100, left: 700 },
-      pressure: { top: 100, left: 800 },
-      flow: { top: 100, left: 900 },
-      level: { top: 100, left: 1000 },
-    }
-  });
-
-  // Start the cleaning cycle
-  const startCycle = () => {
-    if (isSystemRunning) return;
-    
-    setIsSystemRunning(true);
-    setCurrentPhase('pre-rinse');
-    setPhaseTime(0);
-    
-    // Start pumps
-    setPumpStates({
-      pump1: true,
-      pump2: false
-    });
-    
-    // Open initial valves
-    setValveStates({
-      ...valveStates,
-      v1: true,
-      v4: true
-    });
-    
-    // Configure modulating valves
-    setModulatingValveStates({
-      mv1: 1, // Open
-      mv2: 0  // Closed
-    });
-  };
-
-  // Restart the cycle
-  const restartCycle = () => {
-    stopCycle();
-    setTimeout(() => startCycle(), 100);
-  };
-
-  // Stop the cycle
-  const stopCycle = () => {
-    setIsSystemRunning(false);
-    setCurrentPhase('idle');
-    
-    // Stop pumps
-    setPumpStates({
-      pump1: false,
-      pump2: false
-    });
-    
-    // Close all valves
-    setValveStates({
-      v1: false,
-      v2: false,
-      v3: false,
-      v4: false,
-      v5: false,
-      v6: false,
-      v7: false,
-      v8: false,
-      v9: false
-    });
-    
-    // Close modulating valves
-    setModulatingValveStates({
-      mv1: 0,
-      mv2: 0
-    });
-  };
-
-  // Simulate the CIP cycle progression
-  useEffect(() => {
-    if (!isSystemRunning) return;
-    
-    const timer = setInterval(() => {
-      setPhaseTime(prevTime => {
-        const newTime = prevTime + 1;
-        
-        // Logic for transitioning between phases
-        if (currentPhase === 'pre-rinse' && newTime >= 10) {
-          setCurrentPhase('caustic');
-          
-          // Adjust valves for caustic phase
-          setValveStates({
-            v1: false,
-            v2: true,
-            v3: false,
-            v4: false,
-            v5: true,
-            v6: false,
-            v7: true,
-            v8: false,
-            v9: false
-          });
-          
-          // Adjust modulating valves
-          setModulatingValveStates({
-            mv1: 0, // Closed
-            mv2: 1  // Open
-          });
-          
-          return 0;
-        }
-        else if (currentPhase === 'caustic' && newTime >= 15) {
-          setCurrentPhase('intermediate');
-          
-          // Adjust valves for intermediate rinse
-          setValveStates({
-            v1: true,
-            v2: false,
-            v3: false,
-            v4: true,
-            v5: false,
-            v6: false,
-            v7: false,
-            v8: true,
-            v9: false
-          });
-          
-          // Simulate failure in modulating valve
-          setModulatingValveStates({
-            mv1: 2, // Error
-            mv2: 0  // Closed
-          });
-          
-          return 0;
-        }
-        else if (currentPhase === 'intermediate' && newTime >= 8) {
-          setCurrentPhase('acid');
-          
-          // Adjust valves for acid phase
-          setValveStates({
-            v1: false,
-            v2: false,
-            v3: true,
-            v4: false,
-            v5: false,
-            v6: true,
-            v7: false,
-            v8: false,
-            v9: true
-          });
-          
-          // Start second pump
-          setPumpStates({
-            pump1: true,
-            pump2: true
-          });
-          
-          // Restore modulating valve
-          setModulatingValveStates({
-            mv1: 1, // Open
-            mv2: 1  // Open
-          });
-          
-          return 0;
-        }
-        else if (currentPhase === 'acid' && newTime >= 12) {
-          setCurrentPhase('final-rinse');
-          
-          // Adjust valves for final rinse
-          setValveStates({
-            v1: true,
-            v2: false,
-            v3: false,
-            v4: true,
-            v5: false,
-            v6: false,
-            v7: false,
-            v8: false,
-            v9: false
-          });
-          
-          // Stop second pump
-          setPumpStates({
-            pump1: true,
-            pump2: false
-          });
-          
-          // Configure modulating valves for final rinse
-          setModulatingValveStates({
-            mv1: 1, // Open
-            mv2: 0  // Closed
-          });
-          
-          return 0;
-        }
-        else if (currentPhase === 'final-rinse' && newTime >= 10) {
-          // End cycle
-          stopCycle();
-          return 0;
-        }
-        
-        return newTime;
-      });
-      
-      // Simulate tank level changes
-      if (isSystemRunning) {
-        setTankLevel(prev => {
-          // Level varies between 60% and 80%
-          if (prev > 78) return prev - 0.5;
-          if (prev < 62) return prev + 0.5;
-          
-          return prev + (Math.random() > 0.5 ? 0.5 : -0.5);
-        });
-      }
-      
-    }, 1000);
-    
-    return () => clearInterval(timer);
-  }, [isSystemRunning, currentPhase]);
-
-  // Update CIP parameters
-  const updateParameters = (newParams: Partial<CipParameters>) => {
-    setCipParameters(prev => ({
-      ...prev,
-      ...newParams
-    }));
-  };
-
-  // Handle component clicks
-  const handleComponentClick = (componentId: string) => {
-    console.log(`Component clicked: ${componentId}`);
-    
-    // Check if the click was on a modulating valve
-    if (componentId.startsWith('modulatingValve-')) {
-      const valveId = componentId.split('-')[1];
-      
-      // Cycle through states for the clicked modulating valve
-      setModulatingValveStates(prev => {
-        const currentState = prev[valveId as keyof typeof prev];
-        let newState = 0;
-        
-        // Cycle: 0 (closed) -> 1 (open) -> 2 (error) -> 0 (closed)
-        if (currentState === 0) newState = 1;
-        else if (currentState === 1) newState = 2;
-        else newState = 0;
-        
-        return {
-          ...prev,
-          [valveId]: newState
-        };
-      });
-    } else {
-      // For other components, show the parameters dialog
-      setShowDialog(true);
-    }
-  };
-
-  // Toggle edit mode
-  const toggleEditMode = () => {
-    setIsEditMode(!isEditMode);
-  };
-
-  // Get the name of the current phase for display
-  const getPhaseName = () => {
-    switch (currentPhase) {
-      case 'idle': return 'Inativo';
-      case 'pre-rinse': return 'Pré-enxágue';
-      case 'caustic': return 'Limpeza Cáustica';
-      case 'intermediate': return 'Enxágue Intermediário';
-      case 'acid': return 'Limpeza Ácida';
-      case 'final-rinse': return 'Enxágue Final';
-      default: return 'Desconhecido';
-    }
-  };
-
-  // Determine fluid color based on current phase
-  const getFluidColor = () => {
-    switch (currentPhase) {
-      case 'pre-rinse':
-      case 'intermediate':
-      case 'final-rinse':
-        return '#3B82F6'; // blue for water
-      case 'caustic':
-        return '#FBBF24'; // yellow for caustic
-      case 'acid':
-        return '#EF4444'; // red for acid
-      default:
-        return '#9CA3AF'; // gray for inactive
-    }
-  };
-
-  // Helper function to get text for modulating valve status
-  const getValveStatusText = (status: number): string => {
-    switch (status) {
-      case 0: return 'Fechada';
-      case 1: return 'Aberta';
-      case 2: return 'Falha';
-      default: return 'Desconhecida';
-    }
-  };
-
+const HmiPage = () => {
   return (
     <>
       <Navbar />
-      <motion.div
-        variants={pageVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className="w-full min-h-screen pt-28 pb-16 relative bg-gradient-to-br from-primary via-primary to-tertiary"
-      >
+      <div className="w-full min-h-screen pt-28 pb-16 relative bg-gradient-to-br from-primary via-primary to-tertiary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Back button */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-8"
-          >
+          <div className="mb-8">
             <Link 
-              to="/projeto/estacao-cip" 
+              to="/projeto/seu-projeto" 
               className="flex items-center gap-2 text-tech-blue hover:text-white transition-colors group"
             >
               <div className="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center group-hover:bg-tech-blue transition-colors">
@@ -449,46 +24,116 @@ const HmiCipPage = () => {
               </div>
               <span>Voltar para Detalhes do Projeto</span>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Header */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-12 text-center"
-          >
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">Sistema CIP de Limpeza</h1>
+          <div className="mb-12 text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">Nome do Projeto</h1>
             <p className="text-secondary text-lg max-w-3xl mx-auto">
-              Simulação de um sistema CIP (Clean-in-Place) industrial para limpeza automática de equipamentos.
+              Descrição do projeto aqui.
             </p>
-          </motion.div>
+          </div>
 
           <div className="bg-black-100 p-6 rounded-xl shadow-lg mb-10">
-            {/* Dashboard with system information */}
+            {/* Dashboard com painéis de status */}
             <div className="mb-8">
-              <CipDashboard 
-                isSystemRunning={isSystemRunning}
-                currentPhase={currentPhase}
-                phaseTime={phaseTime}
-                cipParameters={cipParameters}
-                tankLevel={tankLevel}
-                pumpStates={pumpStates}
-                modulatingValveStates={modulatingValveStates}
-                getPhaseName={getPhaseName}
-                getValveStatusText={getValveStatusText}
-              />
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {/* Painel 1 */}
+                <div className="bg-gradient-to-br from-tertiary to-black-200 rounded-xl shadow-xl overflow-hidden">
+                  <div className="bg-tech-blue px-4 py-2 text-white font-medium">
+                    Status do Sistema
+                  </div>
+                  <div className="p-4 flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white">Estado:</span>
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-500 text-red-100">
+                        Parado
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white">Fase Atual:</span>
+                      <span className="font-mono bg-black-200 px-3 py-1 rounded text-white">Inativo</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white">Tempo na Fase:</span>
+                      <span className="font-mono bg-black-200 px-3 py-1 rounded text-white">0s</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Painel 2 */}
+                <div className="bg-gradient-to-br from-tertiary to-black-200 rounded-xl shadow-xl overflow-hidden md:col-span-2">
+                  <div className="bg-industry-green px-4 py-2 text-white font-medium">
+                    Parâmetros do Sistema
+                  </div>
+                  <div className="p-4 grid grid-cols-4 gap-4">
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center bg-black-200 mb-2">
+                        <span className="text-industry-green font-bold">75°C</span>
+                      </div>
+                      <span className="text-xs text-secondary">Temperatura</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center bg-black-200 mb-2">
+                        <span className="text-industry-green font-bold">120<span className="text-xs">L/min</span></span>
+                      </div>
+                      <span className="text-xs text-secondary">Vazão</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center bg-black-200 mb-2">
+                        <span className="text-industry-green font-bold">30<span className="text-xs">min</span></span>
+                      </div>
+                      <span className="text-xs text-secondary">Tempo Total</span>
+                    </div>
+                    
+                    {/* Outro parâmetro */}
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 rounded-full flex items-center justify-center bg-black-200 mb-2">
+                        <span className="font-bold text-gray-500">VM1</span>
+                      </div>
+                      <span className="text-xs text-secondary">
+                        Fechada
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Painel 3 */}
+                <div className="bg-gradient-to-br from-tertiary to-black-200 rounded-xl shadow-xl overflow-hidden">
+                  <div className="bg-automation-orange px-4 py-2 text-white font-medium">
+                    Estado dos Componentes
+                  </div>
+                  <div className="p-4 flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white">Bomba 1:</span>
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-500 text-red-100">
+                        Inativa
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white">Bomba 2:</span>
+                      <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-500 text-red-100">
+                        Inativa
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white">Tanque:</span>
+                      <span className="font-mono bg-black-200 px-3 py-1 rounded text-white">70.0%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             
-            {/* Edit mode and parameter buttons */}
+            {/* Botões de modo de edição e parâmetros */}
             <div className="flex justify-end mb-6 gap-4">
               <button
-                onClick={toggleEditMode}
-                className={`px-4 py-2 ${isEditMode ? 'bg-red-500' : 'bg-blue-500'} text-white rounded-lg transition-colors`}
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg transition-colors"
               >
-                {isEditMode ? 'Desativar Modo de Edição' : 'Ativar Modo de Edição'}
+                Ativar Modo de Edição
               </button>
               
               <button
-                onClick={() => setShowDialog(true)}
                 className="px-4 py-2 bg-gradient-to-r from-tech-blue to-industry-green text-white rounded-lg hover:opacity-90 shadow-md transition-all flex items-center gap-2"
               >
                 <FaCog className="h-5 w-5" />
@@ -496,62 +141,56 @@ const HmiCipPage = () => {
               </button>
             </div>
             
-            {/* CIP System Layout */}
-            <div className="bg-black-200 p-2 rounded-xl shadow-xl mb-8">
-              <CipSystemLayout 
-                isSystemRunning={isSystemRunning}
-                currentPhase={currentPhase}
-                phaseTime={phaseTime}
-                tankLevel={tankLevel}
-                valveStates={valveStates}
-                modulatingValveStates={modulatingValveStates}
-                pumpStates={pumpStates}
-                componentPositions={componentPositions}
-                isEditMode={isEditMode}
-                handleComponentClick={handleComponentClick}
-                getFluidColor={getFluidColor}
-                getPhaseName={getPhaseName}
-              />
+            {/* Área principal vazia - sem conteúdo do CIP */}
+            <div className="bg-black-200 p-2 rounded-xl shadow-xl mb-8 relative" style={{ height: "600px" }}>
+              {/* Área completamente vazia para seu novo projeto */}
+              <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center bg-slate-900 rounded-md p-2">
+                <div className="flex items-center">
+                  <div className="w-3 h-3 rounded-full mr-2 bg-red-500"></div>
+                  <span className="text-white text-sm">Status: Parado</span>
+                </div>
+                <div className="text-white text-sm">
+                  Fase: <span className="font-bold">Inativo</span>
+                </div>
+              </div>
             </div>
             
-            {/* Edit mode instructions */}
-            {isEditMode && (
-              <div className="mb-4 p-4 bg-black-200 rounded-lg text-white">
-                <h3 className="text-lg font-bold mb-2">Instruções de Edição</h3>
-                <p className="text-sm text-secondary mb-2">
-                  Para ajustar as posições dos componentes, edite diretamente os valores 
-                  na variável <code>componentPositions</code> no código fonte.
-                </p>
-                <p className="text-sm text-secondary">
-                  Cada componente mostra suas coordenadas atuais para facilitar o posicionamento no código.
-                </p>
-              </div>
-            )}
-            
-            {/* Control buttons */}
-            <ControlButtons 
-              isSystemRunning={isSystemRunning}
-              startCycle={startCycle}
-              stopCycle={stopCycle}
-            />
+            {/* Botões de controle */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                className="w-40 py-3 rounded-lg text-white font-bold transition-all shadow-lg flex items-center justify-center gap-2 bg-gradient-to-r from-tech-blue to-blue-600 hover:opacity-90"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                </svg>
+                Iniciar Ciclo
+              </button>
+              
+              <button
+                className="w-40 py-3 rounded-lg text-white font-bold transition-all shadow-lg flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:opacity-90"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                </svg>
+                Reiniciar Ciclo
+              </button>
+              
+              <button
+                className="w-40 py-3 rounded-lg text-white font-bold transition-all shadow-lg flex items-center justify-center gap-2 bg-red-800 opacity-50 cursor-not-allowed"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" />
+                </svg>
+                Parar Ciclo
+              </button>
+            </div>
           </div>
-          
-          {/* System description */}
-          <SystemDescription />
-          
-          {/* Parameters modal */}
-          <ParametersModal 
-            isOpen={showDialog}
-            onClose={() => setShowDialog(false)}
-            cipParameters={cipParameters}
-            updateParameters={updateParameters}
-          />
         </div>
-      </motion.div>
+      </div>
       <Footer />
       <ScrollToTop />
     </>
   );
 };
 
-export default HmiCipPage;
+export default HmiPage;
