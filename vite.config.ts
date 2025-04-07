@@ -14,8 +14,8 @@ export default defineConfig({
       '@data': path.resolve(__dirname, './src/data'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@utils': path.resolve(__dirname, './src/utils'),
-      '@types': path.resolve(__dirname, './src/types'),
-    },
+      '@types': path.resolve(__dirname, './src/types')
+    }
   },
   optimizeDeps: {
     include: [
@@ -26,12 +26,12 @@ export default defineConfig({
       '@react-three/fiber',
       '@react-three/drei',
       'three'
-    ],
+    ]
   },
   server: {
     hmr: {
-      overlay: true,
-    },
+      overlay: true
+    }
   },
-  base: '/portfolio-automacao/' // Necessário para GitHub Pages
+  base: '/portfolio-danilo/' // Atualizado para o nome correto do repositório
 })

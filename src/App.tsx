@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -24,7 +23,7 @@ import Industry40Projects from './pages/categories/Industry40Projects';
 
 function App() {
   return (
-    <BrowserRouter basename="/portfolio-automacao">
+    <BrowserRouter basename="/portfolio-danilo">
       <div className="bg-primary min-h-screen">
         <Navbar />
         <Routes>
@@ -35,20 +34,20 @@ function App() {
           <Route path="/habilidades" element={<Skills />} />
           <Route path="/projetos" element={<Projects />} />
           <Route path="/contato" element={<Contact />} />
-          
+
           {/* Categorias de projetos */}
           <Route path="/projetos/automacao" element={<AutomationProjects />} />
           <Route path="/projetos/web" element={<WebProjects />} />
           <Route path="/projetos/plc" element={<PLCProjects />} />
           <Route path="/projetos/industria40" element={<Industry40Projects />} />
-          
+
           {/* Página de detalhes do projeto */}
           <Route path="/projeto/:id" element={<ProjectDetail />} />
-          
+
           {/* Página HMI especial */}
           <Route path="/hmi-transporte" element={<HmiPage />} />
           <Route path="/hmi-cip" element={<HmiCipPage />} />
-          
+
           {/* Fallback para rotas não encontradas */}
           <Route path="*" element={<NotFound />} />
         </Routes>

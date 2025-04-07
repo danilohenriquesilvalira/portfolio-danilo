@@ -1,13 +1,12 @@
 {
-  "name": "portfolio-automacao",
-  "private": true,
+  "name": "portfolio-danilo",
   "version": "0.1.0",
+  "homepage": "https://danilohenriquesilvalira.github.io/portfolio-danilo",
+  "private": true,
   "type": "module",
-  "homepage": "https://danilohenriquesilvalira.github.io/portfolio-automacao",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
