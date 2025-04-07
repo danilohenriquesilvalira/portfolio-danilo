@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { skills } from '@/data/experience';
 import { Skill } from '@/types/experience';
 
-// Categorias de habilidades com cores
+// Categorias com cores e gradientes para melhor visualização
 const categories = [
   { id: 'all', label: 'Todas', color: '#0072BB', gradient: 'from-tech-blue to-industry-green' },
   { id: 'automacao', label: 'Automação', color: '#0072BB', gradient: 'from-tech-blue to-blue-400' },
@@ -10,9 +11,8 @@ const categories = [
   { id: 'programacao', label: 'Programação', color: '#FF5722', gradient: 'from-automation-orange to-yellow-400' },
 ];
 
-// Componente para exibir cada habilidade com visual aprimorado
+// Card de habilidade com animação e barra de progresso dinâmica
 const SkillCard = ({ skill }: { skill: Skill }) => {
-  // Determina a cor baseada no nível
   const getLevelColor = (level: string) => {
     switch (level) {
       case 'especialista':
@@ -28,23 +28,6 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
     }
   };
 
-  // Determina a largura da barra de progresso baseada no nível
-  const getLevelWidth = (level: string) => {
-    switch (level) {
-      case 'especialista':
-        return 'w-full';
-      case 'avançado':
-        return 'w-3/4';
-      case 'intermediário':
-        return 'w-1/2';
-      case 'básico':
-        return 'w-1/4';
-      default:
-        return 'w-1/4';
-    }
-  };
-
-  // Determina o texto de porcentagem baseado no nível
   const getLevelPercentage = (level: string) => {
     switch (level) {
       case 'especialista':
@@ -61,7 +44,10 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
   };
 
   return (
-    <div className="p-5 bg-tertiary rounded-xl w-full sm:w-64 hover:shadow-xl transition-shadow duration-300">
+    <motion.div 
+      className="p-5 bg-tertiary rounded-xl w-full sm:w-64 hover:shadow-xl transition-shadow duration-300"
+      whileHover={{ scale: 1.05 }}
+    >
       <div className="flex justify-between items-center mb-3">
         <p className="text-white font-medium text-lg">{skill.name}</p>
         <div className="w-10 h-10 rounded-full flex justify-center items-center bg-black-200">
@@ -77,12 +63,12 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
       </div>
 
       <div className="w-full bg-black-200 rounded-full h-2.5 mb-1 overflow-hidden">
-        <div 
-          className={`h-2.5 rounded-full ${getLevelColor(skill.level)} ${getLevelWidth(skill.level)}`}
-          style={{ 
-            transition: "width 1s ease-in-out"
-          }}
-        ></div>
+        <motion.div 
+          className={`h-2.5 rounded-full ${getLevelColor(skill.level)}`}
+          initial={{ width: 0 }}
+          animate={{ width: getLevelPercentage(skill.level) }}
+          transition={{ duration: 1 }}
+        />
       </div>
       
       <div className="flex justify-between items-center">
@@ -91,11 +77,11 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
         </span>
         <p className="text-secondary text-xs">{getLevelPercentage(skill.level)}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-// Componente para mostrar métodos e diferenciais
+// Card para exibir a abordagem (Metodologia e Diferenciais) com design moderno e animação
 const ApproachCard = ({ 
   title, 
   items, 
@@ -108,7 +94,14 @@ const ApproachCard = ({
   gradient: string;
 }) => {
   return (
-    <div className="bg-tertiary rounded-2xl overflow-hidden h-full">
+    <motion.div 
+      className="bg-tertiary rounded-2xl overflow-hidden h-full"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ scale: 1.03 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className={`bg-gradient-to-r ${gradient} h-2`}></div>
       <div className="p-8">
         <div className="flex items-center gap-4 mb-6">
@@ -136,32 +129,32 @@ const ApproachCard = ({
           ))}
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 const Skills = () => {
   const [activeCategory, setActiveCategory] = useState('all');
-  const [visibleSkills, setVisibleSkills] = useState(skills);
+  const [visibleSkills, setVisibleSkills] = useState<Skill[]>(skills);
 
-  // Filtrar habilidades baseado na categoria selecionada
+  // Atualiza as habilidades visíveis de acordo com a categoria selecionada
   useEffect(() => {
     const filtered = activeCategory === 'all' 
       ? skills 
       : skills.filter((skill) => skill.category === activeCategory);
-    
     setVisibleSkills(filtered);
   }, [activeCategory]);
 
   return (
     <section id="skills" className="py-20 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Cabeçalho */}
         <div className="text-center mb-10">
           <p className="text-secondary mb-2">Minhas Competências</p>
           <h2 className="text-4xl font-bold text-white">Habilidades Técnicas</h2>
         </div>
 
-        {/* Categorias com design aprimorado */}
+        {/* Botões de categoria com transição suave */}
         <div className="flex flex-wrap justify-center mt-10 gap-4">
           {categories.map((category) => (
             <button
@@ -177,28 +170,33 @@ const Skills = () => {
           ))}
         </div>
 
-        {/* Grid de habilidades */}
+        {/* Grid de habilidades com animação escalonada */}
         <div className="mt-10 flex flex-wrap gap-6 justify-center">
-          {visibleSkills.map((skill: Skill) => (
-            <SkillCard 
-              key={`skill-${skill.name}`} 
-              skill={skill} 
-            />
+          {visibleSkills.map((skill: Skill, index) => (
+            <motion.div 
+              key={`skill-${skill.name}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+            >
+              <SkillCard skill={skill} />
+            </motion.div>
           ))}
         </div>
 
-        {/* Seção adicional sobre Abordagem */}
+        {/* Seção de Abordagem: Metodologia e Diferenciais */}
         <div className="mt-20">
           <h3 className="text-3xl font-bold text-center text-white mb-10">
             Minha Abordagem
           </h3>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ApproachCard
               title="Metodologia"
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-tech-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>}
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-tech-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              }
               gradient="from-tech-blue to-blue-400"
               items={[
                 "Análise detalhada de requisitos e processos existentes",
@@ -211,9 +209,11 @@ const Skills = () => {
 
             <ApproachCard
               title="Diferenciais"
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-industry-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>}
+              icon={
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-industry-green" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              }
               gradient="from-industry-green to-green-300"
               items={[
                 "Visão holística que combina experiência em automação tradicional com tecnologias emergentes",

@@ -1,6 +1,6 @@
 import { Experience, Education, Certification, Skill } from '../types/experience';
 
-// Experiências profissionais baseadas no LinkedIn de Danilo Lira
+// Experiências profissionais (dados atualizados)
 export const experiences: Experience[] = [
   {
     title: "Técnico de automação",
@@ -9,11 +9,11 @@ export const experiences: Experience[] = [
     iconBg: "#E6DEDD",
     date: "jun de 2024 - o momento (10 meses)",
     points: [
-      "Desenvolvimento de projetos de automação industrial para clientes de diversos setores",
-      "Implementação de sistemas de controle e monitoramento baseados em Siemens S7-1500",
-      "Programação de interfaces homem-máquina (HMI) para operação intuitiva",
-      "Integração de sistemas SCADA com bancos de dados para análise de desempenho",
-      "Desenvolvimento de soluções de Internet das Coisas Industrial (IIoT)"
+      "Desenvolvimento e implementação de projetos de automação industrial, otimizando processos e elevando a eficiência operacional.",
+      "Configuração e integração de sistemas de controle e monitoramento baseados em Siemens S7-1500, garantindo alta precisão e confiabilidade.",
+      "Programação de interfaces HMI (Human Machine Interface) com foco em usabilidade, promovendo uma operação intuitiva.",
+      "Integração de sistemas SCADA com bancos de dados robustos para análise de desempenho e suporte à tomada de decisão.",
+      "Desenvolvimento de soluções IIoT para conectar dispositivos e automatizar processos industriais de forma inteligente."
     ],
     location: "Lisboa, Portugal",
     technologies: ["Siemens S7", "SCADA", "HMI", "OPC UA", "IIoT", "Node-RED", "SQL"],
@@ -26,13 +26,13 @@ export const experiences: Experience[] = [
     iconBg: "#383E56",
     date: "dez de 2023 - jun de 2024 (7 meses)",
     points: [
-      "Manutenção corretiva e preventiva em linhas de produção de alta velocidade",
-      "Diagnóstico e solução de problemas em sistemas de controle automatizados",
-      "Implementação de melhorias nos processos produtivos aumentando OEE em 12%",
-      "Configuração e otimização de parâmetros em equipamentos de envase",
-      "Coordenação com equipes de produção para minimizar tempo de inatividade"
+      "Realização de manutenção corretiva e preventiva em linhas de produção de alta velocidade, assegurando continuidade e segurança operacional.",
+      "Diagnóstico avançado e resolução de problemas em sistemas automatizados, minimizando paradas não programadas.",
+      "Implementação de melhorias que elevaram o OEE dos processos produtivos em 12%.",
+      "Configuração e otimização de parâmetros em equipamentos de envase, promovendo maior qualidade e eficiência.",
+      "Coordenação com equipes de produção para reduzir tempos de inatividade e maximizar a produtividade."
     ],
-    location: "Portugal",
+    location: "Vialonga, Portugal",
     technologies: ["Allen-Bradley", "Siemens S7", "Instrumentação", "Elétrica Industrial", "Manutenção"],
     categories: ["automacao", "industria"]
   },
@@ -43,11 +43,11 @@ export const experiences: Experience[] = [
     iconBg: "#E6DEDD",
     date: "jul de 2023 - dez de 2023 (6 meses)",
     points: [
-      "Manutenção de equipamentos em linhas de produção de bebidas",
-      "Implementação de sistemas de instrumentação para controle de qualidade",
-      "Desenvolvimento de procedimentos de manutenção preventiva",
-      "Diagnóstico e solução de problemas complexos em sistemas automatizados",
-      "Treinamento de operadores para uso adequado de equipamentos"
+      "Manutenção e calibração de equipamentos em linhas de produção de bebidas, assegurando desempenho consistente.",
+      "Implementação de sistemas de instrumentação para monitoramento preciso e controle da qualidade do produto.",
+      "Desenvolvimento e padronização de procedimentos de manutenção preventiva, reduzindo a ocorrência de falhas.",
+      "Diagnóstico e resolução de problemas complexos em sistemas automatizados, garantindo continuidade operacional.",
+      "Capacitação e treinamento de operadores para o uso seguro e eficiente dos equipamentos."
     ],
     location: "Santarém, Portugal",
     technologies: ["PLCs", "Instrumentação", "Pneumática", "Hidráulica", "Sensores"],
@@ -60,13 +60,13 @@ export const experiences: Experience[] = [
     iconBg: "#383E56",
     date: "fev de 2023 - mar de 2023 (2 meses)",
     points: [
-      "Implementação de projetos de automação para clientes industriais",
-      "Programação e configuração de PLCs para controle de processos",
-      "Desenvolvimento de interfaces SCADA para monitoramento em tempo real",
-      "Integração de sensores e atuadores em sistemas de controle",
-      "Comissionamento e testes de sistemas automatizados"
+      "Planejamento e execução de projetos de automação focados na otimização dos processos industriais.",
+      "Programação e configuração de PLCs utilizando linguagens Ladder e Structured Text, garantindo robustez e flexibilidade.",
+      "Desenvolvimento de interfaces SCADA para monitoramento em tempo real e visualização de dados críticos.",
+      "Integração de sensores, atuadores e dispositivos de rede para sistemas de controle integrados.",
+      "Realização de comissionamento e testes rigorosos, assegurando a confiabilidade dos sistemas automatizados."
     ],
-    location: "Recife, Pernambuco, Brasil",
+    location: "São Paulo, Brasil",
     technologies: ["Siemens S7", "Allen-Bradley", "SCADA", "Instrumentação", "Redes Industriais"],
     categories: ["automacao", "desenvolvimento"]
   },
@@ -77,11 +77,11 @@ export const experiences: Experience[] = [
     iconBg: "#E6DEDD",
     date: "fev de 2014 - jan de 2023 (9 anos)",
     points: [
-      "Manutenção e reparo de equipamentos em linhas de produção de alta velocidade",
-      "Implementação de melhorias contínuas nos processos produtivos",
-      "Programação e modificação de sistemas de controle Allen-Bradley",
-      "Diagnóstico e solução de problemas complexos em ambiente industrial",
-      "Liderança de projetos de modernização e atualização de equipamentos"
+      "Manutenção e reparo de equipamentos em linhas de produção de alta velocidade, maximizando a produtividade.",
+      "Implementação de iniciativas de melhoria contínua, elevando os índices de eficiência operacional.",
+      "Programação e ajustes em sistemas de controle Allen-Bradley utilizando RSLogix e Studio 5000 para otimização de processos.",
+      "Diagnóstico e resolução de problemas complexos em ambientes industriais, reduzindo paradas e perdas.",
+      "Liderança e coordenação de projetos de modernização, introduzindo novas tecnologias e métodos avançados de automação."
     ],
     location: "Brasil",
     technologies: ["Allen-Bradley ControlLogix", "CompactLogix", "FactoryTalk", "RSLogix", "Studio 5000"],
@@ -94,7 +94,7 @@ export const education: Education[] = [
     degree: "Tecnologia da Informação/Sistemas da Informação",
     institution: "Estácio",
     date: "abr de 2021 - dez de 2023",
-    description: "Formação em Tecnologia da Informação com foco em Sistemas da Informação, desenvolvendo competências em análise de dados, bancos de dados SQL e integração de sistemas. Projeto final focado na integração entre sistemas industriais e corporativos.",
+    description: "Formação em TI com foco em Sistemas da Informação, desenvolvendo competências em análise de dados, bancos SQL e integração de sistemas, com projeto final voltado para a convergência entre ambientes industriais e corporativos.",
     icon: "/src/assets/icons/estacio.png",
     iconBg: "#E6DEDD"
   },
@@ -102,7 +102,7 @@ export const education: Education[] = [
     degree: "Técnico Eletromecânico / Automação",
     institution: "SENAI Pernambuco",
     date: "2012 - 2014",
-    description: "Formação técnica em eletromecânica e automação industrial, abrangendo pneumática, hidráulica, manutenção preventiva, programação de PLCs, redes industriais e sistemas de controle. Curso com forte ênfase em aplicações práticas em ambiente industrial.",
+    description: "Curso técnico com ênfase em eletromecânica e automação industrial, abrangendo pneumática, hidráulica, manutenção preventiva, programação de PLCs e redes industriais, com forte aplicação prática.",
     icon: "/src/assets/icons/senai.png",
     iconBg: "#383E56"
   }
@@ -244,7 +244,7 @@ export const skills: Skill[] = [
     level: "especialista"
   },
   {
-    name: "Structured Text",
+    name: "Structured Text (SCL)",
     icon: "/src/assets/icons/structured-text.png",
     category: "programacao",
     level: "avançado"

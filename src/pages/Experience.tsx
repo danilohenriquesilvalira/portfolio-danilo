@@ -9,14 +9,12 @@ import {
   FaCalendarAlt, 
   FaTools 
 } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
-// Importar dados de experiência
+// Importar dados de experiência, educação e certificações
 import { experiences, education, certifications } from '@/data/experience';
 
-/* 
-  Interfaces para os dados. 
-  Se esses tipos já estiverem definidos em outro lugar, você pode importá-los.
-*/
+/* Interfaces dos dados */
 interface Experience {
   title: string;
   company: string;
@@ -59,7 +57,12 @@ const ExperienceFilter: FC<ExperienceFilterProps> = ({ active, onFilterChange })
   ];
   
   return (
-    <div className="flex flex-wrap justify-center gap-3 mb-10">
+    <motion.div 
+      className="flex flex-wrap justify-center gap-3 mb-10"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       {filters.map((filter) => (
         <button
           key={filter.id}
@@ -73,25 +76,40 @@ const ExperienceFilter: FC<ExperienceFilterProps> = ({ active, onFilterChange })
           {filter.label}
         </button>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
-/* Timeline elemento para experiência profissional */
+/* Card da Timeline para Experiência Profissional */
 interface ExperienceCardProps {
   experience: Experience;
 }
 
 const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
+  // Tecnologias adicionais modernas a serem incluídas
+  const additionalTechs = [
+    "Siemens S7", "SCADA", "HMI", "OPC UA", "IIoT", 
+    "Node-RED", "SQL", "PostgreSQL", "Go", "TypeScript", 
+    "React Native", "Tailwind"
+  ];
+  // Combina as tecnologias da experiência com as adicionais, sem duplicatas
+  const allTechs = Array.from(new Set([...experience.technologies, ...additionalTechs]));
+
   return (
-    <div className="mb-12 relative">
+    <motion.div 
+      className="mb-12 relative"
+      initial={{ opacity: 0, x: -50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Linha vertical da timeline */}
       <div className="absolute left-8 top-8 bottom-0 w-0.5 bg-tech-blue bg-opacity-30"></div>
       
       <div className="flex gap-6">
         {/* Ícone */}
         <div
-          className="relative z-10 w-16 h-16 rounded-full flex items-center justify-center shadow-md"
+          className="relative z-10 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
           style={{ backgroundColor: experience.iconBg }}
         >
           <FaBriefcase className="w-8 h-8 text-tech-blue" />
@@ -99,31 +117,30 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
         
         {/* Conteúdo */}
         <div className="flex-1">
-          <div className="bg-tertiary rounded-xl p-6 shadow-md">
+          <div className="bg-tertiary rounded-xl p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300">
             <h3 className="text-white text-xl font-bold">{experience.title}</h3>
             <div className="flex items-center gap-2 mt-1">
-              <FaBuilding className="text-tech-blue flex-shrink-0" />
+              <FaBuilding className="text-tech-blue" />
               <p className="text-secondary text-base font-semibold">
                 {experience.company}
               </p>
             </div>
 
             <div className="mt-3 flex items-center gap-2 text-secondary text-sm">
-              <FaMapMarkerAlt className="text-gray-400 flex-shrink-0" />
+              <FaMapMarkerAlt className="text-gray-400" />
               <span>{experience.location}</span>
               <span className="mx-2">•</span>
-              <FaCalendarAlt className="text-gray-400 flex-shrink-0" />
+              <FaCalendarAlt className="text-gray-400" />
               <span>{experience.date}</span>
             </div>
 
-            <ul className="mt-5 list-none space-y-3">
+            <ul className="mt-5 list-disc list-inside space-y-2">
               {experience.points.map((point: string, index: number) => (
                 <li
                   key={`experience-point-${index}`}
-                  className="text-white-100 text-sm tracking-wider flex items-start gap-3"
+                  className="text-white text-sm"
                 >
-                  <span className="w-2 h-2 rounded-full bg-tech-blue mt-1.5 flex-shrink-0"></span>
-                  <span>{point}</span>
+                  {point}
                 </li>
               ))}
             </ul>
@@ -131,13 +148,13 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
             <div className="mt-5 pt-5 border-t border-gray-700">
               <h4 className="text-white text-sm font-semibold mb-3 flex items-center gap-2">
                 <FaTools className="text-tech-blue" />
-                Tecnologias
+                Ferramentas & Tecnologias
               </h4>
               <div className="flex flex-wrap gap-2">
-                {experience.technologies.map((tech: string, index: number) => (
+                {allTechs.map((tech: string, index: number) => (
                   <span
                     key={`tech-${index}`}
-                    className="bg-black-200 px-3 py-1 rounded-md text-xs text-white-100"
+                    className="bg-black-200 px-3 py-1 rounded-md text-xs text-white"
                   >
                     {tech}
                   </span>
@@ -147,25 +164,31 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-/* Timeline elemento para educação */
+/* Card da Timeline para Formação Acadêmica */
 interface EducationCardProps {
   education: Education;
 }
 
 const EducationCard: FC<EducationCardProps> = ({ education }) => {
   return (
-    <div className="mb-12 relative">
+    <motion.div 
+      className="mb-12 relative"
+      initial={{ opacity: 0, x: 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+    >
       {/* Linha vertical da timeline */}
       <div className="absolute left-8 top-8 bottom-0 w-0.5 bg-industry-green bg-opacity-30"></div>
       
       <div className="flex gap-6">
         {/* Ícone */}
         <div
-          className="relative z-10 w-16 h-16 rounded-full flex items-center justify-center shadow-md"
+          className="relative z-10 w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
           style={{ backgroundColor: education.iconBg }}
         >
           <FaGraduationCap className="w-8 h-8 text-industry-green" />
@@ -173,38 +196,44 @@ const EducationCard: FC<EducationCardProps> = ({ education }) => {
         
         {/* Conteúdo */}
         <div className="flex-1">
-          <div className="bg-tertiary rounded-xl p-6 shadow-md">
+          <div className="bg-tertiary rounded-xl p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300">
             <h3 className="text-white text-xl font-bold">{education.degree}</h3>
             <div className="flex items-center gap-2 mt-1">
-              <FaBuilding className="text-industry-green flex-shrink-0" />
+              <FaBuilding className="text-industry-green" />
               <p className="text-secondary text-base font-semibold">
                 {education.institution}
               </p>
             </div>
 
             <div className="mt-3 flex items-center gap-2 text-secondary text-sm">
-              <FaCalendarAlt className="text-gray-400 flex-shrink-0" />
+              <FaCalendarAlt className="text-gray-400" />
               <span>{education.date}</span>
             </div>
 
-            <p className="text-white-100 text-sm mt-5 tracking-wider leading-relaxed">
+            <p className="text-white text-sm mt-5 leading-relaxed">
               {education.description}
             </p>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-/* Componente para certificações */
+/* Card para Certificações */
 interface CertificationCardProps {
   certification: Certification;
 }
 
 const CertificationCard: FC<CertificationCardProps> = ({ certification }) => {
   return (
-    <div className="bg-tertiary p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-[300px]">
+    <motion.div 
+      className="bg-tertiary p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 w-full sm:w-[300px]"
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="flex items-center gap-4 mb-5">
         <div className="w-12 h-12 flex justify-center items-center rounded-full bg-black-200">
           <img 
@@ -228,13 +257,11 @@ const CertificationCard: FC<CertificationCardProps> = ({ certification }) => {
         <span>Emitido em: {certification.date}</span>
       </div>
 
-      {/* Badge de credencial */}
       <div className="bg-black-200 p-3 rounded-lg flex items-center justify-between">
         <div className="flex items-center gap-2">
           <FaCertificate className="text-orange-500" />
           <span className="text-white text-sm">Credencial</span>
         </div>
-        
         {certification.credentialUrl ? (
           <a
             href={certification.credentialUrl}
@@ -248,14 +275,14 @@ const CertificationCard: FC<CertificationCardProps> = ({ certification }) => {
           <span className="text-secondary text-sm">Disponível mediante solicitação</span>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
 const Experience: FC = () => {
   const [filter, setFilter] = useState<string>('all');
   
-  // Filtrar experiências baseado no filtro selecionado
+  // Filtrar experiências com base no filtro selecionado
   const filteredExperiences = filter === 'all' 
     ? experiences 
     : experiences.filter((exp: Experience) => exp.categories?.includes(filter));
@@ -263,44 +290,66 @@ const Experience: FC = () => {
   return (
     <section id="experience" className="py-20 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <p className="text-secondary mb-2">Minha Trajetória</p>
-          <h2 className="text-4xl font-bold text-white">Experiência Profissional</h2>
-        </div>
+        {/* Cabeçalho */}
+        <motion.div 
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <p className="text-secondary mb-2 text-lg">Explore Minha Trajetória</p>
+          <h2 className="text-4xl font-bold text-white">Experiência Profissional & Inovação Tecnológica</h2>
+          <p className="mt-3 text-secondary max-w-2xl mx-auto">
+            Com uma carreira marcada pela constante evolução, transformo desafios em oportunidades ao integrar as tecnologias mais avançadas ao ambiente corporativo.
+          </p>
+        </motion.div>
 
         {/* Filtro de experiências */}
         <ExperienceFilter active={filter} onFilterChange={setFilter} />
 
         <div className="mt-10">
           {/* Timeline de experiências */}
-          <div className="space-y-4">
+          <div className="space-y-8">
             {filteredExperiences.map((experience: Experience, index: number) => (
               <ExperienceCard key={`experience-${index}`} experience={experience} />
             ))}
           </div>
         </div>
 
-        <div className="mt-20 text-center">
+        {/* Seção de Educação */}
+        <motion.div 
+          className="mt-20 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
           <h2 className="text-4xl font-bold text-white mb-10">Formação Acadêmica</h2>
-        </div>
-
+          <p className="text-secondary max-w-2xl mx-auto">
+            A base do meu conhecimento é reforçada por uma sólida formação acadêmica, que me capacita a aplicar soluções inovadoras e eficazes.
+          </p>
+        </motion.div>
         <div className="mt-10">
-          {/* Timeline de educação */}
-          <div className="space-y-4">
+          <div className="space-y-8">
             {education.map((edu: Education, index: number) => (
               <EducationCard key={`education-${index}`} education={edu} />
             ))}
           </div>
         </div>
 
-        <div className="mt-20 text-center">
+        {/* Seção de Certificações */}
+        <motion.div 
+          className="mt-20 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
           <h2 className="text-4xl font-bold text-white mb-6">Certificações</h2>
           <p className="text-secondary max-w-2xl mx-auto mb-10">
-            Minhas certificações técnicas e profissionais que validam minhas competências
-            em automação industrial e tecnologias relacionadas.
+            As certificações obtidas comprovam meu compromisso com a atualização constante e a excelência na aplicação das tecnologias mais disruptivas do mercado.
           </p>
-        </div>
-
+        </motion.div>
         <div className="mt-10 flex flex-wrap gap-6 justify-center">
           {certifications.map((cert: Certification, index: number) => (
             <CertificationCard key={`certification-${index}`} certification={cert} />
