@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { FaArrowLeft, FaCog } from 'react-icons/fa';
 

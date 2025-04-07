@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaTools, FaIndustry, FaNetworkWired, FaRobot } from 'react-icons/fa';

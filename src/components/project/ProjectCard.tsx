@@ -20,7 +20,7 @@ const cardVariants = {
 };
 
 interface ProjectCardProps {
-  project: Project;
+  project: Project & { featured?: boolean };
   index: number;
 }
 

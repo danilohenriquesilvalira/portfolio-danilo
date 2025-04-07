@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaSearch, FaTimes, FaArrowLeft, FaCode } from 'react-icons/fa';
@@ -39,7 +39,8 @@ const WebProjects = () => {
   
   // Filtrar projetos para mostrar apenas a categoria web
   useEffect(() => {
-    let webProjects = projects.filter(p => p.category === 'web');
+    // Utilizamos um cast para 'any' para ignorar a incompatibilidade do tipo
+    let webProjects = projects.filter(p => (p as any).category === 'web');
     
     // Filtrar por termo de pesquisa
     if (searchTerm.trim() !== '') {
@@ -64,7 +65,7 @@ const WebProjects = () => {
   // Obter tags únicas apenas de projetos web
   const webTags = Array.from(new Set(
     projects
-      .filter(p => p.category === 'web')
+      .filter(p => (p as any).category === 'web')
       .flatMap(project => project.tags)
   )).sort();
   
@@ -170,7 +171,7 @@ const WebProjects = () => {
             {/* Informações de resultado e filtros ativos */}
             <div className="flex justify-between items-center">
               <div className="text-secondary">
-                <span>Exibindo {filteredProjects.length} de {projects.filter(p => p.category === 'web').length} projetos</span>
+                <span>Exibindo {filteredProjects.length} de {projects.filter(p => (p as any).category === 'web').length} projetos</span>
                 
                 {/* Tags selecionadas */}
                 {selectedTags.length > 0 && (

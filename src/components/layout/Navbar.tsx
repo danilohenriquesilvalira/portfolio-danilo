@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
 
-// Links de navegação
 const navLinks = [
   { title: 'Início', id: 'home', path: '/' },
   { title: 'Sobre', id: 'about', path: '/sobre' },
@@ -22,27 +21,17 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      if (scrollTop > 80) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(scrollTop > 80);
     };
 
     window.addEventListener('scroll', handleScroll);
-    
-    // Verificar scroll inicial
     handleScroll();
-    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Atualizar aba ativa baseada na rota atual
   useEffect(() => {
-    // Encontrar qual link corresponde à rota atual
     const currentPath = location.pathname;
-    
-    // Verificar se a rota atual corresponde a algum dos links
     const activeLink = navLinks.find(link => {
       if (link.path === '/') {
         return currentPath === '/';
@@ -50,16 +39,12 @@ const Navbar = () => {
         return currentPath.startsWith(link.path);
       }
     });
-    
-    if (activeLink) {
-      setActive(activeLink.id);
-    } else {
-      setActive('');
-    }
+
+    setActive(activeLink ? activeLink.id : '');
   }, [location]);
 
-  // Manipula cliques nos links
-  const handleLinkClick = (id) => {
+  // Declarando o tipo do parâmetro 'id' explicitamente como string
+  const handleLinkClick = (id: string) => {
     setActive(id);
     setToggle(false);
   };
@@ -90,7 +75,7 @@ const Navbar = () => {
               Danilo Lira
             </p>
             <p className="text-gray-400 text-[12px] leading-tight hidden sm:block">
-              Automação Industrial & Indústria 4.0
+              Automação Industrial &amp; Indústria 4.0
             </p>
           </div>
         </Link>
@@ -98,24 +83,17 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <ul className="list-none hidden md:flex flex-row gap-8 items-center">
           {navLinks.map((link) => (
-            <li
-              key={link.id}
-              className="relative"
-            >
+            <li key={link.id} className="relative">
               <Link 
                 to={link.path}
                 className={`${
-                  active === link.id 
-                    ? 'text-white' 
-                    : 'text-gray-300'
+                  active === link.id ? 'text-white' : 'text-gray-300'
                 } hover:text-white text-[16px] font-medium transition-colors duration-200`}
                 onClick={() => handleLinkClick(link.id)}
               >
                 {link.title}
                 {active === link.id && (
-                  <div 
-                    className="absolute -bottom-2 left-0 right-0 h-0.5 bg-blue-500"
-                  />
+                  <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-blue-500" />
                 )}
               </Link>
             </li>
@@ -160,11 +138,8 @@ const Navbar = () => {
             {toggle ? <FaTimes size={20} color="#fff" /> : <FaBars size={20} color="#fff" />}
           </button>
 
-          {/* Mobile Menu */}
           {toggle && (
-            <div
-              className="p-6 bg-gray-800 absolute top-20 right-0 mx-4 my-2 min-w-[200px] z-10 rounded-xl shadow-xl border border-gray-700"
-            >
+            <div className="p-6 bg-gray-800 absolute top-20 right-0 mx-4 my-2 min-w-[200px] z-10 rounded-xl shadow-xl border border-gray-700">
               <ul className="list-none flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <li

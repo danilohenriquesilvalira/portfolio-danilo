@@ -6,7 +6,7 @@ import TransportSystem from '@/components/hmi_Transporte/TransportSystem';
 import ParameterControls from '@/components/hmi_Transporte/ParameterControls';
 import ScrollToTop from '@/components/common/ScrollToTop';
 import { Link } from 'react-router-dom';
-import { FaArrowLeft, FaCog } from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 
 // Estados possíveis para um palete
 type PalletState = {
@@ -45,8 +45,6 @@ const HmiPage = () => {
 
   // Diálogo de parâmetros
   const [showDialog, setShowDialog] = useState(false);
-  // Variável para armazenar o ID do motor clicado (caso você queira modificar parâmetros específicos)
-  const [selectedMotorId, setSelectedMotorId] = useState<number | null>(null);
 
   // Controle do ciclo
   const [isCycleRunning, setIsCycleRunning] = useState(false);
@@ -111,9 +109,8 @@ const HmiPage = () => {
     setIsCycleRunning(false);
   };
 
-  // Função para lidar com o clique no motor
-  const handleMotorClick = (motorId: number) => {
-    setSelectedMotorId(motorId);
+  // Função para lidar com o clique no motor (parâmetro não utilizado)
+  const handleMotorClick = (_motorId: number) => {
     setShowDialog(true);
   };
 
@@ -128,32 +125,23 @@ const HmiPage = () => {
       setPallets(prevPallets => {
         let updatedPallets = [...prevPallets];
         
-        // Primeiro, atualiza a posição e o estado de cada palete existente
+        // Atualiza posição e estado de cada palete
         updatedPallets = updatedPallets.map(pallet => {
           let { position, state, stateStartTime } = pallet;
           let newState = state;
           let newStateStartTime = stateStartTime;
           
-          // Cálculo da nova posição com base no estado
           if (state === "entering") {
-            // Calcula o progresso desde que começou a entrar
             const elapsed = now - stateStartTime;
             const progress = elapsed / customMoveDuration;
-            
-            // Atualiza a posição
             position = entryPoint + Math.min(progress, 1) * (sensor1Pos - entryPoint);
-            
-            // Se chegou ao sensor 1
             if (progress >= 1) {
               newState = "atSensor1";
               newStateStartTime = now;
-              
-              // Agora pode liberar o segundo palete
               setCanReleasePallet2(true);
             }
           } 
           else if (state === "atSensor1") {
-            // No sensor 1, apenas verifica se o tempo de espera acabou
             const elapsed = now - stateStartTime;
             if (elapsed >= customWaitDuration) {
               newState = "movingToSensor2";
@@ -161,24 +149,16 @@ const HmiPage = () => {
             }
           }
           else if (state === "movingToSensor2") {
-            // Calcula o progresso desde que começou a mover para o sensor 2
             const elapsed = now - stateStartTime;
             const progress = elapsed / customMoveDuration;
-            
-            // Atualiza a posição
             position = sensor1Pos + Math.min(progress, 1) * (sensor2Pos - sensor1Pos);
-            
-            // Se chegou ao sensor 2
             if (progress >= 1) {
               newState = "atSensor2";
               newStateStartTime = now;
-              
-              // Agora pode liberar o terceiro palete
               setCanReleasePallet3(true);
             }
           }
           else if (state === "atSensor2") {
-            // No sensor 2, apenas verifica se o tempo de espera acabou
             const elapsed = now - stateStartTime;
             if (elapsed >= customWaitDuration) {
               newState = "exiting";
@@ -186,14 +166,9 @@ const HmiPage = () => {
             }
           }
           else if (state === "exiting") {
-            // Calcula o progresso desde que começou a sair
             const elapsed = now - stateStartTime;
             const progress = elapsed / customMoveDuration;
-            
-            // Atualiza a posição, agora incluindo o caminho até o sensor 3
             position = sensor2Pos + Math.min(progress, 1) * (exitPoint - sensor2Pos);
-            
-            // Se saiu completamente
             if (progress >= 1) {
               newState = "exited";
             }
@@ -207,37 +182,31 @@ const HmiPage = () => {
           };
         });
         
-        // Remove paletes que já saíram completamente
+        // Remove paletes que saíram completamente
         updatedPallets = updatedPallets.filter(p => p.state !== "exited");
         
         // Verifica se podemos adicionar novos paletes
         const hasSensor1Pallet = updatedPallets.some(p => p.state === "atSensor1" || p.state === "movingToSensor2");
-        const hasSensor2Pallet = updatedPallets.some(p => p.state === "atSensor2");
         const hasEnteringPallet = updatedPallets.some(p => p.state === "entering");
         
-        // Lógica para adicionar novo palete conforme a sequência explicada
         if (canReleasePallet2 && !hasEnteringPallet && !hasSensor1Pallet) {
-          // Se palete 1 já saiu do sensor 1, podemos liberar o palete 2
           updatedPallets.push({
             id: nextPalletId.current++,
             position: entryPoint,
             state: "entering",
             stateStartTime: now
           });
-          
           setCanReleasePallet2(false);
           totalPalletsCreated.current++;
           setPalletCounter(totalPalletsCreated.current);
         }
         else if (canReleasePallet3 && !hasEnteringPallet && !hasSensor1Pallet) {
-          // Se palete 1 já saiu do sensor 2, podemos liberar o palete 3
           updatedPallets.push({
             id: nextPalletId.current++,
             position: entryPoint,
             state: "entering",
             stateStartTime: now
           });
-          
           setCanReleasePallet3(false);
           totalPalletsCreated.current++;
           setPalletCounter(totalPalletsCreated.current);
@@ -250,21 +219,12 @@ const HmiPage = () => {
     return () => clearInterval(interval);
   }, [isCycleRunning, customMoveDuration, customWaitDuration, canReleasePallet2, canReleasePallet3]);
 
-  // Define os estados dos motores com base nas fases dos paletes
-  const motor1Ligado = pallets.some(p => 
-    p.state === "entering" || p.state === "movingToSensor2"
-  );
-  
-  const motor2Ligado = pallets.some(p => 
-    p.state === "movingToSensor2" || p.state === "exiting"
-  );
-  
-  // Motor 3 ligado quando os paletes estão saindo (passando pelo sensor 3)
-  const motor3Ligado = pallets.some(p => 
-    p.state === "exiting" && p.position > sensor2Pos + 100
-  );
-  
-  // Usando 'as const' para garantir que os tipos são específicos
+  // Status dos motores
+  const motor1Ligado = pallets.some(p => p.state === "entering" || p.state === "movingToSensor2");
+  const motor2Ligado = pallets.some(p => p.state === "movingToSensor2" || p.state === "exiting");
+  const motor3Ligado = pallets.some(p => p.state === "exiting" && p.position > sensor2Pos + 100);
+
+  // Cores dos motores
   const motor1Cor = motor1Ligado ? 'verde' as const : 'cinza' as const;
   const motor2Cor = motor2Ligado ? 'verde' as const : 'cinza' as const;
   const motor3Cor = motor3Ligado ? 'verde' as const : 'cinza' as const;
@@ -272,11 +232,7 @@ const HmiPage = () => {
   // Status dos sensores
   const sensor1Ativo = pallets.some(p => p.state === "atSensor1");
   const sensor2Ativo = pallets.some(p => p.state === "atSensor2");
-  // Sensor 3 ativo quando um palete está próximo a ele durante a saída
-  const sensor3Ativo = pallets.some(p => 
-    p.state === "exiting" && 
-    Math.abs(p.position - sensor3Pos) < 20
-  );
+  const sensor3Ativo = pallets.some(p => p.state === "exiting" && Math.abs(p.position - sensor3Pos) < 20);
 
   return (
     <>
@@ -291,14 +247,8 @@ const HmiPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Botão de volta */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-8"
-          >
-            <Link 
-              to="/projeto/transporte-paletes" 
-              className="flex items-center gap-2 text-tech-blue hover:text-white transition-colors group"
-            >
+          <motion.div variants={itemVariants} className="mb-8">
+            <Link to="/projeto/transporte-paletes" className="flex items-center gap-2 text-tech-blue hover:text-white transition-colors group">
               <div className="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center group-hover:bg-tech-blue transition-colors">
                 <FaArrowLeft className="text-tech-blue group-hover:text-white transition-colors" />
               </div>
@@ -307,11 +257,10 @@ const HmiPage = () => {
           </motion.div>
 
           {/* Cabeçalho */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-12 text-center"
-          >
-            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">Simulação de Transporte de Paletes</h1>
+          <motion.div variants={itemVariants} className="mb-12 text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+              Simulação de Transporte de Paletes
+            </h1>
             <p className="text-secondary text-lg max-w-3xl mx-auto">
               Demonstração interativa de um sistema de automação para transporte de paletes com controle em tempo real.
             </p>
@@ -334,11 +283,15 @@ const HmiPage = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-white">Total de Paletes:</span>
-                    <span className="font-mono bg-black-200 px-3 py-1 rounded text-white">{palletCounter}</span>
+                    <span className="font-mono bg-black-200 px-3 py-1 rounded text-white">
+                      {palletCounter}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-white">Paletes Ativos:</span>
-                    <span className="font-mono bg-black-200 px-3 py-1 rounded text-white">{pallets.length}</span>
+                    <span className="font-mono bg-black-200 px-3 py-1 rounded text-white">
+                      {pallets.length}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -417,7 +370,7 @@ const HmiPage = () => {
               </button>
             </div>
             
-            {/* Área de Transporte - Usando o componente TransportSystem */}
+            {/* Área de Transporte */}
             <div className="bg-black-200 p-2 rounded-xl shadow-xl mb-8">
               <TransportSystem
                 offsetX={offsetX}
@@ -438,7 +391,7 @@ const HmiPage = () => {
               />
             </div>
             
-            {/* Botões de controle modernizados */}
+            {/* Botões de controle */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={startCycle}

@@ -11,7 +11,7 @@ const categories = [
 ];
 
 // Componente para exibir cada habilidade com visual aprimorado
-const SkillCard = ({ skill, delay = 0 }: { skill: Skill; delay?: number }) => {
+const SkillCard = ({ skill }: { skill: Skill }) => {
   // Determina a cor baseada no nível
   const getLevelColor = (level: string) => {
     switch (level) {
@@ -120,7 +120,7 @@ const ApproachCard = ({
         
         <p className="text-secondary mb-4">
           {title === "Metodologia" 
-            ? "Trabalho com metodologias ágeis e estruturadas, adaptando o processo às necessidades específicas de cada projeto. Minha abordagem inclui:"
+            ? "Trabalho com metodologias ágeis e estruturadas, adaptando o processo às necessidades específicas de cada projeto. Minha abordagem inclui:" 
             : "O que me diferencia como profissional de automação e Indústria 4.0:"}
         </p>
         
@@ -163,7 +163,7 @@ const Skills = () => {
 
         {/* Categorias com design aprimorado */}
         <div className="flex flex-wrap justify-center mt-10 gap-4">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveCategory(category.id)}
@@ -179,11 +179,10 @@ const Skills = () => {
 
         {/* Grid de habilidades */}
         <div className="mt-10 flex flex-wrap gap-6 justify-center">
-          {visibleSkills.map((skill: Skill, index: number) => (
+          {visibleSkills.map((skill: Skill) => (
             <SkillCard 
-              key={`skill-${skill.name}-${index}`} 
+              key={`skill-${skill.name}`} 
               skill={skill} 
-              delay={index}
             />
           ))}
         </div>

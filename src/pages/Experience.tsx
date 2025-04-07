@@ -1,11 +1,56 @@
-import React, { useState } from 'react';
-import { FaBriefcase, FaGraduationCap, FaCertificate, FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaTools } from 'react-icons/fa';
+import type { FC } from 'react';
+import { useState } from 'react';
+import { 
+  FaBriefcase, 
+  FaGraduationCap, 
+  FaCertificate, 
+  FaBuilding, 
+  FaMapMarkerAlt, 
+  FaCalendarAlt, 
+  FaTools 
+} from 'react-icons/fa';
 
 // Importar dados de experiência
 import { experiences, education, certifications } from '@/data/experience';
 
-// Componente de filtro para experiências
-const ExperienceFilter = ({ active, onFilterChange }) => {
+/* 
+  Interfaces para os dados. 
+  Se esses tipos já estiverem definidos em outro lugar, você pode importá-los.
+*/
+interface Experience {
+  title: string;
+  company: string;
+  location: string;
+  date: string;
+  iconBg: string;
+  points: string[];
+  technologies: string[];
+  categories?: string[];
+}
+
+interface Education {
+  degree: string;
+  institution: string;
+  date: string;
+  description: string;
+  iconBg: string;
+}
+
+interface Certification {
+  icon: string;
+  organization: string;
+  title: string;
+  date: string;
+  credentialUrl?: string;
+}
+
+/* Componente de filtro para experiências */
+interface ExperienceFilterProps {
+  active: string;
+  onFilterChange: (filter: string) => void;
+}
+
+const ExperienceFilter: FC<ExperienceFilterProps> = ({ active, onFilterChange }) => {
   const filters = [
     { id: 'all', label: 'Todas' },
     { id: 'automacao', label: 'Automação' },
@@ -32,8 +77,12 @@ const ExperienceFilter = ({ active, onFilterChange }) => {
   );
 };
 
-// Timeline elemento para experiência profissional
-const ExperienceCard = ({ experience }) => {
+/* Timeline elemento para experiência profissional */
+interface ExperienceCardProps {
+  experience: Experience;
+}
+
+const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
   return (
     <div className="mb-12 relative">
       {/* Linha vertical da timeline */}
@@ -68,7 +117,7 @@ const ExperienceCard = ({ experience }) => {
             </div>
 
             <ul className="mt-5 list-none space-y-3">
-              {experience.points.map((point, index) => (
+              {experience.points.map((point: string, index: number) => (
                 <li
                   key={`experience-point-${index}`}
                   className="text-white-100 text-sm tracking-wider flex items-start gap-3"
@@ -85,7 +134,7 @@ const ExperienceCard = ({ experience }) => {
                 Tecnologias
               </h4>
               <div className="flex flex-wrap gap-2">
-                {experience.technologies.map((tech, index) => (
+                {experience.technologies.map((tech: string, index: number) => (
                   <span
                     key={`tech-${index}`}
                     className="bg-black-200 px-3 py-1 rounded-md text-xs text-white-100"
@@ -102,8 +151,12 @@ const ExperienceCard = ({ experience }) => {
   );
 };
 
-// Timeline elemento para educação
-const EducationCard = ({ education }) => {
+/* Timeline elemento para educação */
+interface EducationCardProps {
+  education: Education;
+}
+
+const EducationCard: FC<EducationCardProps> = ({ education }) => {
   return (
     <div className="mb-12 relative">
       {/* Linha vertical da timeline */}
@@ -144,8 +197,12 @@ const EducationCard = ({ education }) => {
   );
 };
 
-// Componente para certificações
-const CertificationCard = ({ certification }) => {
+/* Componente para certificações */
+interface CertificationCardProps {
+  certification: Certification;
+}
+
+const CertificationCard: FC<CertificationCardProps> = ({ certification }) => {
   return (
     <div className="bg-tertiary p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-[300px]">
       <div className="flex items-center gap-4 mb-5">
@@ -155,7 +212,8 @@ const CertificationCard = ({ certification }) => {
             alt={certification.organization} 
             className="w-8 h-8 object-contain"
             onError={(e) => {
-              e.currentTarget.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2z"/></svg>';
+              (e.currentTarget as HTMLImageElement).src =
+                'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2z"/></svg>';
             }}
           />
         </div>
@@ -194,13 +252,13 @@ const CertificationCard = ({ certification }) => {
   );
 };
 
-const Experience = () => {
-  const [filter, setFilter] = useState('all');
+const Experience: FC = () => {
+  const [filter, setFilter] = useState<string>('all');
   
   // Filtrar experiências baseado no filtro selecionado
   const filteredExperiences = filter === 'all' 
     ? experiences 
-    : experiences.filter(exp => exp.categories?.includes(filter));
+    : experiences.filter((exp: Experience) => exp.categories?.includes(filter));
 
   return (
     <section id="experience" className="py-20 bg-primary">
@@ -216,7 +274,7 @@ const Experience = () => {
         <div className="mt-10">
           {/* Timeline de experiências */}
           <div className="space-y-4">
-            {filteredExperiences.map((experience, index) => (
+            {filteredExperiences.map((experience: Experience, index: number) => (
               <ExperienceCard key={`experience-${index}`} experience={experience} />
             ))}
           </div>
@@ -229,7 +287,7 @@ const Experience = () => {
         <div className="mt-10">
           {/* Timeline de educação */}
           <div className="space-y-4">
-            {education.map((edu, index) => (
+            {education.map((edu: Education, index: number) => (
               <EducationCard key={`education-${index}`} education={edu} />
             ))}
           </div>
@@ -244,8 +302,8 @@ const Experience = () => {
         </div>
 
         <div className="mt-10 flex flex-wrap gap-6 justify-center">
-          {certifications.map((certification, index) => (
-            <CertificationCard key={`certification-${index}`} certification={certification} />
+          {certifications.map((cert: Certification, index: number) => (
+            <CertificationCard key={`certification-${index}`} certification={cert} />
           ))}
         </div>
       </div>
