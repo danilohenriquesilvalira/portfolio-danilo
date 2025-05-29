@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import Herosections from "../components/sections/Herosections";
+import TechExpertise from "../components/sections/TechExpertise";
+import Sobre from "../components/sections/sobre";
 import FeaturedProjects from "../components/sections/FeaturedProjects";
 import ContactCTA from "../components/home/ContactCTA";
 
@@ -13,6 +15,12 @@ const Home = () => {
     <main className="min-h-screen bg-primary overflow-hidden">
       {/* Hero Section */}
       <Herosections />
+      
+      {/* Tech Expertise Mini Section */}
+      <TechExpertise />
+      
+      {/* Sobre Section */}
+      <Sobre />
       
       {/* Featured Projects Section */}
       <FeaturedProjects />
