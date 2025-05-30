@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Herosections from "../components/sections/Herosections";
 import TechExpertise from "../components/sections/TechExpertise";
+import Solucoes from "../components/sections/solucoes"; // ← NOVA IMPORTAÇÃO
 import Sobre from "../components/sections/sobre";
 import FeaturedProjects from "../components/sections/FeaturedProjects";
 import ContactCTA from "../components/home/ContactCTA";
@@ -18,6 +19,9 @@ const Home = () => {
       
       {/* Tech Expertise Mini Section */}
       <TechExpertise />
+      
+      {/* Soluções Section - NOVA SEÇÃO */}
+      <Solucoes />
       
       {/* Sobre Section */}
       <Sobre />
