@@ -45,7 +45,7 @@ const FeaturedProjectCard = ({
       initial="hidden"
       animate="visible"
       transition={{ delay: index * 0.1 }}
-      className="group bg-tertiary rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+      className="group bg-tech-blue rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-blue-700"
     >
       <div className="relative h-48 overflow-hidden">
         {/* Placeholder ou imagem real */}
@@ -64,7 +64,7 @@ const FeaturedProjectCard = ({
             <span
               key={`tag-${tagIndex}`}
               className="px-3 py-1 text-xs text-white rounded-full backdrop-blur-sm"
-              style={{ backgroundColor: 'rgba(0, 114, 187, 0.7)' }}
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
             >
               {tag}
             </span>
@@ -73,18 +73,18 @@ const FeaturedProjectCard = ({
       </div>
       
       <div className="p-6">
-        <h3 className="text-white text-xl font-bold mb-3 group-hover:text-tech-blue transition-colors">
+        <h3 className="text-white text-xl font-bold mb-3 group-hover:text-gray-100 transition-colors">
           {project.title}
         </h3>
-        <p className="text-secondary text-sm line-clamp-2 mb-4">
+        <p className="text-gray-200 text-sm line-clamp-2 mb-4 group-hover:text-gray-100 transition-colors">
           {project.description}
         </p>
         
         <Link
           to={`/projeto/${project.id}`}
-          className="flex items-center gap-1 text-tech-blue text-sm font-medium hover:gap-2 hover:text-white transition-all"
+          className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-lg text-white text-sm font-semibold transition-all duration-300 hover:scale-105 hover:gap-3 border border-white border-opacity-30 hover:border-opacity-50"
         >
-          Ver Detalhes <FaArrowRight size={12} />
+          Ver Detalhes <FaArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
     </motion.div>
@@ -115,11 +115,15 @@ const FeaturedProjects = () => {
           </div>
           
           <h2 className="text-white font-black text-3xl sm:text-4xl md:text-5xl leading-tight">
-            Soluções de <span className="text-tech-blue">Automação</span> para Indústria
+            Modernizando a <span className="text-tech-blue">Automação Industrial</span> com Tecnologia Web
           </h2>
           
-          <p className="text-secondary mt-4 max-w-2xl mx-auto text-base sm:text-lg">
-            Conheça alguns dos meus projetos recentes de automação industrial e tecnologias aplicadas.
+          <p className="text-secondary mt-4 max-w-4xl mx-auto text-base sm:text-lg leading-relaxed">
+            Desenvolvendo soluções inovadoras que integram <span className="text-white font-semibold">linguagens modernas de programação</span>, 
+            <br className="hidden sm:block" />
+            <span className="text-white font-semibold">HMI web responsivos</span> e <span className="text-white font-semibold">interfaces intuitivas</span> 
+            <br className="hidden sm:block" />
+            para revolucionar o chão de fábrica tradicional e conectá-lo à era digital.
           </p>
         </motion.div>
         

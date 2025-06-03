@@ -2,425 +2,337 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 
-const TechExpertise = () => {
+const ProfessionalJourney = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  // Componente do fundo hexagonal OTIMIZADO
-  const HexagonBackground = () => {
-    return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* SVG Background SIMPLIFICADO - sem animações pesadas */}
-        <div className="absolute inset-0 w-full h-full opacity-90">
-          <svg 
-            className="w-full h-full object-cover"
-            viewBox="0 0 1920 1120" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice"
-          >
-            {/* Fundo base */}
-            <rect width="1920" height="1120" fill="url(#paint0_linear_2566_209)" />
-            
-            {/* Hexágono Central Grande - SEM MASK */}
-            <path 
-              d="M481.03 270.973L643.603 364.884L806.177 458.795V646.616V834.438L643.603 928.348L481.03 1022.26L318.456 928.348L155.883 834.438V646.616V458.795L318.456 364.884L481.03 270.973Z" 
-              fill="url(#paint1_linear_2566_209)"
-              opacity="0.7"
-            />
-            
-            {/* Hexágonos menores simplificados */}
-            <path 
-              d="M0 0L537.956 0L602.173 37.0945V242.671L424.232 551.035L246.29 653.823L68.3487 551.035L0 511.553V0Z" 
-              fill="url(#paint2_linear_2566_209)"
-              opacity="0.5"
-            />
-            
-            <path 
-              d="M0 381.769L57.5866 348.504L220.16 442.415L382.733 536.326V724.147L220.16 1005.88L57.5866 1099.79L0 1066.53V381.769Z" 
-              fill="url(#paint3_linear_2566_209)"
-              opacity="0.5"
-            />
-            
-            <path 
-              d="M0 949.374L159.026 857.513L321.6 763.602L484.173 857.513L646.747 951.423V1120H0V949.374Z" 
-              fill="url(#paint4_linear_2566_209)"
-              opacity="0.5"
-            />
-            
-            {/* Detalhes ciano simples */}
-            <path 
-              d="M564.458 37.0945V448.247L424.233 551.035L602.174 448.247V37.0945L537.957 0H500.241L564.458 37.0945Z" 
-              fill="#39D5FF"
-              opacity="0.6"
-            />
-            
-            <path 
-              d="M768.459 458.793V834.436L643.602 928.346L806.176 834.436V458.793L643.602 364.882L768.459 458.793Z" 
-              fill="#39D5FF"
-              opacity="0.6"
-            />
-            
-            {/* Gradientes simplificados */}
-            <defs>
-              <linearGradient id="paint0_linear_2566_209" x1="0" y1="0" x2="1920" y2="1120" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#001E87" stopOpacity="0.8"/>
-                <stop offset="1" stopColor="#000E3E" stopOpacity="0.6"/>
-              </linearGradient>
-              <linearGradient id="paint1_linear_2566_209" x1="300" y1="400" x2="700" y2="800" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#000E3E" stopOpacity="0.9"/>
-                <stop offset="1" stopColor="#19B5FE" stopOpacity="0.5"/>
-              </linearGradient>
-              <linearGradient id="paint2_linear_2566_209" x1="0" y1="0" x2="600" y2="600" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#004790" stopOpacity="0.6"/>
-                <stop offset="1" stopColor="#19B5FE" stopOpacity="0.3"/>
-              </linearGradient>
-              <linearGradient id="paint3_linear_2566_209" x1="0" y1="400" x2="400" y2="1000" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#003C78" stopOpacity="0.6"/>
-                <stop offset="1" stopColor="#19B5FE" stopOpacity="0.3"/>
-              </linearGradient>
-              <linearGradient id="paint4_linear_2566_209" x1="0" y1="800" x2="600" y2="1120" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#004790" stopOpacity="0.6"/>
-                <stop offset="1" stopColor="#19B5FE" stopOpacity="0.3"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
-    );
-  };
-
-  // Dados das peças do quebra-cabeça
-  const puzzleData = [
+  // Career journey data with professionally relevant steps
+  const processSteps = [
     {
-      id: "01",
-      title: "Automação",
-      subtitle: "Controle",
-      icon: "/portfolio-danilo/About/icone_controle.svg",
-      description: "Sistemas de controle e automação industrial"
+      letter: "A",
+      title: "Início da Carreira",
+      subtitle: "Ambev Brasil (2013-2014)",
+      description: "Entrada como estagiário técnico em automação industrial na maior cervejaria da América Latina, com foco em instrumentação e elétrica.",
+      color: "#8B7DD1", // Roxo
+      iconColor: "#8B7DD1",
+      icon: "brewery"
     },
     {
-      id: "02", 
-      title: "Integração",
-      subtitle: "Processamento",
-      icon: "/portfolio-danilo/About/icone_integração.svg",
-      description: "Integração de sistemas e processamento de dados"
+      letter: "B",
+      title: "Efetivação Técnica",
+      subtitle: "Ambev Brasil (2014-2018)",
+      description: "Efetivado como técnico em automação industrial, aplicando conhecimentos em manutenção preventiva e corretiva nos processos cervejeiros.",
+      color: "#9B6FDD", // Roxo mais escuro
+      iconColor: "#9B6FDD",
+      icon: "automation"
     },
     {
-      id: "03",
-      title: "Supervisão", 
-      subtitle: "Visualização",
-      icon: "/portfolio-danilo/About/icone_supervisao.svg",
-      description: "Monitoramento e interfaces visuais"
+      letter: "C",
+      title: "Evolução Sênior",
+      subtitle: "Ambev Brasil (2018-2020)",
+      description: "Promoção a técnico sênior, liderando diretrizes técnicas e implementando melhorias contínuas nos processos industriais.",
+      color: "#F4C22B", // Amarelo
+      iconColor: "#F4C22B",
+      icon: "engineering"
     },
     {
-      id: "04",
-      title: "Conectividade",
-      subtitle: "Gestão", 
-      icon: "/portfolio-danilo/About/icone_conectividade.svg",
-      description: "Dados e gestão de informações"
+      letter: "D",
+      title: "Formação Tecnológica",
+      subtitle: "Análise e Desenvolvimento (2020-2023)",
+      description: "Graduação em ADS com desenvolvimento de habilidades em Python, Go, Java, C/C++, React e JavaScript, aplicando tecnologias da Indústria 4.0.",
+      color: "#F5A623", // Laranja
+      iconColor: "#F5A623",
+      icon: "coding"
+    },
+    {
+      letter: "E",
+      title: "Expansão Internacional",
+      subtitle: "Font Salem Portugal (2023)",
+      description: "Mudança para Portugal e desenvolvimento do sistema de auto flush e controle de qualidade na linha de envase da Font Salem (Grupo Damm).",
+      color: "#E53E3E", // Vermelho
+      iconColor: "#E53E3E",
+      icon: "bottleLine"
+    },
+    {
+      letter: "F",
+      title: "Heineken Portugal",
+      subtitle: "Sagres (2023)",
+      description: "Experiência em manutenção preventiva e corretiva em uma das maiores cervejarias do mundo, com foco em disponibilidade e eficiência.",
+      color: "#38D9A9", // Verde
+      iconColor: "#38D9A9",
+      icon: "heineken"
+    },
+    {
+      letter: "G", 
+      title: "Projetos Internacionais",
+      subtitle: "RLS Automação - Portugal",
+      description: "Desenvolvimento de soluções de automação industrial em Portugal, integrando sistemas clássicos com tecnologias da Indústria 4.0.",
+      color: "#68B5E8", // Azul claro
+      iconColor: "#68B5E8",
+      icon: "automationProject"
+    },
+    {
+      letter: "H", 
+      title: "Expansão Continental",
+      subtitle: "RLS Automação - Espanha e Moçambique",
+      description: "Ampliação para projetos na Espanha e Moçambique, consolidando expertise internacional em automação e transformação digital.",
+      color: "#4299E1", // Azul
+      iconColor: "#4299E1",
+      icon: "globalTech"
     }
   ];
 
-  // Componente do quebra-cabeça OTIMIZADO
-  const PuzzleComponent = () => {
-    return (
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8">
-        {/* SVG do quebra-cabeça OTIMIZADO - sem animações pathLength */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="flex-shrink-0"
-        >
-          <svg 
-            width="120" 
-            height="360" 
-            viewBox="0 0 442 1321" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-            className="drop-shadow-2xl sm:w-[140px] sm:h-[420px] lg:w-[160px] lg:h-[480px]"
-          >
-            {/* Peça 1 - Vermelha - SEM ANIMAÇÃO PESADA */}
-            <path 
-              d="M273.156 437.882C253.49 437.967 233.77 425.067 231.174 399.233C230.252 387.507 234.64 375.807 242.231 367.732C244.878 363.859 247.674 360.121 250.249 356.495C260.276 342.328 250.723 334.876 241.278 332.76H109.255V200.736C107.138 191.291 99.6872 181.738 85.5202 191.765C81.8952 194.34 78.1562 197.136 74.2832 199.783C66.2082 207.374 54.5082 211.761 42.7822 210.84C16.9472 208.245 4.04724 188.524 4.13324 168.858V168.856V168.854C4.04824 149.188 16.9482 129.468 42.7822 126.872C54.5082 125.95 66.2082 130.338 74.2832 137.929C78.1562 140.576 81.8942 143.372 85.5202 145.947C99.6872 155.974 107.139 146.421 109.255 136.976V4.95312H241.276C250.721 7.07013 260.274 14.5211 250.247 28.6891C247.672 32.3141 244.876 36.0531 242.229 39.9261C234.638 48.0011 230.251 59.7011 231.172 71.4271C233.768 97.2581 253.491 110.164 273.158 110.076C292.825 110.164 312.549 97.2581 315.144 71.4271C316.066 59.7011 311.678 48.0011 304.087 39.9261C301.44 36.0531 298.644 32.3151 296.069 28.6891C286.042 14.5221 295.595 7.07013 305.04 4.95312H437.061V332.759H305.039C295.594 334.876 286.041 342.327 296.068 356.494C298.643 360.12 301.439 363.858 304.086 367.731C311.677 375.806 316.064 387.506 315.143 399.232C312.548 425.067 292.827 437.967 273.161 437.881H273.159L273.156 437.882Z" 
-              fill="#F20018" 
-              stroke="white" 
-              strokeWidth="8" 
-              strokeMiterlimit="10"
-            />
-            
-            {/* Peça 2 - Laranja */}
-            <path 
-              d="M273.16 765.687C292.826 765.772 312.546 752.872 315.142 727.038C316.064 715.312 311.676 703.611 304.085 695.537C301.438 691.664 298.642 687.926 296.067 684.3C286.04 670.133 295.593 662.681 305.038 660.565H437.061V332.758H305.04C295.595 334.875 286.042 342.326 296.069 356.494C298.644 360.119 301.44 363.858 304.087 367.731C311.678 375.806 316.065 387.506 315.144 399.232C312.548 425.063 292.825 437.969 273.158 437.881C253.491 437.969 233.767 425.063 231.172 399.232C230.25 387.506 234.638 375.806 242.229 367.731C244.876 363.858 247.672 360.12 250.247 356.494C260.274 342.327 250.721 334.875 241.276 332.758H109.254V464.779C111.371 474.224 118.822 483.777 132.99 473.75C136.615 471.175 140.354 468.379 144.227 465.732C152.302 458.141 164.002 453.753 175.728 454.675C201.559 457.271 214.465 476.994 214.377 496.661C214.465 516.328 201.559 536.052 175.728 538.647C164.002 539.569 152.302 535.181 144.227 527.59C140.354 524.943 136.616 522.147 132.99 519.572C118.823 509.545 111.371 519.098 109.254 528.543V660.564H241.277C250.722 662.681 260.275 670.132 250.248 684.299C247.673 687.924 244.877 691.663 242.23 695.536C234.639 703.611 230.252 715.311 231.173 727.037C233.768 752.872 253.489 765.772 273.155 765.686H273.157L273.16 765.687Z" 
-              fill="#FF9000" 
-              stroke="white" 
-              strokeWidth="8" 
-              strokeMiterlimit="10"
-            />
-            
-            {/* Peça 3 - Roxa */}
-            <path 
-              d="M273.156 1093.5C253.49 1093.58 233.77 1080.68 231.174 1054.85C230.252 1043.12 234.64 1031.42 242.231 1023.35C244.878 1019.47 247.674 1015.74 250.249 1012.11C260.276 997.942 250.723 990.49 241.278 988.374H109.255V856.35C107.138 846.905 99.6872 837.352 85.5202 847.379C81.8952 849.954 78.1562 852.75 74.2832 855.397C66.2082 862.988 54.5082 867.375 42.7822 866.454C16.9472 863.859 4.04724 844.138 4.13324 824.472V824.47V824.468C4.04824 804.802 16.9482 785.082 42.7822 782.486C54.5082 781.564 66.2082 785.952 74.2832 793.543C78.1562 796.19 81.8942 798.986 85.5202 801.561C99.6872 811.588 107.139 802.035 109.255 792.59V660.566H241.276C250.721 662.683 260.274 670.134 250.247 684.301C247.672 687.926 244.876 691.665 242.229 695.538C234.638 703.613 230.251 715.313 231.172 727.039C233.768 752.87 253.491 765.776 273.158 765.688C292.825 765.776 312.549 752.87 315.144 727.039C316.066 715.313 311.678 703.612 304.087 695.538C301.44 691.665 298.644 687.927 296.069 684.301C286.042 670.134 295.595 662.682 305.04 660.566H437.061V988.372H305.039C295.594 990.489 286.041 997.94 296.068 1012.11C298.643 1015.73 301.439 1019.47 304.086 1023.34C311.677 1031.42 316.064 1043.12 315.143 1054.85C312.548 1080.68 292.827 1093.58 273.161 1093.49H273.159C273.158 1093.5 273.156 1093.5 273.156 1093.5Z" 
-              fill="#A064BC" 
-              stroke="white" 
-              strokeWidth="8" 
-              strokeMiterlimit="10"
-            />
-            
-            {/* Peça 4 - Azul/Verde */}
-            <path 
-              d="M437.064 1316.18H109.258V1184.16C111.375 1174.71 118.826 1165.16 132.994 1175.19C136.619 1177.76 140.358 1180.56 144.231 1183.2C152.306 1190.79 164.006 1195.18 175.732 1194.26C201.563 1191.67 214.469 1171.94 214.381 1152.27C214.469 1132.61 201.563 1112.88 175.732 1110.29C164.006 1109.37 152.305 1113.75 144.231 1121.35C140.358 1123.99 136.62 1126.79 132.994 1129.36C118.827 1139.39 111.375 1129.84 109.258 1120.39V988.371H241.279C250.724 990.488 260.277 997.939 250.25 1012.11C247.675 1015.73 244.879 1019.47 242.232 1023.34C234.641 1031.42 230.254 1043.12 231.175 1054.85C233.771 1080.68 253.494 1093.58 273.161 1093.49C292.828 1093.58 312.552 1080.68 315.147 1054.85C316.069 1043.12 311.681 1031.42 304.09 1023.34C301.443 1019.47 298.647 1015.73 296.072 1012.11C286.045 997.94 295.598 990.488 305.043 988.371H437.064V1316.18Z" 
-              fill="#35B7B9" 
-              stroke="white" 
-              strokeWidth="8" 
-              strokeMiterlimit="10"
-            />
+  // Componente de ícones SVG específicos para cada etapa da carreira
+  const ProcessIcon = ({ type, color }: { type: string; color: string }) => {
+    const iconProps = {
+      width: "40",
+      height: "40",
+      viewBox: "0 0 24 24",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg"
+    };
+
+    switch (type) {
+      case "brewery": // Ícone de fábrica de cerveja/estágio inicial
+        return (
+          <svg {...iconProps}>
+            <path d="M19 21H5C4.44772 21 4 20.5523 4 20V10C4 9.44772 4.44772 9 5 9H19C19.5523 9 20 9.44772 20 10V20C20 20.5523 19.5523 21 19 21Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4 13H20" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4 17H20" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M8 13V21" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 13V21" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M16 13V21" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M8 9V5C8 4.46957 8.21071 3.96086 8.58579 3.58579C8.96086 3.21071 9.46957 3 10 3H14C14.5304 3 15.0391 3.21071 15.4142 3.58579C15.7893 3.96086 16 4.46957 16 5V9" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-        </motion.div>
-
-        {/* Textos */}
-        <div className="flex flex-col space-y-3 sm:space-y-4 lg:space-y-5 text-white w-full sm:w-auto">
-          {puzzleData.map((piece, index) => (
-            <motion.div
-              key={piece.id}
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-              className="flex items-center space-x-3 sm:space-x-4 p-3 sm:p-4 rounded-xl bg-white/10 border border-white/20 hover:bg-white/15 transition-all duration-300 cursor-pointer"
-            >
-              {/* Ícone SVG */}
-              <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 p-2 rounded-lg bg-white/20">
-                <img 
-                  src={piece.icon}
-                  alt={`${piece.title} icon`}
-                  className="w-full h-full object-contain filter brightness-0 invert"
-                />
-              </div>
-
-              {/* Conteúdo */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2 mb-1">
-                  <span className="text-xs sm:text-sm lg:text-base font-black opacity-70 bg-white/20 px-2 py-1 rounded-md">
-                    {piece.id}
-                  </span>
-                  <span className="font-bold text-[14px] sm:text-[16px] lg:text-[18px] text-white">
-                    {piece.title}
-                  </span>
-                </div>
-                <div className="font-semibold text-[16px] sm:text-[18px] lg:text-[20px] text-slate-200 mb-1">
-                  {piece.subtitle}
-                </div>
-                <div className="text-[12px] sm:text-[14px] lg:text-[16px] text-secondary opacity-80 leading-relaxed">
-                  {piece.description}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    );
+        );
+      case "automation": // Ícone específico de automação industrial
+        return (
+          <svg {...iconProps}>
+            <path d="M16 8H8V16H16V8Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M20 4H4V20H20V4Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4 4L8 8M20 20L16 16M4 20L8 16M20 4L16 8" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="12" cy="12" r="1" fill={color}/>
+          </svg>
+        );
+      case "engineering": // Ícone para técnico sênior/engenheiro
+        return (
+          <svg {...iconProps}>
+            <path d="M14 11C14 12.1046 13.1046 13 12 13C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11Z" stroke={color} strokeWidth="2"/>
+            <path d="M6.52083 17C7.77881 15.5318 9.75193 14.5 12 14.5C14.2481 14.5 16.2212 15.5318 17.4792 17" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+            <path d="M20 17.6063V8C20 6.89543 19.1046 6 18 6H6C4.89543 6 4 6.89543 4 8V17.6063C4 18.3811 4.694 18.9443 5.45056 18.7558L6.84943 18.4442C7.48016 18.2902 8.1384 18.409 8.66824 18.7724L8.73372 18.8152C9.41985 19.2554 10.3125 19.2636 11.0066 18.8359L12 18.2L12.9934 18.8359C13.6875 19.2636 14.5802 19.2554 15.2663 18.8152L15.3318 18.7724C15.8616 18.409 16.5198 18.2902 17.1506 18.4442L18.5494 18.7558C19.306 18.9443 20 18.3811 20 17.6063Z" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        );
+      case "coding": // Ícone de programação/desenvolvimento de sistemas
+        return (
+          <svg {...iconProps}>
+            <path d="M10 16L14 8" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M18 16L22 12L18 8" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6 8L2 12L6 16" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
+      case "bottleLine": // Ícone específico para linha de envase
+        return (
+          <svg {...iconProps}>
+            <path d="M10 3V5" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+            <path d="M14 3V5" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+            <path d="M9 5H15L14 9.5C16.5 10.5 16.5 13 16.5 15V20C16.5 20.5523 16.0523 21 15.5 21H8.5C7.94772 21 7.5 20.5523 7.5 20V15C7.5 13 7.5 10.5 10 9.5L9 5Z" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+            <path d="M7.5 15H16.5" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+            <path d="M3 12H5" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+            <path d="M19 12H21" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+            <path d="M3 16L5 16" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+            <path d="M19 16L21 16" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+          </svg>
+        );
+      case "heineken": // Ícone personalizado para Heineken/cerveja
+        return (
+          <svg {...iconProps}>
+            <path d="M17 9L17 20C17 20.5304 16.7893 21.0391 16.4142 21.4142C16.0391 21.7893 15.5304 22 15 22L9 22C8.46957 22 7.96086 21.7893 7.58579 21.4142C7.21071 21.0391 7 20.5304 7 20L7 9" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M5 5H19" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 2H15V5H9V2Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 12L12 18" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M15 5V9C15 10 14 11 12 11C10 11 9 10 9 9V5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
+      case "automationProject": // Ícone de projeto de automação
+        return (
+          <svg {...iconProps}>
+            <path d="M3 9H21" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 21V9" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M5 5H19C20.1046 5 21 5.89543 21 7V17C21 18.1046 20.1046 19 19 19H5C3.89543 19 3 18.1046 3 17V7C3 5.89543 3.89543 5 5 5Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="15" cy="15" r="2" stroke={color} strokeWidth="2"/>
+            <path d="M13 12L17 12" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M15 14L15 18" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
+      case "globalTech": // Ícone para expansão internacional com tecnologia
+        return (
+          <svg {...iconProps}>
+            <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2"/>
+            <path d="M12 2C16.4183 7 16.4183 17 12 22" stroke={color} strokeWidth="2"/>
+            <path d="M12 2C7.58172 7 7.58172 17 12 22" stroke={color} strokeWidth="2"/>
+            <path d="M2 12H22" stroke={color} strokeWidth="2"/>
+            <path d="M10 7H14" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+            <path d="M10 17H14" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
-    <section className="relative z-20 w-full py-6 sm:py-8 md:py-10 lg:py-12 xl:py-16">
+    <section className="relative z-20 w-full py-16 lg:py-24 bg-gray-50">
       <motion.div
         ref={ref}
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        className="relative w-full"
+        transition={{ duration: 0.8 }}
+        className="max-w-7xl mx-auto px-6 lg:px-8"
       >
-        {/* Container principal */}
-        <div className="relative w-full bg-gradient-to-b from-[#2331BB] via-[#2330BB] to-[#55BDEF] shadow-2xl border-t border-b border-slate-600/30 overflow-hidden rounded-[20px] sm:rounded-[25px] lg:rounded-[30px]">
-          
-          {/* Fundo Hexagonal - APENAS DESKTOP - OTIMIZADO */}
-          <div className="hidden sm:block">
-            <HexagonBackground />
-          </div>
-          
-          {/* Fundo azul escuro para mobile */}
-          <div className="block sm:hidden absolute inset-0 bg-gradient-to-br from-[#0f1e3d] via-[#1a2a4d] to-[#243a5e]" />
+        {/* Título principal */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4 tracking-wide">
+            TRAJETÓRIA PROFISSIONAL
+          </h2>
+          <div className="w-24 h-1 bg-tech-blue mx-auto rounded-full"></div>
+        </motion.div>
 
-          {/* LAYOUT MOBILE */}
-          <div className="block sm:hidden relative z-10">
-            {/* Header mobile */}
-            <div className="px-4 py-6 text-center">
-              <h3 className="text-white font-black text-[20px] leading-tight mb-2">
-                Conectando Chão de Fábrica com Tecnologias Modernas
-              </h3>
-              <p className="text-secondary font-medium text-[14px] leading-relaxed">
-                Expertise Técnica em Automação Industrial & Desenvolvimento
-              </p>
-            </div>
-
-            {/* Quebra-cabeça MOBILE */}
-            <div className="px-4 pb-6">
-              <div className="flex flex-row items-center justify-center gap-3">
-                {/* SVG quebra-cabeça mobile OTIMIZADO */}
-                <div className="flex-shrink-0">
-                  <svg 
-                    width="110" 
-                    height="300" 
-                    viewBox="0 0 442 1321" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="drop-shadow-xl"
-                  >
-                    {/* Peças simplificadas - SEM ANIMAÇÕES */}
-                    <path 
-                      d="M273.156 437.882C253.49 437.967 233.77 425.067 231.174 399.233C230.252 387.507 234.64 375.807 242.231 367.732C244.878 363.859 247.674 360.121 250.249 356.495C260.276 342.328 250.723 334.876 241.278 332.76H109.255V200.736C107.138 191.291 99.6872 181.738 85.5202 191.765C81.8952 194.34 78.1562 197.136 74.2832 199.783C66.2082 207.374 54.5082 211.761 42.7822 210.84C16.9472 208.245 4.04724 188.524 4.13324 168.858V168.856V168.854C4.04824 149.188 16.9482 129.468 42.7822 126.872C54.5082 125.95 66.2082 130.338 74.2832 137.929C78.1562 140.576 81.8942 143.372 85.5202 145.947C99.6872 155.974 107.139 146.421 109.255 136.976V4.95312H241.276C250.721 7.07013 260.274 14.5211 250.247 28.6891C247.672 32.3141 244.876 36.0531 242.229 39.9261C234.638 48.0011 230.251 59.7011 231.172 71.4271C233.768 97.2581 253.491 110.164 273.158 110.076C292.825 110.164 312.549 97.2581 315.144 71.4271C316.066 59.7011 311.678 48.0011 304.087 39.9261C301.44 36.0531 298.644 32.3151 296.069 28.6891C286.042 14.5221 295.595 7.07013 305.04 4.95312H437.061V332.759H305.039C295.594 334.876 286.041 342.327 296.068 356.494C298.643 360.12 301.439 363.858 304.086 367.731C311.677 375.806 316.064 387.506 315.143 399.232C312.548 425.067 292.827 437.967 273.161 437.881H273.159L273.156 437.882Z" 
-                      fill="#F20018" 
-                      stroke="white" 
-                      strokeWidth="4"
-                    />
-                    <path 
-                      d="M273.16 765.687C292.826 765.772 312.546 752.872 315.142 727.038C316.064 715.312 311.676 703.611 304.085 695.537C301.438 691.664 298.642 687.926 296.067 684.3C286.04 670.133 295.593 662.681 305.038 660.565H437.061V332.758H305.04C295.595 334.875 286.042 342.326 296.069 356.494C298.644 360.119 301.44 363.858 304.087 367.731C311.678 375.806 316.065 387.506 315.144 399.232C312.548 425.063 292.825 437.969 273.158 437.881C253.491 437.969 233.767 425.063 231.172 399.232C230.25 387.506 234.638 375.806 242.229 367.731C244.876 363.858 247.672 360.12 250.247 356.494C260.274 342.327 250.721 334.875 241.276 332.758H109.254V464.779C111.371 474.224 118.822 483.777 132.99 473.75C136.615 471.175 140.354 468.379 144.227 465.732C152.302 458.141 164.002 453.753 175.728 454.675C201.559 457.271 214.465 476.994 214.377 496.661C214.465 516.328 201.559 536.052 175.728 538.647C164.002 539.569 152.302 535.181 144.227 527.59C140.354 524.943 136.616 522.147 132.99 519.572C118.823 509.545 111.371 519.098 109.254 528.543V660.564H241.277C250.722 662.681 260.275 670.132 250.248 684.299C247.673 687.924 244.877 691.663 242.23 695.536C234.639 703.611 230.252 715.311 231.173 727.037C233.768 752.872 253.489 765.772 273.155 765.686H273.157L273.16 765.687Z" 
-                      fill="#FF9000" 
-                      stroke="white" 
-                      strokeWidth="4"
-                    />
-                    <path 
-                      d="M273.156 1093.5C253.49 1093.58 233.77 1080.68 231.174 1054.85C230.252 1043.12 234.64 1031.42 242.231 1023.35C244.878 1019.47 247.674 1015.74 250.249 1012.11C260.276 997.942 250.723 990.49 241.278 988.374H109.255V856.35C107.138 846.905 99.6872 837.352 85.5202 847.379C81.8952 849.954 78.1562 852.75 74.2832 855.397C66.2082 862.988 54.5082 867.375 42.7822 866.454C16.9472 863.859 4.04724 844.138 4.13324 824.472V824.47V824.468C4.04824 804.802 16.9482 785.082 42.7822 782.486C54.5082 781.564 66.2082 785.952 74.2832 793.543C78.1562 796.19 81.8942 798.986 85.5202 801.561C99.6872 811.588 107.139 802.035 109.255 792.59V660.566H241.276C250.721 662.683 260.274 670.134 250.247 684.301C247.672 687.926 244.876 691.665 242.229 695.538C234.638 703.613 230.251 715.313 231.172 727.039C233.768 752.87 253.491 765.776 273.158 765.688C292.825 765.776 312.549 752.87 315.144 727.039C316.066 715.313 311.678 703.612 304.087 695.538C301.44 691.665 298.644 687.927 296.069 684.301C286.042 670.134 295.595 662.682 305.04 660.566H437.061V988.372H305.039C295.594 990.489 286.041 997.94 296.068 1012.11C298.643 1015.73 301.439 1019.47 304.086 1023.34C311.677 1031.42 316.064 1043.12 315.143 1054.85C312.548 1080.68 292.827 1093.58 273.161 1093.49H273.159C273.158 1093.5 273.156 1093.5 273.156 1093.5Z" 
-                      fill="#A064BC" 
-                      stroke="white" 
-                      strokeWidth="4"
-                    />
-                    <path 
-                      d="M437.064 1316.18H109.258V1184.16C111.375 1174.71 118.826 1165.16 132.994 1175.19C136.619 1177.76 140.358 1180.56 144.231 1183.2C152.306 1190.79 164.006 1195.18 175.732 1194.26C201.563 1191.67 214.469 1171.94 214.381 1152.27C214.469 1132.61 201.563 1112.88 175.732 1110.29C164.006 1109.37 152.305 1113.75 144.231 1121.35C140.358 1123.99 136.62 1126.79 132.994 1129.36C118.827 1139.39 111.375 1129.84 109.258 1120.39V988.371H241.279C250.724 990.488 260.277 997.939 250.25 1012.11C247.675 1015.73 244.879 1019.47 242.232 1023.34C234.641 1031.42 230.254 1043.12 231.175 1054.85C233.771 1080.68 253.494 1093.58 273.161 1093.49C292.828 1093.58 312.552 1080.68 315.147 1054.85C316.069 1043.12 311.681 1031.42 304.09 1023.34C301.443 1019.47 298.647 1015.73 296.072 1012.11C286.045 997.94 295.598 990.488 305.043 988.371H437.064V1316.18Z" 
-                      fill="#35B7B9" 
-                      stroke="white" 
-                      strokeWidth="4"
-                    />
-                  </svg>
-                </div>
-
-                {/* Textos MOBILE */}
-                <div className="flex flex-col space-y-2 text-white flex-1 min-w-0">
-                  {puzzleData.map((piece) => (
-                    <div
-                      key={piece.id}
-                      className="flex items-center space-x-2 p-2 rounded-lg bg-white/10 border border-white/20 min-h-[60px]"
-                    >
-                      <div className="flex-shrink-0 w-8 h-8 p-1 rounded-lg bg-white/20">
-                        <img 
-                          src={piece.icon}
-                          alt={`${piece.title} icon`}
-                          className="w-full h-full object-contain filter brightness-0 invert"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-1 mb-1">
-                          <span className="text-xs font-black bg-white/30 px-1 py-0.5 rounded text-white">{piece.id}</span>
-                          <span className="font-bold text-[12px] text-white truncate">{piece.title}</span>
-                        </div>
-                        <div className="font-semibold text-[14px] text-slate-200 mb-1">{piece.subtitle}</div>
-                        <div className="text-[12px] text-secondary leading-tight">{piece.description}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Stats mobile */}
-            <div className="px-4 pb-6">
-              <div className="grid grid-cols-4 gap-3 text-center text-white">
-                <div className="p-3">
-                  <div className="text-white font-black text-[20px] mb-1">+10</div>
-                  <div className="text-secondary text-[12px] leading-tight">anos</div>
-                </div>
-                <div className="p-3">
-                  <div className="text-white font-black text-[20px] mb-1">+3</div>
-                  <div className="text-secondary text-[12px] leading-tight">países</div>
-                </div>
-                <div className="p-3">
-                  <div className="text-white font-black text-[20px] mb-1">+50</div>
-                  <div className="text-secondary text-[12px] leading-tight">projetos</div>
-                </div>
-                <div className="p-3">
-                  <div className="text-white font-black text-[20px] mb-1">∞</div>
-                  <div className="text-secondary text-[12px] leading-tight">soluções</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* LAYOUT DESKTOP */}
-          <div className="hidden md:flex relative min-h-[480px] lg:min-h-[520px] xl:min-h-[540px] max-w-none z-10">
-            {/* Imagem de perfil - desktop */}
+        {/* Grid de cards - sem linhas conectoras */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
+          {processSteps.map((step, index) => (
             <motion.div
-              initial={{ opacity: 0, y: -30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -30 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="relative w-1/3 lg:w-2/5 flex-shrink-0 flex items-end justify-center bg-gradient-to-r from-[#2331BB] via-[#2431BB] to-transparent pl-4 lg:pl-6 xl:pl-8 pb-4"
+              key={step.letter}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+              className="text-center"
             >
-              <img
-                src="/portfolio-danilo/About/eu_novo.svg"
-                alt="Danilo Lira - Perfil"
-                className="h-[85%] lg:h-[90%] w-auto object-contain"
-              />
-            </motion.div>
-
-            {/* Conteúdo - desktop */}
-            <div className="flex-1 flex flex-col justify-center px-6 lg:px-8 xl:px-12 py-8 lg:py-12 xl:py-16 max-w-4xl">
-              <motion.div 
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                className="mb-6 lg:mb-8 xl:mb-10"
-              >
-                <h3 className="text-white font-black text-[24px] lg:text-[32px] xl:text-[40px] leading-tight mb-3 lg:mb-4">
-                  Conectando Chão de Fábrica com Tecnologias Modernas
-                </h3>
-                <p className="text-secondary font-medium text-[14px] lg:text-[16px] xl:text-[18px] leading-relaxed">
-                  Expertise Técnica em Automação Industrial & Desenvolvimento
-                </p>
-              </motion.div>
-
-              {/* Quebra-cabeça - desktop */}
-              <div className="mb-6 lg:mb-8 xl:mb-10">
-                <PuzzleComponent />
+              {/* Círculo principal com ícone */}
+              <div className="relative mb-8">
+                <div 
+                  className="w-28 h-28 mx-auto rounded-full border-4 flex items-center justify-center relative bg-white shadow-lg"
+                  style={{ borderColor: step.color }}
+                >
+                  {/* Ícone SVG apropriado */}
+                  <ProcessIcon type={step.icon} color={step.color} />
+                  
+                  {/* Letra no canto superior direito */}
+                  <div 
+                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm"
+                    style={{ backgroundColor: step.color }}
+                  >
+                    {step.letter}
+                  </div>
+                </div>
               </div>
 
-              {/* Stats - desktop */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-6 text-center text-white"
-              >
-                <div>
-                  <div className="text-white font-black text-[30px] lg:text-[40px] xl:text-[50px] leading-tight mb-2">+10</div>
-                  <div className="text-secondary font-medium text-[12px] lg:text-[14px] xl:text-[16px] leading-relaxed">
-                    anos de atuação na<br/>Automação Industrial
-                  </div>
+              {/* Conteúdo com estilo de fonte do HeroSection */}
+              <div className="space-y-2">
+                <h3 
+                  className="font-black text-[20px]"
+                  style={{ color: step.color }}
+                >
+                  {step.title}
+                </h3>
+                
+                <h4 className="text-gray-600 font-medium text-[16px]">
+                  {step.subtitle}
+                </h4>
+                
+                <p className="text-secondary font-medium text-[14px] leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+
+              {/* Conector vertical para mobile */}
+              {index < processSteps.length - 1 && (
+                <div className="lg:hidden flex justify-center mt-8 mb-4">
+                  <motion.div 
+                    className="w-1 h-12 rounded-full"
+                    style={{
+                      background: `linear-gradient(to bottom, ${step.color}, ${processSteps[index + 1].color})`
+                    }}
+                    initial={{ height: 0 }}
+                    animate={{ height: 48 }}
+                    transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                  ></motion.div>
                 </div>
-                <div>
-                  <div className="text-white font-black text-[30px] lg:text-[40px] xl:text-[50px] leading-tight mb-2">+3</div>
-                  <div className="text-secondary font-medium text-[12px] lg:text-[14px] xl:text-[16px] leading-relaxed">
-                    países de experiência<br/>profissional
-                  </div>
-                </div>
-                <div>
-                  <div className="text-white font-black text-[30px] lg:text-[40px] xl:text-[50px] leading-tight mb-2">+50</div>
-                  <div className="text-secondary font-medium text-[12px] lg:text-[14px] xl:text-[16px] leading-relaxed">
-                    projetos desenvolvidos<br/>em automação
-                  </div>
-                </div>
-                <div>
-                  <div className="text-white font-black text-[30px] lg:text-[40px] xl:text-[50px] leading-tight mb-2">∞</div>
-                  <div className="text-secondary font-medium text-[12px] lg:text-[14px] xl:text-[16px] leading-relaxed">
-                    soluções criadas para<br/>indústria 4.0
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
+              )}
+            </motion.div>
+          ))}
         </div>
+
+        {/* Stats finais */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 1.5 }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-20"
+        >
+          {[
+            { number: "+10", label: "Anos de\nExperiência", color: "#8B7DD1" },
+            { number: "3", label: "Países de\nAtuação", color: "#E53E3E" },
+            { number: "2", label: "Formações\nTécnicas", color: "#F4C22B" },
+            { number: "4.0", label: "Indústria e\nTransformação Digital", color: "#4299E1" }
+          ].map((stat, index) => (
+            <div key={index} className="text-center p-6 bg-white rounded-xl shadow-lg">
+              <div 
+                className="font-black text-[32px] lg:text-[42px] mb-2"
+                style={{ color: stat.color }}
+              >
+                {stat.number}
+              </div>
+              <div className="text-secondary font-medium text-[14px] whitespace-pre-line">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Seção adicional para destacar habilidades técnicas */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.8, delay: 1.8 }}
+          className="mt-24"
+        >
+          <h3 className="font-black text-[32px] text-center mb-10 text-gray-800">Expertises Técnicas</h3>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { name: "Automação Industrial", icon: "automation", color: "#8B7DD1" },
+              { name: "Indústria 4.0", icon: "globalTech", color: "#F4C22B" },
+              { name: "Desenvolvimento de APIs", icon: "coding", color: "#E53E3E" },
+              { name: "Programação", icon: "coding", color: "#38D9A9" },
+              { name: "Integração de Sistemas", icon: "automationProject", color: "#68B5E8" },
+              { name: "Transformação Digital", icon: "globalTech", color: "#4299E1" }
+            ].map((skill, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 2.0 + index * 0.1 }}
+                className="bg-white p-4 rounded-lg shadow-md flex flex-col items-center text-center"
+              >
+                <div 
+                  className="w-16 h-16 rounded-full flex items-center justify-center mb-3"
+                  style={{ backgroundColor: `${skill.color}15` }}
+                >
+                  <ProcessIcon type={skill.icon} color={skill.color} />
+                </div>
+                <h4 className="font-medium text-[14px] text-gray-700">{skill.name}</h4>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </motion.div>
     </section>
   );
 };
 
-export default TechExpertise;
+export default ProfessionalJourney;
