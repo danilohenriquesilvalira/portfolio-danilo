@@ -1,154 +1,219 @@
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FaArrowRight } from 'react-icons/fa';
+import { BsGithub } from "react-icons/bs";
 
-// Importa os dados e o tipo
-import { projects } from '../../data/projects';
-import { Project } from '../../types/project';
+// Tipos TypeScript
+interface Project {
+  id: string;
+  title: string;
+  about: string;
+  filter: string[];
+  tech: string[];
+  thumbnail: string;
+  github?: string;
+}
 
-// Animations
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
+// Dados dos projetos - Apenas 2 projetos limpos
+const projects: Project[] = [
+  {
+    id: '1',
+    title: 'Sistema de Transporte',
+    about: 'Sistema web moderno para controle e monitoramento de transportadores industriais com interface responsiva, focado na otimização de fluxo de materiais e integração SCADA.',
+    filter: ['All', 'Web Development'],
+    tech: ['React', 'TypeScript', 'Industrial', 'HMI'],
+    thumbnail: '/portfolio-danilo/projects/transporte.jpg',
+    github: 'https://github.com/danilolirabr/sistema-transporte'
+  },
+  {
+    id: '2',
+    title: 'Estação de CIP',
+    about: 'Interface web para controle de estação CIP (Clean-in-Place) com supervisão em tempo real de processos de limpeza automatizados, garantindo padrões de higiene e rastreabilidade.',
+    filter: ['All', 'Web Development'],
+    tech: ['React', 'CIP', 'Automação', 'SCADA'],
+    thumbnail: '/portfolio-danilo/projects/estacao-cip.jpg',
+    github: 'https://github.com/danilolirabr/estacao-cip'
   }
+];
+
+// Componente Filter
+const Filter: React.FC<{
+  selectedFilter: string;
+  setSelectedFilter: (filter: string) => void;
+}> = ({ selectedFilter, setSelectedFilter }) => {
+  const filters = ['All', 'Web Development'];
+
+  return (
+    <div className="flex justify-center mt-8 mb-12">
+      <div className="flex gap-8 md:gap-10">
+        {filters.map((filter) => (
+          <button
+            key={filter}
+            onClick={() => setSelectedFilter(filter)}
+            className={`font-medium text-base md:text-lg transition-all duration-300 relative group
+              ${selectedFilter === filter
+                ? 'text-tech-blue'
+                : 'text-gray-400 hover:text-white'
+              }`}
+          >
+            {filter}
+            {selectedFilter === filter && (
+              <hr className="w-8 border-t-2 rounded-full border-tech-blue absolute left-1/2 -translate-x-1/2 mt-2 group-hover:w-10 transition-all duration-300" />
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 };
 
-const cardVariant = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 50,
-      damping: 10
-    }
-  }
-};
-
-const FeaturedProjectCard = ({
-  project,
-  index
-}: {
-  project: Project & { featured?: boolean };
-  index: number;
-}) => {
+// Componente SlideUp
+const SlideUp: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   return (
     <motion.div
-      variants={cardVariant}
-      initial="hidden"
-      animate="visible"
-      transition={{ delay: index * 0.1 }}
-      className="group bg-tech-blue rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-blue-700"
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="h-full flex" // Ensure card takes full height for grid consistency
     >
-      <div className="relative h-48 overflow-hidden">
-        {/* Placeholder ou imagem real */}
-        <div className="w-full h-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center">
-          <span className="text-4xl font-bold text-tech-blue opacity-50">
-            {project.title.slice(0, 2).toUpperCase()}
-          </span>
-        </div>
-        
-        {/* Overlay com gradiente */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-        
-        {/* Tags */}
-        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-          {project.tags.slice(0, 2).map((tag, tagIndex) => (
-            <span
-              key={`tag-${tagIndex}`}
-              className="px-3 py-1 text-xs text-white rounded-full backdrop-blur-sm"
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-      
-      <div className="p-6">
-        <h3 className="text-white text-xl font-bold mb-3 group-hover:text-gray-100 transition-colors">
-          {project.title}
-        </h3>
-        <p className="text-gray-200 text-sm line-clamp-2 mb-4 group-hover:text-gray-100 transition-colors">
-          {project.description}
-        </p>
-        
-        <Link
-          to={`/projeto/${project.id}`}
-          className="inline-flex items-center gap-2 mt-2 px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm rounded-lg text-white text-sm font-semibold transition-all duration-300 hover:scale-105 hover:gap-3 border border-white border-opacity-30 hover:border-opacity-50"
-        >
-          Ver Detalhes <FaArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
-        </Link>
-      </div>
+      {children}
     </motion.div>
   );
 };
 
-const FeaturedProjects = () => {
-  // Seleciona projetos em destaque (com featured true ou, se nenhum estiver marcado, os 3 primeiros)
-  const featuredProjects = projects
-    .filter((project) => project.featured === true)
-    .slice(0, 3);
-  
-  const projectsToShow =
-    featuredProjects.length > 0 ? featuredProjects : projects.slice(0, 3);
-  
+const ProjectsPage: React.FC = () => {
+  const [selectedFilter, setSelectedFilter] = useState<string>('All');
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
+
+  useEffect(() => {
+    const newFilteredProjects = projects.filter((project) =>
+      project.filter.includes(selectedFilter)
+    );
+    setFilteredProjects(newFilteredProjects);
+  }, [selectedFilter]);
+
   return (
-    <section className="py-20 bg-primary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full min-h-screen bg-primary">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20"> {/* Adjusted vertical padding */}
+
+        {/* Header Section */}
         <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          className="mb-12 text-center"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12 md:mb-16" // Adjusted bottom margin
         >
-          <div className="flex flex-row items-center justify-center gap-2 mb-4">
-            <div className="w-5 h-5 rounded-full bg-tech-blue"></div>
-            <p className="text-white font-medium sm:text-xl">Projetos em Destaque</p>
-          </div>
-          
-          <h2 className="text-white font-black text-3xl sm:text-4xl md:text-5xl leading-tight">
-            Modernizando a <span className="text-tech-blue">Automação Industrial</span> com Tecnologia Web
+          <h2 className="relative text-white font-black text-4xl md:text-5xl mb-4 leading-tight">
+            Meus Projetos
+            <hr className="w-16 border-t-4 rounded border-tech-blue absolute left-1/2 -translate-x-1/2 mt-3" />
           </h2>
-          
-          <p className="text-secondary mt-4 max-w-4xl mx-auto text-base sm:text-lg leading-relaxed">
-            Desenvolvendo soluções inovadoras que integram <span className="text-white font-semibold">linguagens modernas de programação</span>, 
-            <br className="hidden sm:block" />
-            <span className="text-white font-semibold">HMI web responsivos</span> e <span className="text-white font-semibold">interfaces intuitivas</span> 
-            <br className="hidden sm:block" />
-            para revolucionar o chão de fábrica tradicional e conectá-lo à era digital.
+          <p className="text-gray-400 text-lg max-w-3xl mx-auto font-light">
+            Explore as soluções que desenvolvo para transformar a indústria com tecnologias web avançadas, otimizando processos e elevando a produtividade.
           </p>
         </motion.div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {projectsToShow.map((project, index) => (
-            <FeaturedProjectCard key={project.id} project={project} index={index} />
+
+        {/* Filter Section */}
+        <Filter
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
+        />
+
+        {/* Projects Grid Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto items-stretch"> {/* Added items-stretch for equal card heights */}
+          {filteredProjects.map((project: Project) => (
+            <SlideUp key={project.id}>
+              {/* Project Card */}
+              <div className="group relative rounded-xl overflow-hidden bg-gray-800/40 hover:bg-gray-700/60 transition-all duration-500 border border-gray-700/50 hover:border-tech-blue/60 shadow-lg hover:shadow-2xl hover:scale-[1.01] transform-gpu flex flex-col cursor-pointer w-full"> {/* Added w-full */}
+
+                {/* Project Image Placeholder */}
+                <div className="relative h-60 overflow-hidden bg-gray-900 flex-shrink-0">
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-800 via-gray-900 to-black">
+                    <div className="text-5xl font-black text-gray-700 group-hover:text-tech-blue/60 transition-colors duration-500">
+                      {project.title.substring(0, 2)}
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+                </div>
+
+                {/* Project Content */}
+                <div className="p-6 flex-1 flex flex-col">
+
+                  {/* Title */}
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-tech-blue transition-colors duration-300">
+                    {project.title}
+                  </h3>
+
+                  {/* Description - Smooth reveal on hover */}
+                  <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 flex-1 flex flex-col">
+                    <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+                      {project.about}
+                    </p>
+
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-2 mb-6 flex-1 items-start content-start">
+                      {project.tech.map((item, index) => (
+                        <span
+                          key={index}
+                          className="bg-tech-blue/15 text-tech-blue px-3 py-1 rounded-full text-xs font-medium border border-tech-blue/20 hover:bg-tech-blue/25 transition-colors duration-300 backdrop-blur-sm"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* GitHub Link */}
+                    <div className="flex justify-center mt-auto">
+                      {project.github && (
+                        <Link
+                          to={project.github}
+                          target="_blank"
+                          onClick={(e) => e.stopPropagation()}
+                          className="group/btn relative inline-flex items-center justify-center px-6 py-3 border border-tech-blue/50 rounded-full text-tech-blue text-sm font-medium overflow-hidden transition-all duration-300 hover:text-white hover:border-tech-blue hover:shadow-tech-blue/30 hover:shadow-md"
+                        >
+                          <span className="relative z-10 flex items-center gap-2">
+                            <BsGithub size={18} /> Ver Código
+                          </span>
+                          <span className="absolute inset-0 bg-gradient-to-r from-tech-blue to-blue-600 transform scale-x-0 group-hover/btn:scale-x-100 transition-transform duration-300 origin-left"></span>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Hover Indicator (always present but fades) */}
+                  <div className="opacity-100 group-hover:opacity-0 transition-opacity duration-300 absolute bottom-6 left-0 right-0 text-center px-6 pointer-events-none">
+                    <div className="text-gray-500 text-sm">
+                      Passe o mouse para ver detalhes
+                    </div>
+                    <div className="flex justify-center mt-2">
+                      <div className="w-10 h-1 bg-tech-blue/30 rounded-full"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </SlideUp>
           ))}
         </div>
-        
-        <motion.div 
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-          className="mt-12 flex justify-center"
+
+        {/* Informative Footer Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-center mt-20 text-sm text-gray-500" // Adjusted margin-top
         >
-          <Link
-            to="/projetos"
-            className="flex items-center gap-2 py-3 px-8 rounded-xl outline-none bg-tech-blue font-bold text-white shadow-button hover:shadow-button-hover hover:bg-blue-700 transition-all duration-300"
-          >
-            Ver Todos os Projetos <FaArrowRight />
-          </Link>
+          <p>
+            Curioso para ver mais? Novos projetos e atualizações chegam em breve.
+          </p>
+          <p className="mt-1">
+            Mantenha-se conectado!
+          </p>
         </motion.div>
       </div>
     </section>
   );
 };
 
-export default FeaturedProjects;
+export default ProjectsPage;

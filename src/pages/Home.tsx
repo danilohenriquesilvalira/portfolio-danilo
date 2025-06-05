@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Herosections from "../components/sections/Herosections";
 import TechExpertise from "../components/sections/TechExpertise";
 import FeaturedProjects from "../components/sections/FeaturedProjects";
-import ContactCTA from "../components/home/ContactCTA";
+
 
 const Home = () => {
   // Scroll to top when component mounts
@@ -23,8 +23,7 @@ const Home = () => {
       {/* Featured Projects Section */}
       <FeaturedProjects />
       
-      {/* Contact CTA Section */}
-      <ContactCTA />
+      
     </main>
   );
 };

@@ -19,9 +19,9 @@ const Navbar = () => {
     const currentPath = location.pathname;
     const activeLink = navLinks.find(link => {
       if (link.path === '/') {
-        return currentPath === '/';
+        return currentPath === '/'; // Link 'Início' ativo APENAS se a rota for EXATAMENTE '/'
       } else {
-        return currentPath.startsWith(link.path);
+        return currentPath.startsWith(link.path); // Outros links ativos se a rota começar com o path
       }
     });
 
@@ -30,7 +30,7 @@ const Navbar = () => {
 
   const handleLinkClick = (id: string) => {
     setActive(id);
-    setToggle(false);
+    setToggle(false); // Fecha o menu mobile ao clicar em um link
   };
 
   return (
@@ -40,7 +40,9 @@ const Navbar = () => {
           to="/"
           className="flex items-center gap-2"
           onClick={() => {
-            setActive('');
+            // Removido setActive('') daqui.
+            // O useEffect já cuidará de definir 'home' como ativo se a rota for '/',
+            // ou de remover a ativação se a rota mudar.
             window.scrollTo(0, 0);
           }}
         >
