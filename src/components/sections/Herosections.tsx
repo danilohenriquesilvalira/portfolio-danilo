@@ -70,7 +70,7 @@ const Herosections = () => {
       }}>
         <div><strong>TELA:</strong> {screenInfo.width} x {screenInfo.height}</div>
         <div><strong>BREAKPOINT:</strong> <span style={{
-          color: screenInfo.breakpoint === 'NOTEBOOK' ? '#00ff00' : '#ffffff'
+          color: screenInfo.breakpoint === 'MOBILE' ? '#00ff00' : '#ffffff'
         }}>{screenInfo.breakpoint}</span></div>
         <div><strong>RANGE:</strong> {
           screenInfo.breakpoint === 'MOBILE' ? '0-767px' :
@@ -89,7 +89,7 @@ const Herosections = () => {
       <div className="hero-wrapper">
         
         {/* Layout responsivo - Mobile: coluna, Desktop: grid */}
-        <div className="w-full flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-12 items-center h-full">
+        <div className="w-full flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-12 items-center h-full">
           
           {/* Conteúdo de texto - LADO ESQUERDO */}
           <div className="hero-container order-2 md:order-1">

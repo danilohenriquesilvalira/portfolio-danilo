@@ -5,14 +5,14 @@
   position: relative;
   width: 100%;
   height: auto; /* MUDANÇA AQUI */
-  min-height: 50vh; /* ADICIONE ISTO */
+  min-height: auto; /* CORRIGIDO: era 50vh */
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #191919;
   overflow: visible;
-  padding: 3rem 0; /* AUMENTE O PADDING */
+  padding: 1rem 0; /* CORRIGIDO: era 3rem */
 }
 
 /* Container wrapper */
@@ -113,7 +113,7 @@
 @media (max-width: 767px) {
   .tech-expertise-section {
     height: auto; /* AUTO no mobile */
-    min-height: 50vh; /* MÍNIMO de 50vh */
+    min-height: auto; /* CORRIGIDO: era 50vh */
     padding: 1.5rem 0; /* REDUZIDO padding */
   }
 
@@ -166,7 +166,7 @@
 /* TABLETS - Sistema inteligente (768px-1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   .tech-expertise-section {
-    height: 60vh; /* REDUZIDO */
+    height: auto; /* CORRIGIDO: era 60vh */
     padding: 1.5rem 0;
   }
 
@@ -219,7 +219,7 @@
 /* NOTEBOOKS - Base compacta (1024px-1440px) */
 @media (min-width: 1024px) and (max-width: 1440px) {
   .tech-expertise-section {
-    height: 65vh; /* REDUZIDO */
+    height: auto; /* CORRIGIDO: era 65vh */
     padding: 2rem 0;
   }
 
@@ -273,7 +273,7 @@
 /* MONITORES GRANDES - Escala compacta (1441px-1920px) */
 @media (min-width: 1441px) and (max-width: 1920px) {
   .tech-expertise-section {
-    height: 70vh; /* REDUZIDO */
+    height: auto; /* CORRIGIDO: era 70vh */
     padding: 2rem 0;
   }
 
@@ -326,7 +326,7 @@
 /* MONITORES 4K+ - Escala compacta (1921px-2559px) */
 @media (min-width: 1921px) and (max-width: 2559px) {
   .tech-expertise-section {
-    height: 75vh; /* REDUZIDO */
+    height: auto; /* CORRIGIDO: era 75vh */
     padding: 2.5rem 0;
     justify-content: center;
     align-items: center;
@@ -356,7 +356,7 @@
   }
      
   .tech-expertise-description {
-    font-size: clamp(20px, 1.3vw, 26px); /* REDUZIDO */
+    font-size: clamp(20px, 1.3vw, 20px); /* REDUZIDO */
     max-width: 900px;
     text-align: center;
     margin: 0 auto;
@@ -384,7 +384,7 @@
 /* ULTRA-WIDE - Escala compacta (2560px+) */
 @media (min-width: 2560px) {
   .tech-expertise-section {
-    height: 80vh; /* REDUZIDO */
+    height: auto; /* CORRIGIDO: era 80vh */
     padding: 3rem 0;
   }
 

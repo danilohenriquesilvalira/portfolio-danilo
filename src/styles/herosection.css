@@ -118,16 +118,27 @@
 
 /* ===== RESPONSIVIDADE INTELIGENTE ===== */
 
-/* MOBILE PHONES - Sistema inteligente (320px-767px) */
+/* MOBILE PHONES - Sistema inteligente CORRIGIDO (320px-767px) */
 @media (max-width: 767px) {
+  /* SEÇÃO HERO - ALTURA OTIMIZADA */
+  .hero-section {
+    height: auto; /* MUDANÇA: altura automática */
+    min-height: 100vh; /* GARANTE altura mínima */
+    padding: 2rem 0; /* ADICIONADO: padding vertical */
+  }
+
   .hero-wrapper {
     padding: 0 1rem;
+    align-items: center; /* CENTRALIZA verticalmente */
+    justify-content: center; /* CENTRALIZA horizontalmente */
   }
   
   .hero-container {
-    text-align: center;
-    gap: 1rem;
-    align-items: center;
+    text-align: center; /* CENTRALIZA todo o conteúdo */
+    gap: 1.5rem; /* AUMENTADO espaçamento */
+    align-items: center; /* CENTRALIZA itens */
+    width: 100%; /* GARANTE largura total */
+    max-width: 400px; /* LIMITA largura máxima */
   }
   
   .hero-greeting {
@@ -136,33 +147,37 @@
   
   .hero-title {
     font-size: clamp(28px, 9vw, 42px);
+    text-align: center; /* FORÇA centralização */
   }
   
   .hero-description {
     font-size: clamp(14px, 4vw, 16px);
     max-width: 100%;
+    text-align: center; /* FORÇA centralização */
+    line-height: 1.5; /* MELHOR legibilidade */
   }
 
-  /* Botão Mobile */
+  /* BOTÃO MOBILE - CENTRALIZADO */
   .hero-button {
     font-size: clamp(12px, 3.5vw, 14px);
     padding: clamp(12px, 4vw, 16px) clamp(24px, 8vw, 32px);
-    margin-top: 0.5rem;
+    margin-top: 1rem; /* AUMENTADO espaçamento */
     width: auto;
     max-width: 280px;
+    align-self: center; /* CENTRALIZA o botão */
   }
   
   .hero-image {
-    width: clamp(250px, 70vw, 320px);
-    height: clamp(250px, 70vw, 320px);
+    width: clamp(200px, 60vw, 280px); /* REDUZIDO tamanho */
+    height: clamp(200px, 60vw, 280px); /* REDUZIDO tamanho */
   }
   
-  /* SVG Mobile - SEM LIMITAÇÕES */
+  /* SVG Mobile - REDUZIDO E CENTRALIZADO */
   .hero-svg-decorative {
     min-width: 988px;
     min-height: 1166px;
-    transform: scale(0.6) translateX(0px);
-    opacity: 0.2;
+    transform: scale(0.4) translateX(0px); /* REDUZIDO e centralizado */
+    opacity: 0.15; /* MAIS SUTIL */
   }
 }
 
