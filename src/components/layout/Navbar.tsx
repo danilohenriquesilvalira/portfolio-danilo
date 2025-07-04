@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaBars, FaTimes, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
+import '../../styles/navbar.css';
 
 const navLinks = [
   { title: 'Início', id: 'home', path: '/' },
-  { title: 'Experiência', id: 'experience', path: '/experiencia' },
   { title: 'Projetos', id: 'projects', path: '/projetos' },
-  { title: 'Contato', id: 'contact', path: '/contato' },
+  { title: 'Sobre', id: 'about', path: '/sobre' },
+  { title: 'Tech Stack', id: 'techstack', path: '/techstack' },
+  { title: 'Contatos', id: 'contact', path: '/contatos' },
 ];
 
 const Navbar = () => {
@@ -19,9 +21,9 @@ const Navbar = () => {
     const currentPath = location.pathname;
     const activeLink = navLinks.find(link => {
       if (link.path === '/') {
-        return currentPath === '/'; // Link 'Início' ativo APENAS se a rota for EXATAMENTE '/'
+        return currentPath === '/';
       } else {
-        return currentPath.startsWith(link.path); // Outros links ativos se a rota começar com o path
+        return currentPath.startsWith(link.path);
       }
     });
 
@@ -30,105 +32,86 @@ const Navbar = () => {
 
   const handleLinkClick = (id: string) => {
     setActive(id);
-    setToggle(false); // Fecha o menu mobile ao clicar em um link
+    setToggle(false);
   };
 
   return (
-    <nav className="absolute top-0 left-0 right-0 z-50 w-full flex items-center py-5 bg-transparent">
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="navbar">
+      <div className="navbar-wrapper">
+        
+        {/* Logo e Título */}
         <Link
           to="/"
-          className="flex items-center gap-2"
+          className="navbar-logo"
           onClick={() => {
-            // Removido setActive('') daqui.
-            // O useEffect já cuidará de definir 'home' como ativo se a rota for '/',
-            // ou de remover a ativação se a rota mudar.
             window.scrollTo(0, 0);
           }}
         >
-          {/* Logo */}
-          <div className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-500">
-            <span className="text-white font-bold text-xl">DL</span>
+          <div className="navbar-logo-icon">
+            <span>DL</span>
           </div>
-          <div className="flex flex-col">
-            <p className="text-white text-[18px] font-bold leading-tight">
-              Danilo Lira
-            </p>
-            <p className="text-gray-400 text-[12px] leading-tight hidden sm:block">
-              Automação Industrial &amp; Indústria 4.0
-            </p>
+          <div className="navbar-logo-text">
+            <p className="navbar-name">Danilo Lira</p>
+            <p className="navbar-subtitle">Automação Industrial & Indústria 4.0</p>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <ul className="list-none hidden md:flex flex-row gap-8 items-center">
+        <ul className="navbar-desktop">
           {navLinks.map((link) => (
-            <li key={link.id} className="relative">
+            <li key={link.id} className="navbar-desktop-item">
               <Link 
                 to={link.path}
-                className={`${
-                  active === link.id ? 'text-white' : 'text-gray-300'
-                } hover:text-white text-[16px] font-medium transition-colors duration-200`}
+                className={`navbar-desktop-link ${active === link.id ? 'active' : ''}`}
                 onClick={() => handleLinkClick(link.id)}
               >
                 {link.title}
-                {active === link.id && (
-                  <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-blue-500" />
-                )}
+                {active === link.id && <div className="navbar-desktop-indicator" />}
               </Link>
             </li>
           ))}
           
-          <div className="ml-6 flex gap-3 items-center border-l border-gray-700 pl-6">
+          {/* Redes Sociais Desktop */}
+          <div className="navbar-social">
             <a 
               href="https://linkedin.com/in/danilo-lira-82b17516b" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-white transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800 hover:bg-opacity-50"
+              className="navbar-social-link"
               aria-label="LinkedIn"
             >
-              <FaLinkedin size={18} />
+              <FaLinkedin />
             </a>
             <a 
               href="https://github.com/danilohenriquesilvalira" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-white transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800 hover:bg-opacity-50"
+              className="navbar-social-link"
               aria-label="GitHub"
             >
-              <FaGithub size={18} />
+              <FaGithub />
             </a>
             <a 
               href="mailto:contato@danilolira.com"
-              className="text-gray-300 hover:text-white transition-colors w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-800 hover:bg-opacity-50"
+              className="navbar-social-link"
               aria-label="Email"
             >
-              <FaEnvelope size={18} />
+              <FaEnvelope />
             </a>
           </div>
         </ul>
 
-        {/* Mobile Navigation */}
-        <div className="md:hidden flex flex-1 justify-end items-center">
+        {/* Mobile Menu Button */}
+        <div className="navbar-mobile">
           <button
             onClick={() => setToggle(!toggle)}
-            className={`relative w-12 h-12 rounded-2xl flex justify-center items-center backdrop-blur-lg transition-all duration-300 ${
-              toggle 
-                ? 'bg-blue-500 bg-opacity-90 scale-95' 
-                : 'bg-white bg-opacity-10 hover:bg-white hover:bg-opacity-20'
-            }`}
+            className={`navbar-mobile-button ${toggle ? 'active' : ''}`}
             aria-label={toggle ? "Fechar menu" : "Abrir menu"}
           >
-            <div className="flex flex-col justify-center items-center w-5 h-5 relative">
-              <span className={`block h-0.5 w-full bg-white rounded-full transition-all duration-300 ${
-                toggle ? 'rotate-45 translate-y-0.5' : ''
-              }`}></span>
-              <span className={`block h-0.5 w-full bg-white rounded-full transition-all duration-300 mt-1 ${
-                toggle ? 'opacity-0' : ''
-              }`}></span>
-              <span className={`block h-0.5 w-full bg-white rounded-full transition-all duration-300 mt-1 ${
-                toggle ? '-rotate-45 -translate-y-1.5' : ''
-              }`}></span>
+            <div className="navbar-hamburger">
+              <span className={toggle ? 'rotate-45' : ''}></span>
+              <span className={toggle ? 'opacity-0' : ''}></span>
+              <span className={toggle ? '-rotate-45' : ''}></span>
             </div>
           </button>
 
@@ -136,87 +119,81 @@ const Navbar = () => {
             <>
               {/* Backdrop */}
               <div 
-                className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"
+                className="navbar-backdrop"
                 onClick={() => setToggle(false)}
               ></div>
               
-              {/* Menu */}
-              <div className="fixed top-0 right-0 h-screen w-80 bg-gray-900 bg-opacity-95 backdrop-blur-xl z-50 transform transition-transform duration-300 ease-out">
-                <div className="flex flex-col h-full">
-                  {/* Header do menu */}
-                  <div className="flex items-center justify-between p-6 border-b border-gray-700">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
-                        <span className="text-white font-bold text-sm">DL</span>
+              {/* Mobile Menu */}
+              <div className="navbar-mobile-menu">
+                <div className="navbar-mobile-content">
+                  
+                  {/* Mobile Header */}
+                  <div className="navbar-mobile-header">
+                    <div className="navbar-mobile-logo">
+                      <div className="navbar-logo-icon small">
+                        <span>DL</span>
                       </div>
-                      <span className="text-white font-semibold">Menu</span>
+                      <span className="navbar-mobile-title">Menu</span>
                     </div>
                     <button
                       onClick={() => setToggle(false)}
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+                      className="navbar-mobile-close"
                     >
-                      <FaTimes size={16} />
+                      <FaTimes />
                     </button>
                   </div>
                   
-                  {/* Links de navegação */}
-                  <div className="flex-1 px-6 py-8">
-                    <ul className="space-y-6">
+                  {/* Mobile Links */}
+                  <div className="navbar-mobile-links">
+                    <ul>
                       {navLinks.map((link, index) => (
                         <li key={link.id}>
                           <Link
                             to={link.path}
-                            className={`block py-3 px-4 rounded-xl font-medium text-lg transition-all duration-200 ${
-                              active === link.id
-                                ? 'text-white bg-blue-500 bg-opacity-20 border border-blue-500 border-opacity-30'
-                                : 'text-gray-300 hover:text-white hover:bg-gray-800 hover:bg-opacity-50'
-                            }`}
+                            className={`navbar-mobile-link ${active === link.id ? 'active' : ''}`}
                             onClick={() => handleLinkClick(link.id)}
                             style={{ animationDelay: `${index * 0.1}s` }}
                           >
-                            <span className="flex items-center gap-3">
-                              <span className={`w-2 h-2 rounded-full transition-colors ${
-                                active === link.id ? 'bg-blue-400' : 'bg-gray-600'
-                              }`}></span>
-                              {link.title}
-                            </span>
+                            <span className={`navbar-mobile-indicator ${active === link.id ? 'active' : ''}`}></span>
+                            {link.title}
                           </Link>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
-                  {/* Footer com redes sociais */}
-                  <div className="p-6 border-t border-gray-700">
-                    <p className="text-gray-400 text-sm mb-4 text-center">Conecte-se comigo</p>
-                    <div className="flex justify-center gap-4">
+                  {/* Mobile Social */}
+                  <div className="navbar-mobile-social">
+                    <p className="navbar-mobile-social-title">Conecte-se comigo</p>
+                    <div className="navbar-mobile-social-links">
                       <a 
                         href="https://linkedin.com/in/danilo-lira-82b17516b" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-12 h-12 rounded-xl bg-gray-800 bg-opacity-50 flex items-center justify-center text-gray-300 hover:text-white hover:bg-blue-600 transition-all duration-200 backdrop-blur-sm"
+                        className="navbar-mobile-social-link linkedin"
                         aria-label="LinkedIn"
                       >
-                        <FaLinkedin size={20} />
+                        <FaLinkedin />
                       </a>
                       <a 
                         href="https://github.com/danilohenriquesilvalira" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="w-12 h-12 rounded-xl bg-gray-800 bg-opacity-50 flex items-center justify-center text-gray-300 hover:text-white hover:bg-gray-600 transition-all duration-200 backdrop-blur-sm"
+                        className="navbar-mobile-social-link github"
                         aria-label="GitHub"
                       >
-                        <FaGithub size={20} />
+                        <FaGithub />
                       </a>
                       <a 
                         href="mailto:contato@danilolira.com"
-                        className="w-12 h-12 rounded-xl bg-gray-800 bg-opacity-50 flex items-center justify-center text-gray-300 hover:text-white hover:bg-red-600 transition-all duration-200 backdrop-blur-sm"
+                        className="navbar-mobile-social-link email"
                         aria-label="Email"
                       >
-                        <FaEnvelope size={18} />
+                        <FaEnvelope />
                       </a>
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </>

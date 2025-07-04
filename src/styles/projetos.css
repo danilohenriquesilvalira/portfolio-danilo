@@ -1,0 +1,264 @@
+/* ===== PROJETOS STYLES - VERSÃO LIMPA ===== */
+
+/* Base da seção */
+.projetos-section {
+  position: relative;
+  width: 100%;
+  height: auto; /* MUDANÇA AQUI */
+  min-height: 40vh; /* ADICIONE ISTO */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #191919;
+  overflow: visible;
+  padding: 3rem 0; /* AUMENTE O PADDING */
+}
+
+/* Container wrapper */
+.projetos-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Container do conteúdo */
+.projetos-container {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* ===== HEADER CENTRALIZADO ===== */
+.projetos-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ===== COMPONENTES DE TEXTO ===== */
+
+.projetos-title {
+  font-weight: bold;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.projetos-description {
+  font-weight: 500;
+  line-height: 1.6;
+  color: #d1d5db;
+  text-align: center;
+}
+
+/* ===== RESPONSIVIDADE INTELIGENTE - CENTRALIZADA ===== */
+
+/* MOBILE PHONES - Sistema inteligente (320px-767px) */
+@media (max-width: 767px) {
+  .projetos-section {
+    height: auto; /* AUTO no mobile igual tech expertise */
+    min-height: 50vh; /* MÍNIMO de 50vh igual tech expertise */
+    padding: 1.5rem 0; /* REDUZIDO padding igual tech expertise */
+  }
+
+  .projetos-wrapper {
+    padding: 0 1rem;
+    justify-content: center;
+  }
+  
+  .projetos-container {
+    text-align: center;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .projetos-title {
+    font-size: clamp(28px, 9vw, 42px);
+    text-align: center;
+    margin-bottom: 0.25rem;
+  }
+  
+  .projetos-description {
+    font-size: clamp(14px, 4vw, 16px);
+    max-width: 100%;
+    text-align: center;
+  }
+}
+
+/* TABLETS - Sistema inteligente (768px-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .projetos-section {
+    height: 60vh; /* REDUZIDO igual tech expertise */
+    padding: 1.5rem 0;
+  }
+
+  .projetos-wrapper {
+    padding: 0 2rem;
+    justify-content: center;
+  }
+  
+  .projetos-container {
+    text-align: center;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  
+  .projetos-title {
+    font-size: clamp(42px, 6vw, 56px);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .projetos-description {
+    font-size: clamp(16px, 2.2vw, 18px);
+    max-width: 90%;
+    text-align: center;
+  }
+}
+
+/* NOTEBOOKS - Base limpa (1024px-1440px) */
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .projetos-section {
+    height: 65vh; /* REDUZIDO igual tech expertise */
+    padding: 2rem 0;
+  }
+
+  .projetos-section .projetos-wrapper {
+    padding: 0 1.5rem;
+    justify-content: center;
+  }
+  
+  .projetos-section .projetos-container {
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .projetos-section .projetos-title {
+    font-size: clamp(56px, 4.5vw, 72px);
+    line-height: 1.1;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .projetos-section .projetos-description {
+    font-size: clamp(18px, 1.2vw, 20px);
+    max-width: 600px;
+    text-align: center;
+  }
+}
+
+/* MONITORES GRANDES - Escala inteligente (1441px-1920px) */
+@media (min-width: 1441px) and (max-width: 1920px) {
+  .projetos-section {
+    height: 70vh; /* REDUZIDO igual tech expertise */
+    padding: 2rem 0;
+  }
+
+  .projetos-wrapper {
+    padding: 0 2rem;
+    justify-content: center;
+  }
+  
+  .projetos-container {
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .projetos-title {
+    font-size: clamp(60px, 5vw, 80px);
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  .projetos-description {
+    font-size: clamp(19px, 1.2vw, 22px);
+    max-width: 700px;
+    text-align: center;
+  }
+}
+
+/* MONITORES 4K+ - Escala avançada CENTRALIZADA (1921px-2559px) */
+@media (min-width: 1921px) and (max-width: 2559px) {
+  .projetos-section {
+    height: 75vh; /* REDUZIDO igual tech expertise */
+    padding: 2.5rem 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .projetos-wrapper {
+    padding: 0 2rem;
+    justify-content: center;
+  }
+     
+  .projetos-container {
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .projetos-header {
+    text-align: center;
+  }
+     
+  .projetos-title {
+    font-size: clamp(50px, 4.2vw, 50px);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+     
+  .projetos-description {
+    font-size: clamp(20px, 1.5vw, 26px);
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+/* ULTRA-WIDE - Escala máxima CENTRALIZADA (2560px+) */
+@media (min-width: 2560px) {
+  .projetos-section {
+    height: 80vh; /* REDUZIDO igual tech expertise */
+    padding: 3rem 0;
+  }
+
+  .projetos-wrapper {
+    padding: 0 3rem;
+    justify-content: center;
+  }
+  
+  .projetos-container {
+    gap: 2rem;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .projetos-title {
+    font-size: clamp(100px, 6vw, 140px);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .projetos-description {
+    font-size: clamp(30px, 1.8vw, 42px);
+    max-width: 1000px;
+    text-align: center;
+  }
+}

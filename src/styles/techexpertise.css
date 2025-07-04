@@ -1,0 +1,435 @@
+/* ===== TECHEXPERTISE STYLES - VERSÃO COMPACTA ===== */
+
+/* Base da seção - MAIS COMPACTA */
+.tech-expertise-section {
+  position: relative;
+  width: 100%;
+  height: auto; /* MUDANÇA AQUI */
+  min-height: 50vh; /* ADICIONE ISTO */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #191919;
+  overflow: visible;
+  padding: 3rem 0; /* AUMENTE O PADDING */
+}
+
+/* Container wrapper */
+.tech-expertise-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Container do conteúdo */
+.tech-expertise-container {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* REDUZIDO de 1rem para 0.5rem */
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* ===== HEADER CENTRALIZADO - MAIS COMPACTO ===== */
+.tech-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2rem; /* REDUZIDO de 4rem para 2rem */
+}
+
+/* ===== COMPONENTES DE TEXTO ===== */
+
+.tech-expertise-title {
+  font-weight: bold;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 0.5rem; /* REDUZIDO de 1rem para 0.5rem */
+  text-align: center;
+}
+
+.tech-expertise-description {
+  font-weight: 500;
+  line-height: 1.6;
+  color: #d1d5db;
+  text-align: center;
+}
+
+/* ===== GRID DE TECNOLOGIAS - MAIS COMPACTO ===== */
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2rem; /* REDUZIDO de 4rem para 2rem */
+  margin: 1.5rem 0; /* REDUZIDO de 4rem para 1.5rem */
+  width: 100%;
+  max-width: 900px; /* REDUZIDO de 1000px para 900px */
+  justify-items: center;
+  align-items: center;
+  justify-self: center;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+  transform: translateY(-6px) scale(1.05); /* REDUZIDO translateY de -8px para -6px */
+}
+
+.tech-icon {
+  width: 85px; /* REDUZIDO de 120px para 85px */
+  height: 85px; /* REDUZIDO de 120px para 85px */
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.tech-item:hover .tech-icon {
+  transform: scale(1.1); /* REDUZIDO de 1.15 para 1.1 */
+}
+
+/* ===== BOTÃO VER PROJETOS - REMOVIDO PARA MAIS COMPACTO ===== */
+.tech-expertise-button {
+  display: none; /* OCULTO para deixar mais compacto */
+}
+
+/* ===== RESPONSIVIDADE INTELIGENTE - COMPACTA ===== */
+
+/* MOBILE PHONES - Sistema inteligente (320px-767px) */
+@media (max-width: 767px) {
+  .tech-expertise-section {
+    height: auto; /* AUTO no mobile */
+    min-height: 50vh; /* MÍNIMO de 50vh */
+    padding: 1.5rem 0; /* REDUZIDO padding */
+  }
+
+  .tech-expertise-wrapper {
+    padding: 0 1rem;
+    justify-content: center;
+  }
+  
+  .tech-expertise-container {
+    text-align: center;
+    gap: 0.5rem; /* REDUZIDO */
+    align-items: center;
+  }
+
+  .tech-header {
+    margin-bottom: 1rem; /* REDUZIDO */
+  }
+  
+  .tech-expertise-title {
+    font-size: clamp(24px, 8vw, 36px); /* REDUZIDO */
+    text-align: center;
+    margin-bottom: 0.25rem; /* REDUZIDO */
+  }
+  
+  .tech-expertise-description {
+    font-size: clamp(13px, 3.5vw, 15px); /* REDUZIDO */
+    max-width: 100%;
+    text-align: center;
+  }
+
+  /* Grid Mobile - MAIS COMPACTO */
+  .tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem; /* REDUZIDO */
+    margin: 1rem 0; /* REDUZIDO */
+    max-width: 100%;
+    justify-self: center;
+  }
+  
+  .tech-item {
+    padding: 0.5rem; /* REDUZIDO */
+  }
+  
+  .tech-icon {
+    width: clamp(30px, 9vw, 40px); /* REDUZIDO */
+    height: clamp(30px, 9vw, 40px); /* REDUZIDO */
+  }
+}
+
+/* TABLETS - Sistema inteligente (768px-1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .tech-expertise-section {
+    height: 60vh; /* REDUZIDO */
+    padding: 1.5rem 0;
+  }
+
+  .tech-expertise-wrapper {
+    padding: 0 2rem;
+    justify-content: center;
+  }
+  
+  .tech-expertise-container {
+    text-align: center;
+    gap: 0.75rem; /* REDUZIDO */
+    align-items: center;
+  }
+
+  .tech-header {
+    margin-bottom: 1.5rem; /* REDUZIDO */
+  }
+  
+  .tech-expertise-title {
+    font-size: clamp(36px, 5.5vw, 48px); /* REDUZIDO */
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tech-expertise-description {
+    font-size: clamp(15px, 2vw, 17px); /* REDUZIDO */
+    max-width: 90%;
+    text-align: center;
+  }
+
+  /* Grid Tablet - MAIS COMPACTO */
+  .tech-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem; /* REDUZIDO */
+    margin: 1.25rem 0; /* REDUZIDO */
+    max-width: 500px; /* REDUZIDO */
+    justify-self: center;
+  }
+  
+  .tech-item {
+    padding: 0.75rem; /* REDUZIDO */
+  }
+  
+  .tech-icon {
+    width: clamp(40px, 7vw, 50px); /* REDUZIDO */
+    height: clamp(40px, 7vw, 50px); /* REDUZIDO */
+  }
+}
+
+/* NOTEBOOKS - Base compacta (1024px-1440px) */
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .tech-expertise-section {
+    height: 65vh; /* REDUZIDO */
+    padding: 2rem 0;
+  }
+
+  .tech-expertise-section .tech-expertise-wrapper {
+    padding: 0 1.5rem;
+    justify-content: center;
+  }
+  
+  .tech-expertise-section .tech-expertise-container {
+    gap: 1rem; /* REDUZIDO de 1.5rem */
+    align-items: center;
+    text-align: center;
+  }
+
+  .tech-expertise-section .tech-header {
+    margin-bottom: 2rem; /* REDUZIDO */
+  }
+  
+  .tech-expertise-section .tech-expertise-title {
+    font-size: clamp(48px, 4vw, 60px); /* REDUZIDO */
+    line-height: 1.1;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tech-expertise-section .tech-expertise-description {
+    font-size: clamp(16px, 1.1vw, 18px); /* REDUZIDO */
+    max-width: 600px;
+    text-align: center;
+  }
+
+  /* Grid Notebook - MAIS COMPACTO */
+  .tech-expertise-section .tech-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.25rem; /* REDUZIDO */
+    margin: 1.5rem 0; /* REDUZIDO */
+    max-width: 600px; /* REDUZIDO */
+    justify-self: center;
+  }
+  
+  .tech-expertise-section .tech-item {
+    padding: 0.75rem; /* REDUZIDO */
+  }
+  
+  .tech-expertise-section .tech-icon {
+    width: clamp(45px, 3.5vw, 55px); /* REDUZIDO */
+    height: clamp(45px, 3.5vw, 55px); /* REDUZIDO */
+  }
+}
+
+/* MONITORES GRANDES - Escala compacta (1441px-1920px) */
+@media (min-width: 1441px) and (max-width: 1920px) {
+  .tech-expertise-section {
+    height: 70vh; /* REDUZIDO */
+    padding: 2rem 0;
+  }
+
+  .tech-expertise-wrapper {
+    padding: 0 2rem;
+    justify-content: center;
+  }
+  
+  .tech-expertise-container {
+    gap: 1rem; /* REDUZIDO */
+    align-items: center;
+    text-align: center;
+  }
+
+  .tech-header {
+    margin-bottom: 2.5rem; /* REDUZIDO */
+  }
+  
+  .tech-expertise-title {
+    font-size: clamp(40px, 4.5vw, 40px); /* REDUZIDO */
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  .tech-expertise-description {
+    font-size: clamp(17px, 1.1vw, 20px); /* REDUZIDO */
+    max-width: 700px;
+    text-align: center;
+  }
+
+  /* Grid Monitor Grande - MAIS COMPACTO */
+  .tech-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1.5rem; /* REDUZIDO */
+    margin: 2rem 0; /* REDUZIDO */
+    max-width: 700px; /* REDUZIDO */
+    justify-self: center;
+  }
+  
+  .tech-item {
+    padding: 1rem; /* REDUZIDO */
+  }
+  
+  .tech-icon {
+    width: clamp(50px, 3.2vw, 60px); /* REDUZIDO */
+    height: clamp(50px, 3.2vw, 60px); /* REDUZIDO */
+  }
+}
+
+/* MONITORES 4K+ - Escala compacta (1921px-2559px) */
+@media (min-width: 1921px) and (max-width: 2559px) {
+  .tech-expertise-section {
+    height: 75vh; /* REDUZIDO */
+    padding: 2.5rem 0;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tech-expertise-wrapper {
+    padding: 0 2rem;
+    justify-content: center;
+  }
+     
+  .tech-expertise-container {
+    gap: 1.5rem; /* REDUZIDO */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .tech-header {
+    text-align: center;
+    margin-bottom: 3rem; /* REDUZIDO */
+  }
+     
+  .tech-expertise-title {
+    font-size: clamp(50px, 3.8vw, 50px); /* REDUZIDO */
+    text-align: center;
+    margin-bottom: 1rem; /* REDUZIDO */
+  }
+     
+  .tech-expertise-description {
+    font-size: clamp(20px, 1.3vw, 26px); /* REDUZIDO */
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  /* Grid 4K COMPACTO */
+  .tech-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2.5rem; /* REDUZIDO */
+    margin: 2.5rem auto; /* REDUZIDO */
+    max-width: 1000px; /* REDUZIDO */
+    justify-self: center;
+  }
+  
+  .tech-item {
+    padding: 1.25rem; /* REDUZIDO */
+  }
+  
+  .tech-icon {
+    width: clamp(70px, 4vw, 100px); /* REDUZIDO */
+    height: clamp(70px, 4vw, 100px); /* REDUZIDO */
+  }
+}
+
+/* ULTRA-WIDE - Escala compacta (2560px+) */
+@media (min-width: 2560px) {
+  .tech-expertise-section {
+    height: 80vh; /* REDUZIDO */
+    padding: 3rem 0;
+  }
+
+  .tech-expertise-wrapper {
+    padding: 0 3rem;
+    justify-content: center;
+  }
+  
+  .tech-expertise-container {
+    gap: 2rem; /* REDUZIDO */
+    align-items: center;
+    text-align: center;
+  }
+
+  .tech-header {
+    margin-bottom: 4rem; /* REDUZIDO */
+  }
+  
+  .tech-expertise-title {
+    font-size: clamp(80px, 5vw, 120px); /* REDUZIDO */
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tech-expertise-description {
+    font-size: clamp(26px, 1.5vw, 36px); /* REDUZIDO */
+    max-width: 1000px;
+    text-align: center;
+  }
+
+  /* Grid Ultra-wide COMPACTO */
+  .tech-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2.5rem; /* REDUZIDO */
+    margin: 3rem 0; /* REDUZIDO */
+    max-width: 1100px; /* REDUZIDO */
+    justify-self: center;
+  }
+  
+  .tech-item {
+    padding: 1.5rem; /* REDUZIDO */
+  }
+  
+  .tech-icon {
+    width: clamp(65px, 2.2vw, 80px); /* REDUZIDO */
+    height: clamp(65px, 2.2vw, 80px); /* REDUZIDO */
+  }
+}

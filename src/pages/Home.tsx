@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Herosections from "../components/sections/Herosections";
 import TechExpertise from "../components/sections/TechExpertise";
-import FeaturedProjects from "../components/sections/FeaturedProjects";
+import ProjectsPage from "../components/sections/ProjectsPage";
 
 
 const Home = () => {
@@ -21,7 +21,7 @@ const Home = () => {
 
       
       {/* Featured Projects Section */}
-      <FeaturedProjects />
+      <ProjectsPage />
       
       
     </main>
