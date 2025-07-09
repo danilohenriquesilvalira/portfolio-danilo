@@ -1,4 +1,4 @@
-/* ===== NAVBAR STYLES - PADRONIZADO HERO SECTION ===== */
+/* ===== NAVBAR STYLES - OTIMIZADO E RESPONSIVO ===== */
 
 /* Base do navbar */
 .navbar {
@@ -10,7 +10,7 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1.25rem 0;
+  padding: 1rem 0;
   background: transparent;
   font-family: 'Poppins', sans-serif;
 }
@@ -20,85 +20,75 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1rem;
+  min-height: 4rem;
+  padding-top: 1rem;
 }
 
-/* ===== LOGO E TÍTULO ===== */
-
+/* ===== LOGO SVG ===== */
 .navbar-logo {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: flex-start;
   text-decoration: none;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 10;
+  padding-top: 0.5rem;
 }
 
 .navbar-logo:hover {
   opacity: 0.8;
 }
 
+/* Ícone principal - Configuração base */
 .navbar-logo-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
+  width: 3rem; /* Base padrão */
+  height: 3rem; /* Base padrão */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
-  border: 2px solid white;
+  background: transparent;
+  border: none;
   transition: all 0.3s ease;
+  padding: 0.25rem;
+  position: relative;
+  flex-shrink: 0;
+  transform: translate(0px, 0px); /* Base padrão */
 }
 
 .navbar-logo-icon.small {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.125rem;
 }
 
-.navbar-logo-icon span {
-  color: #191919;
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-.navbar-logo-icon.small span {
-  font-size: 0.875rem;
-}
-
-.navbar-logo-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.navbar-name {
-  color: white;
-  font-weight: bold;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.navbar-subtitle {
-  color: #d1d5db;
-  line-height: 1.2;
-  margin: 0;
+.navbar-logo-icon svg {
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
 }
 
 /* ===== DESKTOP NAVIGATION ===== */
-
 .navbar-desktop {
   display: none;
   list-style: none;
   flex-direction: row;
   gap: 2rem;
-  align-items: center;
+  align-items: flex-start;
   margin: 0;
   padding: 0;
+  padding-top: 1rem;
+  height: auto;
+  justify-content: center;
 }
 
 .navbar-desktop-item {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-desktop-link {
@@ -107,6 +97,9 @@
   font-weight: 500;
   transition: all 0.3s ease;
   position: relative;
+  display: flex;
+  align-items: center;
+  line-height: 1;
 }
 
 .navbar-desktop-link:hover,
@@ -125,14 +118,16 @@
 }
 
 /* ===== REDES SOCIAIS DESKTOP ===== */
-
 .navbar-social {
   margin-left: 1.5rem;
   display: flex;
   gap: 0.75rem;
-  align-items: center;
+  align-items: flex-start;
   border-left: 1px solid #374151;
   padding-left: 1.5rem;
+  padding-top: 1rem;
+  height: auto;
+  justify-content: center;
 }
 
 .navbar-social-link {
@@ -146,6 +141,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.125rem;
+  flex-shrink: 0;
 }
 
 .navbar-social-link:hover {
@@ -154,7 +150,6 @@
 }
 
 /* ===== MOBILE NAVIGATION ===== */
-
 .navbar-mobile {
   display: flex;
   flex: 1;
@@ -221,7 +216,6 @@
 }
 
 /* ===== MOBILE MENU ===== */
-
 .navbar-backdrop {
   position: fixed;
   inset: 0;
@@ -385,19 +379,34 @@
 
 /* ===== RESPONSIVIDADE INTELIGENTE ===== */
 
-/* MOBILE PHONES (320px-767px) */
-@media (max-width: 767px) {
+/* EXTRA SMALL - Celulares pequenos (320px-479px) */
+@media (max-width: 479px) {
+  .navbar-wrapper {
+    padding: 0 0.5rem;
+    max-width: 100%;
+  }
+  
+  .navbar-logo-icon {
+    width: 3rem;
+    height: 3rem;
+    transform: translate(0px, 0px);
+  }
+  
+  .navbar-desktop {
+    display: none;
+  }
+}
+
+/* SMALL - Celulares (480px-767px) */
+@media (min-width: 480px) and (max-width: 767px) {
   .navbar-wrapper {
     padding: 0 1rem;
   }
   
-  .navbar-name {
-    font-size: clamp(16px, 4.5vw, 18px);
-  }
-  
-  .navbar-subtitle {
-    font-size: clamp(10px, 3vw, 12px);
-    display: none;
+  .navbar-logo-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    transform: translate(0px, 0px);
   }
   
   .navbar-desktop {
@@ -405,46 +414,49 @@
   }
 }
 
-/* TABLETS (768px-1023px) */
+/* MEDIUM - Tablets (768px-1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .navbar-wrapper {
-    padding: 0 2rem;
-  }
-  
-  .navbar-name {
-    font-size: clamp(18px, 3vw, 20px);
-  }
-  
-  .navbar-subtitle {
-    font-size: clamp(12px, 2vw, 14px);
-  }
-  
-  .navbar-desktop {
-    display: none;
-  }
-}
-
-/* NOTEBOOKS (1024px-1440px) */
-@media (min-width: 1024px) and (max-width: 1440px) {
   .navbar-wrapper {
     padding: 0 1.5rem;
   }
   
-  .navbar-name {
-    font-size: clamp(18px, 1.5vw, 20px);
+  .navbar-logo-icon {
+    width: 4rem;
+    height: 4rem;
+    transform: translate(0px, 0px);
   }
   
-  .navbar-subtitle {
-    font-size: clamp(12px, 1vw, 14px);
+  .navbar-desktop {
+    display: none;
+  }
+}
+
+/* LARGE - Notebooks pequenos (1024px-1199px) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .navbar-wrapper {
+    padding: 0 1.5rem;
+    min-height: 4rem;
+    align-items: flex-start;
+  }
+  
+  .navbar-logo-icon {
+    width: 4.2rem;
+    height: 4.2rem;
+    transform: translate(0px, -5px);
   }
   
   .navbar-desktop {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.2rem;
+    transform: translateY(-0.3rem);
   }
   
   .navbar-desktop-link {
-    font-size: clamp(16px, 1.1vw, 18px);
+    font-size: clamp(14px, 1.0vw, 16px);
+  }
+  
+  .navbar-social {
+    transform: translateY(-0.3rem);
   }
   
   .navbar-mobile {
@@ -452,60 +464,100 @@
   }
 }
 
-/* MONITORES GRANDES (1441px-1920px) */
+/* X-LARGE - Notebooks médios (1200px-1440px) */
+@media (min-width: 1200px) and (max-width: 1440px) {
+  .navbar-wrapper {
+    padding: 0 1.5rem;
+    min-height: 4.2rem;
+    align-items: flex-start;
+  }
+  
+  .navbar-logo-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: translate(0px, -8px);
+  }
+  
+  .navbar-desktop {
+    display: flex;
+    gap: 1.5rem;
+    transform: translateY(-0.5rem);
+  }
+  
+  .navbar-desktop-link {
+    font-size: clamp(15px, 1.1vw, 18px);
+  }
+  
+  .navbar-social {
+    transform: translateY(-0.5rem);
+  }
+  
+  .navbar-mobile {
+    display: none;
+  }
+}
+
+/* 2X-LARGE - Monitores grandes (1441px-1920px) */
 @media (min-width: 1441px) and (max-width: 1920px) {
   .navbar-wrapper {
-    padding: 0 2rem;
+    padding: 0 0rem;
+    min-height: 4.5rem;
+    align-items: flex-start;
   }
   
-  .navbar-name {
-    font-size: clamp(18px, 1.4vw, 20px);
-  }
-  
-  .navbar-subtitle {
-    font-size: clamp(12px, 1vw, 13px);
+  .navbar-logo-icon {
+    width: 6rem;
+    height: 6rem;
+    transform: translate(0px, -15px);
   }
   
   .navbar-desktop {
     display: flex;
     gap: 2rem;
+    align-items: center;
+    transform: translateY(-0.8rem);
   }
   
   .navbar-desktop-link {
     font-size: clamp(16px, 1.2vw, 20px);
   }
   
+  .navbar-social {
+    transform: translateY(-0.3rem);
+  }
+  
   .navbar-mobile {
     display: none;
   }
 }
 
-/* MONITORES 4K+ (1921px-2559px) */
+/* 3X-LARGE - Monitores 4K (1921px-2559px) */
 @media (min-width: 1921px) and (max-width: 2559px) {
   .navbar-wrapper {
-    padding: 0 2rem;
+    padding: 0 0rem;
+    min-height: 5rem;
+    align-items: flex-start;
   }
   
-  /* ADICIONE ESTA PARTE AQUI */
-  .navbar-logo {
-    transform: translateX(-100px); /* Ajuste o valor: -20px, -30px, -50px */
-  }
-  
-  .navbar-name {
-    font-size: clamp(20px, 1.0vw, 20px);
-  }
-  
-  .navbar-subtitle {
-    font-size: clamp(10px, 1.2vw, 14px);
+  .navbar-logo-icon {
+    width: 9rem;
+    height: 9rem;
+    transform: translate(-100px, -10px);
   }
   
   .navbar-desktop {
     display: flex;
-    gap: 2.0rem;
+    gap: 4.0rem;
+    align-items: center;
+    transform: translate(150px, 10px);
   }
   
   .navbar-desktop-link {
-    font-size: clamp(18px, 1.3vw, 22px);
+    font-size: clamp(18px, 1.3vw, 24px);
+  }
+  
+  .navbar-social {
+    transform: translateY(-0.6rem);
   }
   
   .navbar-mobile {
@@ -513,30 +565,57 @@
   }
 }
 
-/* ULTRA-WIDE (2560px+) */
+/* 4X-LARGE - Ultra-wide (2560px+) */
 @media (min-width: 2560px) {
   .navbar-wrapper {
     padding: 0 3rem;
+    min-height: 5.5rem;
+    align-items: flex-start;
   }
   
-  .navbar-name {
-    font-size: clamp(28px, 1.8vw, 32px);
-  }
-  
-  .navbar-subtitle {
-    font-size: clamp(18px, 1.4vw, 20px);
+  .navbar-logo-icon {
+    width: 8rem;
+    height: 8rem;
+    transform: translate(-30px, -15px);
   }
   
   .navbar-desktop {
     display: flex;
     gap: 3rem;
+    align-items: center;
+    transform: translateY(-1rem);
   }
   
   .navbar-desktop-link {
-    font-size: clamp(20px, 1.4vw, 24px);
+    font-size: clamp(20px, 1.4vw, 28px);
+  }
+  
+  .navbar-social {
+    transform: translateY(-0.8rem);
   }
   
   .navbar-mobile {
     display: none;
+  }
+}
+
+/* ===== OTIMIZAÇÕES PARA PERFORMANCE ===== */
+
+/* Reduzir motion para usuários sensíveis */
+@media (prefers-reduced-motion: reduce) {
+  .navbar-logo,
+  .navbar-desktop-link,
+  .navbar-social-link,
+  .navbar-logo-icon,
+  .navbar-hamburger span {
+    transition: none;
+  }
+}
+
+/* Otimização para telas de alta densidade */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .navbar-logo-icon svg {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
 }

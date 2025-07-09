@@ -276,7 +276,7 @@
 /* MONITORES GRANDES - Escala inteligente (1441px-1920px) */
 @media (min-width: 1441px) and (max-width: 1920px) {
   .hero-wrapper {
-    padding: 0 2rem;
+    padding: 0 rem;
   }
   
   .hero-container {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FaBars, FaTimes, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
+import { FaTimes, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa';
 import '../../styles/navbar.css';
 
 const navLinks = [
@@ -39,7 +39,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-wrapper">
         
-        {/* Logo e Título */}
+        {/* Logo SVG Only */}
         <Link
           to="/"
           className="navbar-logo"
@@ -48,11 +48,25 @@ const Navbar = () => {
           }}
         >
           <div className="navbar-logo-icon">
-            <span>DL</span>
-          </div>
-          <div className="navbar-logo-text">
-            <p className="navbar-name">Danilo Lira</p>
-            <p className="navbar-subtitle">Automação Industrial & Indústria 4.0</p>
+            <svg viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g filter="url(#filter0_d_2905_557)">
+                <path d="M12.8699 1H11.0343C11.0343 2.15566 11.0343 2.8329 11.0343 3.98856M12.8699 1H14.7449M12.8699 1V3.95926M12.8699 17.2524V3.95926M11.0343 17.2524C11.0343 12.092 11.0343 9.14899 11.0343 3.98856M11.0343 3.98856L6.80469 3.95926C6.80469 9.94354 6.80469 13.2987 6.80469 19.283V19.7517M12.8699 3.95926L15.0086 3.98856" stroke="white"/>
+                <path d="M15.0156 16.7668C18.5432 16.7668 21.4029 13.9071 21.4029 10.3795C21.4029 6.85189 18.5432 3.99219 15.0156 3.99219" stroke="white"/>
+                <path d="M14.7483 1H15.012C20.1902 1 24.3879 5.19772 24.3879 10.3759C24.3879 15.554 20.1902 19.7517 15.012 19.7517H6.80812H5V3.5438" stroke="white"/>
+              </g>
+              <defs>
+                <filter id="filter0_d_2905_557" x="0.5" y="0.5" width="28.3906" height="27.75" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                  <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+                  <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                  <feOffset dy="4"/>
+                  <feGaussianBlur stdDeviation="2"/>
+                  <feComposite in2="hardAlpha" operator="out"/>
+                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2905_557"/>
+                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2905_557" result="shape"/>
+                </filter>
+              </defs>
+            </svg>
           </div>
         </Link>
 
@@ -131,7 +145,25 @@ const Navbar = () => {
                   <div className="navbar-mobile-header">
                     <div className="navbar-mobile-logo">
                       <div className="navbar-logo-icon small">
-                        <span>DL</span>
+                        <svg viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g filter="url(#filter0_d_2905_557_mobile)">
+                            <path d="M12.8699 1H11.0343C11.0343 2.15566 11.0343 2.8329 11.0343 3.98856M12.8699 1H14.7449M12.8699 1V3.95926M12.8699 17.2524V3.95926M11.0343 17.2524C11.0343 12.092 11.0343 9.14899 11.0343 3.98856M11.0343 3.98856L6.80469 3.95926C6.80469 9.94354 6.80469 13.2987 6.80469 19.283V19.7517M12.8699 3.95926L15.0086 3.98856" stroke="white"/>
+                            <path d="M15.0156 16.7668C18.5432 16.7668 21.4029 13.9071 21.4029 10.3795C21.4029 6.85189 18.5432 3.99219 15.0156 3.99219" stroke="white"/>
+                            <path d="M14.7483 1H15.012C20.1902 1 24.3879 5.19772 24.3879 10.3759C24.3879 15.554 20.1902 19.7517 15.012 19.7517H6.80812H5V3.5438" stroke="white"/>
+                          </g>
+                          <defs>
+                            <filter id="filter0_d_2905_557_mobile" x="0.5" y="0.5" width="28.3906" height="27.75" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                              <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+                              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                              <feOffset dy="4"/>
+                              <feGaussianBlur stdDeviation="2"/>
+                              <feComposite in2="hardAlpha" operator="out"/>
+                              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2905_557"/>
+                              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2905_557" result="shape"/>
+                            </filter>
+                          </defs>
+                        </svg>
                       </div>
                       <span className="navbar-mobile-title">Menu</span>
                     </div>
