@@ -1,5 +1,5 @@
 import { useState, useRef, FormEvent } from 'react';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { FaEnvelope, FaLinkedin, FaGithub, FaPhoneAlt, FaMapMarkerAlt, FaWhatsapp, FaCheckCircle, FaExclamationCircle } from 'react-icons/fa';
 
 // Reaproveitando o componente de contato existente na forma de página independente
@@ -7,7 +7,7 @@ import ContactFormField from '@/components/contact/ContactFormField';
 import ContactItem from '@/components/contact/ContactItem';
 
 // Variantes de animação
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -17,7 +17,7 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: {
     y: 0,

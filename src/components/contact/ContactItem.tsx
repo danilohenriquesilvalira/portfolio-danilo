@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { ReactNode } from 'react';
 
 // Componente de item de contato com efeito hover
@@ -10,7 +10,7 @@ interface ContactItemProps {
 }
 
 // Variantes de animação
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { y: 20, opacity: 0 },
   visible: {
     y: 0,

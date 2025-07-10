@@ -1,4 +1,4 @@
-import { Experience, Education, Certification, Skill } from '../types/experience';
+import { Experience, Education, Skill } from '../types/experience';
 
 // Experiências profissionais (dados atualizados)
 export const experiences: Experience[] = [
