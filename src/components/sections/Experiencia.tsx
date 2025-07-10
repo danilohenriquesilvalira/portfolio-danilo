@@ -1,12 +1,12 @@
-import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaGraduationCap } from 'react-icons/fa';
-import '../../styles/experiencia.css';
+import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaGraduationCap, FaClock, FaBriefcase } from 'react-icons/fa';
+import { CSSProperties } from 'react';
 
 const Experiencia = () => {
   // Dados da experiência profissional
   const experienciaProfissional = [
     {
       cargo: "Especialista em Automação Industrial & Desenvolvedor Full-Stack",
-      empresa: "R15 Automação Industrial",
+      empresa: "RLS Automação Industrial",
       localizacao: "Lisboa, Portugal",
       periodo: "jun de 2024 - o momento ( 1 ano )",
       tipo: "Full Time",
@@ -66,88 +66,224 @@ const Experiencia = () => {
     }
   ];
 
+  const styles: { [key: string]: CSSProperties } = {
+    section: {
+      backgroundColor: '#191919',
+      padding: '2rem 0',
+      fontFamily: "'Poppins', sans-serif"
+    },
+    container: {
+      maxWidth: '1000px',
+      margin: '0 auto',
+      padding: '0 1rem'
+    },
+    title: {
+      fontSize: '1.8rem',
+      fontWeight: 'bold',
+      color: 'white',
+      textAlign: 'center' as const,
+      marginBottom: '1.5rem'
+    },
+    timelineItem: {
+      padding: '0.7rem 0',
+      borderBottom: '1px solid #d1d5db',
+      transition: 'transform 0.2s ease'
+    },
+    jobHeader: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+      gap: '1rem',
+      marginBottom: '0.4rem'
+    },
+    jobTitle: {
+      fontSize: '0.95rem',
+      fontWeight: '600',
+      color: 'white',
+      margin: 0,
+      lineHeight: '1.3',
+      flex: 1
+    },
+    badge: {
+      fontSize: '0.65rem',
+      fontWeight: '600',
+      padding: '0.4rem 0.8rem',
+      borderRadius: '20px',
+      textTransform: 'uppercase' as const,
+      letterSpacing: '0.08em',
+      position: 'relative' as const,
+      transition: 'all 0.3s ease',
+      cursor: 'default',
+      backdropFilter: 'blur(10px)',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    badgeGreen: {
+      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.35) 100%)',
+      color: '#10b981',
+      border: '1px solid rgba(16, 185, 129, 0.4)',
+      textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+    },
+    badgeYellow: {
+      background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.35) 100%)',
+      color: '#f59e0b',
+      border: '1px solid rgba(245, 158, 11, 0.4)',
+      textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+    },
+    company: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.4rem',
+      fontSize: '0.85rem',
+      fontWeight: '500',
+      color: '#e5e7eb',
+      marginBottom: '0.3rem'
+    },
+    meta: {
+      display: 'flex',
+      gap: '1.2rem',
+      fontSize: '0.75rem',
+      color: '#9ca3af'
+    },
+    metaItem: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.3rem'
+    },
+    icon: {
+      fontSize: '0.7rem'
+    },
+    separator: {
+      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+      paddingBottom: '1.5rem',
+      marginBottom: '2rem'
+    }
+  };
+
   return (
-    <section className="experiencia-section" id="experiencia">
-      <div className="experiencia-wrapper">
-        <div className="experiencia-container">
+    <section style={styles.section} id="experiencia">
+      <div style={styles.container}>
+        
+        {/* Experiência Profissional */}
+        <div style={styles.separator}>
+          <h2 style={styles.title}>Experiência Profissional</h2>
           
-          {/* Experiência Profissional */}
-          <div className="experiencia-profissional">
-            <h2 className="section-title">Experiência Profissional</h2>
-            
-            <div className="timeline">
-              {experienciaProfissional.map((exp, index) => (
-                <div key={index} className="timeline-item">
-                  <div className="timeline-content">
-                    <div className="job-header">
-                      <h3 className="job-title">{exp.cargo}</h3>
-                      <span className={`job-type ${exp.tipoColor}`}>
+          <div>
+            {experienciaProfissional.map((exp, index) => (
+              <div key={index} style={styles.timelineItem}>
+                <div style={styles.jobHeader}>
+                  <h3 style={styles.jobTitle}>{exp.cargo}</h3>
+                  <span 
+                    style={{
+                      ...styles.badge,
+                      ...(exp.tipoColor === 'green' ? styles.badgeGreen : styles.badgeYellow)
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px) scale(1.05)';
+                      e.currentTarget.style.boxShadow = exp.tipoColor === 'green' 
+                        ? '0 4px 15px rgba(16, 185, 129, 0.4)' 
+                        : '0 4px 15px rgba(245, 158, 11, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+                    }}
+                  >
+                    {exp.tipoColor === 'green' ? (
+                      <>
+                        <FaBriefcase style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
                         {exp.tipo}
-                      </span>
-                    </div>
-                    
-                    <div className="job-details">
-                      <div className="job-company">
-                        <FaBuilding className="company-icon" />
-                        <span>{exp.empresa}</span>
-                      </div>
-                      <div className="job-meta">
-                        <div className="job-location">
-                          <FaMapMarkerAlt className="location-icon" />
-                          <span>{exp.localizacao}</span>
-                        </div>
-                        <div className="job-period">
-                          <FaCalendarAlt className="period-icon" />
-                          <span>{exp.periodo}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="timeline-line"></div>
+                      </>
+                    ) : (
+                      <>
+                        <FaClock style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
+                        {exp.tipo}
+                      </>
+                    )}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Formação Acadêmica */}
-          <div className="formacao-academica">
-            <h2 className="section-title">Formação Acadêmica</h2>
-            
-            <div className="timeline">
-              {formacaoAcademica.map((edu, index) => (
-                <div key={index} className="timeline-item">
-                  <div className="timeline-content">
-                    <div className="job-header">
-                      <h3 className="job-title">{edu.curso}</h3>
-                      <span className={`job-type ${edu.tipoColor}`}>
-                        {edu.tipo}
-                      </span>
-                    </div>
-                    
-                    <div className="job-details">
-                      <div className="job-company">
-                        <FaGraduationCap className="company-icon" />
-                        <span>{edu.instituicao}</span>
-                      </div>
-                      <div className="job-meta">
-                        <div className="job-location">
-                          <FaMapMarkerAlt className="location-icon" />
-                          <span>{edu.localizacao}</span>
-                        </div>
-                        <div className="job-period">
-                          <FaCalendarAlt className="period-icon" />
-                          <span>{edu.periodo}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="timeline-line"></div>
+                
+                <div style={styles.company}>
+                  <FaBuilding style={{...styles.icon, color: '#d1d5db'}} />
+                  <span>{exp.empresa}</span>
                 </div>
-              ))}
-            </div>
+                
+                <div style={styles.meta}>
+                  <div style={styles.metaItem}>
+                    <FaMapMarkerAlt style={{...styles.icon, color: '#6b7280'}} />
+                    <span>{exp.localizacao}</span>
+                  </div>
+                  <div style={styles.metaItem}>
+                    <FaCalendarAlt style={{...styles.icon, color: '#6b7280'}} />
+                    <span>{exp.periodo}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-
         </div>
+
+        {/* Formação Acadêmica */}
+        <div>
+          <h2 style={styles.title}>Formação Acadêmica</h2>
+          
+          <div>
+            {formacaoAcademica.map((edu, index) => (
+              <div key={index} style={styles.timelineItem}>
+                <div style={styles.jobHeader}>
+                  <h3 style={styles.jobTitle}>{edu.curso}</h3>
+                  <span 
+                    style={{
+                      ...styles.badge,
+                      ...(edu.tipoColor === 'green' ? styles.badgeGreen : styles.badgeYellow)
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-1px) scale(1.05)';
+                      e.currentTarget.style.boxShadow = edu.tipoColor === 'green' 
+                        ? '0 4px 15px rgba(16, 185, 129, 0.4)' 
+                        : '0 4px 15px rgba(245, 158, 11, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+                    }}
+                  >
+                    {edu.tipoColor === 'green' ? (
+                      <>
+                        <FaBriefcase style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
+                        {edu.tipo}
+                      </>
+                    ) : (
+                      <>
+                        <FaClock style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
+                        {edu.tipo}
+                      </>
+                    )}
+                  </span>
+                </div>
+                
+                <div style={styles.company}>
+                  <FaGraduationCap style={{...styles.icon, color: '#d1d5db'}} />
+                  <span>{edu.instituicao}</span>
+                </div>
+                
+                <div style={styles.meta}>
+                  <div style={styles.metaItem}>
+                    <FaMapMarkerAlt style={{...styles.icon, color: '#6b7280'}} />
+                    <span>{edu.localizacao}</span>
+                  </div>
+                  <div style={styles.metaItem}>
+                    <FaCalendarAlt style={{...styles.icon, color: '#6b7280'}} />
+                    <span>{edu.periodo}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );
