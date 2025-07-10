@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
 // Variantes para animação
-const sectionVariants = {
+const sectionVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -30,15 +30,16 @@ const SectionWrapper = (
     const sectionRef = useRef<HTMLDivElement>(null);
 
     // Configuração da variante com props de stagger, se fornecidas
-    const getVariants = () => {
+    const getVariants = (): Variants => {
       if (!staggerProps) return sectionVariants;
 
       return {
-        ...sectionVariants,
+        hidden: { opacity: 0 },
         visible: {
-          ...sectionVariants.visible,
+          opacity: 1,
           transition: {
-            ...sectionVariants.visible.transition,
+            duration: 0.6,
+            ease: "easeInOut",
             staggerChildren: staggerProps.staggerChildren || 0.1,
             delayChildren: staggerProps.delayChildren || 0.2
           }
