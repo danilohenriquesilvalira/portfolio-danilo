@@ -1,289 +1,466 @@
-import { FaBuilding, FaMapMarkerAlt, FaCalendarAlt, FaGraduationCap, FaClock, FaBriefcase } from 'react-icons/fa';
-import { CSSProperties } from 'react';
+import { FaCalendarAlt, FaGraduationCap, FaBriefcase, FaTrophy } from 'react-icons/fa';
+import { CSSProperties, useEffect, useState } from 'react'; // Importar useState
 
 const Experiencia = () => {
-  // Dados da experiência profissional
-  const experienciaProfissional = [
-    {
-      cargo: "Especialista em Automação Industrial & Desenvolvedor Full-Stack",
-      empresa: "RLS Automação Industrial",
-      localizacao: "Lisboa, Portugal",
-      periodo: "jun de 2024 - o momento ( 1 ano )",
-      tipo: "Full Time",
-      tipoColor: "green"
-    },
-    {
-      cargo: "Técnico de Manutenção Elétrica & Automação Industrial",
-      empresa: "Central de Cervejas (Sagres)",
-      localizacao: "Vialonga, Portugal",
-      periodo: "dez de 2023 - jun de 2024 (7 meses)",
-      tipo: "Full Time",
-      tipoColor: "green"
-    },
-    {
-      cargo: "Técnico de Automação Industrial",
-      empresa: "Font Salem (Grupo Damm)",
-      localizacao: "Santarém, Portugal",
-      periodo: "jul de 2023 - dez de 2023 (6 meses)",
-      tipo: "Full Time",
-      tipoColor: "green"
-    },
-    {
-      cargo: "Especialista em Automação de Sistemas Cervejeiros",
-      empresa: "Tecnale Automação de Sistemas",
-      localizacao: "São Paulo, Brasil",
-      periodo: "fev de 2023 - mar de 2023 (2 meses)",
-      tipo: "Temporary",
-      tipoColor: "yellow"
-    },
-    {
-      cargo: "Técnico de Automação Sênior & Desenvolvedor Full-Stack",
-      empresa: "AB InBev",
-      localizacao: "Pernambuco, Brasil",
-      periodo: "fev de 2014 - jan de 2023 (9 anos)",
-      tipo: "Full Time",
-      tipoColor: "green"
-    }
-  ];
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
-  // Dados da formação acadêmica
-  const formacaoAcademica = [
-    {
-      curso: "Tecnologia da Informação/Sistemas da Informação",
-      instituicao: "Estácio",
-      localizacao: "Pernambuco, Brasil",
-      periodo: "abr de 2021 - dez de 2023",
-      tipo: "Full Time",
-      tipoColor: "green"
-    },
-    {
-      curso: "Tecnologia da Informação/Sistemas da Informação",
-      instituicao: "SENAI Pernambuco",
-      localizacao: "Pernambuco, Brasil",
-      periodo: "fev de 2012 - dez de 2014",
-      tipo: "Full Time",
-      tipoColor: "green"
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Define o estado isMobile
+    };
+
+    const handleTouchDetect = () => {
+      // Verifica se o navegador suporta eventos de toque
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      // Adiciona um listener para detectar o primeiro toque e definir isTouchDevice
+      window.addEventListener('touchstart', handleTouchDetect, { once: true });
+      handleResize(); // Executa na montagem inicial
+      handleTouchDetect(); // Executa na montagem inicial
     }
-  ];
+
+    return () => {
+      document.head.removeChild(link);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('touchstart', handleTouchDetect);
+      }
+    };
+  }, []);
+
+  const getContentPadding = () => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width <= 480) return '1.5rem';
+      if (width <= 768) return '2rem';
+      return '2.5rem';
+    }
+    return '2.5rem';
+  };
+
+  const getGridColumns = () => {
+    return isMobile ? '1fr' : '1fr 1fr'; // Usa o estado isMobile
+  };
+
+  const getResponsiveFontSize = (desktopSize: number, mobileFactor: number = 0.8) => {
+    return isMobile ? `${desktopSize * mobileFactor}rem` : `${desktopSize}rem`;
+  };
+
+  // Funções para os estilos de hover, agora condicionais
+  const getExperienceItemHoverStyles = () => (
+    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio para desativar o hover
+      borderLeft: '3px solid #3b82f6',
+      paddingLeft: '1rem',
+      transform: 'translateX(5px)',
+    }
+  );
+
+  const getExperienceItemLeaveStyles = () => (
+    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio
+      borderLeft: 'none',
+      paddingLeft: '0',
+      transform: 'translateX(0)',
+    }
+  );
+
+  const getEducationItemHoverStyles = () => (
+    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio para desativar o hover
+      borderLeft: '3px solid #10b981',
+      paddingLeft: '1rem',
+      transform: 'translateX(5px)',
+    }
+  );
+
+  const getEducationItemLeaveStyles = () => (
+    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio
+      borderLeft: 'none',
+      paddingLeft: '0',
+      transform: 'translateX(0)',
+    }
+  );
 
   const styles: { [key: string]: CSSProperties } = {
     section: {
       backgroundColor: '#191919',
-      padding: '2rem 0',
+      padding: '4rem 0',
       fontFamily: "'Poppins', sans-serif"
     },
     container: {
+      maxWidth: '1200px',
+      margin: '0 auto',
+      padding: '0 2rem'
+    },
+    sectionTitle: {
+      fontSize: getResponsiveFontSize(3, 0.7), // Ajustado para mobile
+      fontWeight: '700',
+      color: '#ffffff',
+      textAlign: 'center' as const,
+      marginBottom: '3rem',
+      fontFamily: "'Montserrat', sans-serif",
+      letterSpacing: '-0.025em'
+    },
+    mainCard: {
+      position: 'relative' as const,
       maxWidth: '1000px',
       margin: '0 auto',
-      padding: '0 1rem'
+      padding: '1rem'
     },
-    title: {
-      fontSize: '1.8rem',
-      fontWeight: 'bold',
-      color: 'white',
-      textAlign: 'center' as const,
-      marginBottom: '1.5rem'
+    blackCard: {
+      background: 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)',
+      borderTopLeftRadius: '20px',
+      borderBottomRightRadius: '20px',
+      borderTopRightRadius: '50px',
+      borderBottomLeftRadius: '50px',
+      padding: getContentPadding(),
+      boxShadow: '0 25px 50px rgba(0, 0, 0, 0.6)',
+      position: 'relative' as const,
+      zIndex: 10
     },
-    timelineItem: {
-      padding: '0.7rem 0',
-      borderBottom: '1px solid #d1d5db',
-      transition: 'transform 0.2s ease'
+    whiteCard: {
+      position: 'absolute' as const,
+      bottom: '-20px',
+      right: '-20px',
+      width: '60%',
+      height: '80%',
+      background: '#ffffff',
+      borderTopLeftRadius: '20px',
+      borderBottomRightRadius: '20px',
+      borderTopRightRadius: '50px',
+      borderBottomLeftRadius: '50px',
+      zIndex: 1,
+      display: isMobile ? 'none' : 'block', // Oculta em mobile
     },
-    jobHeader: {
+    backgroundCard: {
+      position: 'absolute' as const,
+      bottom: '-30px',
+      right: '-30px',
+      width: '65%',
+      height: '85%',
+      background: '#6b7280',
+      borderTopLeftRadius: '20px',
+      borderBottomRightRadius: '20px',
+      borderTopRightRadius: '50px',
+      borderBottomLeftRadius: '50px',
+      zIndex: 0,
+      display: isMobile ? 'none' : 'block', // Oculta em mobile
+    },
+    contentGrid: {
+      display: 'grid',
+      gridTemplateColumns: getGridColumns(),
+      gap: isMobile ? '1.5rem' : '2rem', // Reduz o gap no mobile
+      alignItems: 'start'
+    },
+    leftColumn: {
       display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      gap: '1rem',
-      marginBottom: '0.4rem'
+      flexDirection: 'column' as const,
+      gap: isMobile ? '1rem' : '1.5rem', // Reduz o gap no mobile
+      height: '100%'
     },
-    jobTitle: {
-      fontSize: '0.95rem',
+    rightColumn: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      gap: isMobile ? '1rem' : '1.5rem', // Reduz o gap no mobile
+      height: '100%'
+    },
+    sectionHeader: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.8rem',
+      marginBottom: '1rem'
+    },
+    sectionTitleInCard: {
+      fontSize: getResponsiveFontSize(1.3, 0.9), // Ajustado para mobile
       fontWeight: '600',
-      color: 'white',
-      margin: 0,
-      lineHeight: '1.3',
+      color: '#ffffff',
+      fontFamily: "'Montserrat', sans-serif"
+    },
+    experienceList: {
+      display: 'flex',
+      flexDirection: 'column' as const,
+      gap: isMobile ? '0.8rem' : '1rem', // Reduz o gap no mobile
       flex: 1
     },
-    badge: {
-      fontSize: '0.65rem',
+    experienceItem: {
+      background: 'transparent',
+      borderRadius: '0px',
+      padding: '1rem 0',
+      border: 'none',
+      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+      transition: isTouchDevice ? 'none' : 'all 0.3s ease' // Desativa transição em toque
+    },
+    jobTitle: {
+      fontSize: getResponsiveFontSize(1, 0.9), // Ajustado para mobile
       fontWeight: '600',
-      padding: '0.4rem 0.8rem',
-      borderRadius: '20px',
-      textTransform: 'uppercase' as const,
-      letterSpacing: '0.08em',
-      position: 'relative' as const,
-      transition: 'all 0.3s ease',
-      cursor: 'default',
-      backdropFilter: 'blur(10px)',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    badgeGreen: {
-      background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.35) 100%)',
-      color: '#10b981',
-      border: '1px solid rgba(16, 185, 129, 0.4)',
-      textShadow: '0 1px 2px rgba(0,0,0,0.3)'
-    },
-    badgeYellow: {
-      background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.25) 0%, rgba(217, 119, 6, 0.35) 100%)',
-      color: '#f59e0b',
-      border: '1px solid rgba(245, 158, 11, 0.4)',
-      textShadow: '0 1px 2px rgba(0,0,0,0.3)'
+      color: '#ffffff',
+      marginBottom: '0.4rem',
+      lineHeight: '1.3'
     },
     company: {
+      fontSize: getResponsiveFontSize(0.85, 0.9), // Ajustado para mobile
+      color: '#e2e8f0',
+      marginBottom: '0.4rem',
+      fontWeight: '400'
+    },
+    period: {
+      fontSize: getResponsiveFontSize(0.75, 0.9), // Ajustado para mobile
+      color: '#cbd5e1',
       display: 'flex',
       alignItems: 'center',
-      gap: '0.4rem',
-      fontSize: '0.85rem',
-      fontWeight: '500',
-      color: '#e5e7eb',
-      marginBottom: '0.3rem'
+      gap: '0.4rem'
     },
-    meta: {
-      display: 'flex',
-      gap: '1.2rem',
-      fontSize: '0.75rem',
-      color: '#9ca3af'
+    summaryBox: {
+      background: 'rgba(255, 255, 255, 0.08)',
+      borderRadius: '12px',
+      padding: isMobile ? '1rem' : '1.5rem', // Reduz padding no mobile
+      border: '1px solid rgba(255, 255, 255, 0.15)'
     },
-    metaItem: {
+    summaryText: {
+      fontSize: getResponsiveFontSize(0.85, 0.9), // Ajustado para mobile
+      color: '#d1d5db',
+      lineHeight: '1.6',
+      marginBottom: '1.5rem'
+    },
+    statsRow: {
       display: 'flex',
-      alignItems: 'center',
-      gap: '0.3rem'
+      justifyContent: 'space-around',
+      paddingTop: '1rem',
+      borderTop: '1px solid rgba(255, 255, 255, 0.15)'
+    },
+    statItem: {
+      textAlign: 'center' as const
+    },
+    statNumber: {
+      fontSize: getResponsiveFontSize(1.4, 0.9), // Ajustado para mobile
+      fontWeight: '700',
+      color: '#ffffff',
+      display: 'block'
+    },
+    statLabel: {
+      fontSize: getResponsiveFontSize(0.75, 0.9), // Ajustado para mobile
+      color: '#e2e8f0',
+      marginTop: '0.3rem'
     },
     icon: {
-      fontSize: '0.7rem'
-    },
-    separator: {
-      borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-      paddingBottom: '1.5rem',
-      marginBottom: '2rem'
+      fontSize: getResponsiveFontSize(1.2, 0.9), // Ajustado para mobile
+      opacity: 0.9
     }
   };
 
   return (
     <section style={styles.section} id="experiencia">
       <div style={styles.container}>
-        
-        {/* Experiência Profissional */}
-        <div style={styles.separator}>
-          <h2 style={styles.title}>Experiência Profissional</h2>
-          
-          <div>
-            {experienciaProfissional.map((exp, index) => (
-              <div key={index} style={styles.timelineItem}>
-                <div style={styles.jobHeader}>
-                  <h3 style={styles.jobTitle}>{exp.cargo}</h3>
-                  <span 
-                    style={{
-                      ...styles.badge,
-                      ...(exp.tipoColor === 'green' ? styles.badgeGreen : styles.badgeYellow)
-                    }}
+
+        <h2 style={styles.sectionTitle}>
+          Experiência & Formação
+        </h2>
+
+        <div style={styles.mainCard}>
+
+          {/* Card Branco Decorativo - Oculto em mobile */}
+          <div style={styles.whiteCard} />
+
+          {/* Card Preto Principal (frente) */}
+          <div style={styles.blackCard}>
+
+            <div style={styles.contentGrid}>
+
+              {/* Coluna Esquerda - Experiências */}
+              <div style={styles.leftColumn}>
+                <div style={styles.sectionHeader}>
+                  <FaBriefcase style={{ ...styles.icon, color: '#3b82f6' }} />
+                  <h3 style={styles.sectionTitleInCard}>
+                    Experiência Profissional
+                  </h3>
+                </div>
+                <div style={styles.experienceList}>
+                  <div
+                    style={styles.experienceItem}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-1px) scale(1.05)';
-                      e.currentTarget.style.boxShadow = exp.tipoColor === 'green' 
-                        ? '0 4px 15px rgba(16, 185, 129, 0.4)' 
-                        : '0 4px 15px rgba(245, 158, 11, 0.4)';
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemHoverStyles());
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemLeaveStyles());
+                      }
                     }}
                   >
-                    {exp.tipoColor === 'green' ? (
-                      <>
-                        <FaBriefcase style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
-                        {exp.tipo}
-                      </>
-                    ) : (
-                      <>
-                        <FaClock style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
-                        {exp.tipo}
-                      </>
-                    )}
-                  </span>
-                </div>
-                
-                <div style={styles.company}>
-                  <FaBuilding style={{...styles.icon, color: '#d1d5db'}} />
-                  <span>{exp.empresa}</span>
-                </div>
-                
-                <div style={styles.meta}>
-                  <div style={styles.metaItem}>
-                    <FaMapMarkerAlt style={{...styles.icon, color: '#6b7280'}} />
-                    <span>{exp.localizacao}</span>
+                    <div style={styles.jobTitle}>Especialista em Automação Industrial & Full-Stack</div>
+                    <div style={styles.company}>RLS Automação Industrial • Lisboa, Portugal</div>
+                    <div style={styles.period}>
+                      <FaCalendarAlt style={{ fontSize: getResponsiveFontSize(0.65, 0.9), opacity: 0.7 }} />
+                      jun 2024 - presente (1 ano)
+                    </div>
                   </div>
-                  <div style={styles.metaItem}>
-                    <FaCalendarAlt style={{...styles.icon, color: '#6b7280'}} />
-                    <span>{exp.periodo}</span>
+
+                  <div
+                    style={styles.experienceItem}
+                    onMouseEnter={(e) => {
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemHoverStyles());
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemLeaveStyles());
+                      }
+                    }}
+                  >
+                    <div style={styles.jobTitle}>Técnico de Manutenção Elétrica & Automação</div>
+                    <div style={styles.company}>Central de Cervejas (Sagres) • Vialonga, Portugal</div>
+                    <div style={styles.period}>
+                      <FaCalendarAlt style={{ fontSize: getResponsiveFontSize(0.65, 0.9), opacity: 0.7 }} />
+                      dez 2023 - jun 2024 (7 meses)
+                    </div>
+                  </div>
+
+                  <div
+                    style={styles.experienceItem}
+                    onMouseEnter={(e) => {
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemHoverStyles());
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemLeaveStyles());
+                      }
+                    }}
+                  >
+                    <div style={styles.jobTitle}>Técnico de Automação Industrial</div>
+                    <div style={styles.company}>Font Salem (Grupo Damm) • Santarém, Portugal</div>
+                    <div style={styles.period}>
+                      <FaCalendarAlt style={{ fontSize: getResponsiveFontSize(0.65, 0.9), opacity: 0.7 }} />
+                      jul 2023 - dez 2023 (6 meses)
+                    </div>
+                  </div>
+
+                  <div
+                    style={styles.experienceItem}
+                    onMouseEnter={(e) => {
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemHoverStyles());
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isTouchDevice) {
+                        Object.assign(e.currentTarget.style, getExperienceItemLeaveStyles());
+                      }
+                    }}
+                  >
+                    <div style={styles.jobTitle}>Técnico de Automação Sênior & Full-Stack</div>
+                    <div style={styles.company}>AB InBev • Pernambuco, Brasil</div>
+                    <div style={styles.period}>
+                      <FaCalendarAlt style={{ fontSize: getResponsiveFontSize(0.65, 0.9), opacity: 0.7 }} />
+                      fev 2014 - jan 2023 (9 anos)
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Formação Acadêmica */}
-        <div>
-          <h2 style={styles.title}>Formação Acadêmica</h2>
-          
-          <div>
-            {formacaoAcademica.map((edu, index) => (
-              <div key={index} style={styles.timelineItem}>
-                <div style={styles.jobHeader}>
-                  <h3 style={styles.jobTitle}>{edu.curso}</h3>
-                  <span 
-                    style={{
-                      ...styles.badge,
-                      ...(edu.tipoColor === 'green' ? styles.badgeGreen : styles.badgeYellow)
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-1px) scale(1.05)';
-                      e.currentTarget.style.boxShadow = edu.tipoColor === 'green' 
-                        ? '0 4px 15px rgba(16, 185, 129, 0.4)' 
-                        : '0 4px 15px rgba(245, 158, 11, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
-                    }}
-                  >
-                    {edu.tipoColor === 'green' ? (
-                      <>
-                        <FaBriefcase style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
-                        {edu.tipo}
-                      </>
-                    ) : (
-                      <>
-                        <FaClock style={{ fontSize: '0.5rem', marginRight: '0.3rem' }} />
-                        {edu.tipo}
-                      </>
-                    )}
-                  </span>
-                </div>
-                
-                <div style={styles.company}>
-                  <FaGraduationCap style={{...styles.icon, color: '#d1d5db'}} />
-                  <span>{edu.instituicao}</span>
-                </div>
-                
-                <div style={styles.meta}>
-                  <div style={styles.metaItem}>
-                    <FaMapMarkerAlt style={{...styles.icon, color: '#6b7280'}} />
-                    <span>{edu.localizacao}</span>
+              {/* Coluna Direita - Formação & Resumo */}
+              <div style={styles.rightColumn}>
+
+                {/* Formação */}
+                <div>
+                  <div style={styles.sectionHeader}>
+                    <FaGraduationCap style={{ ...styles.icon, color: '#10b981' }} />
+                    <h4 style={styles.sectionTitleInCard}>
+                      Formação Acadêmica
+                    </h4>
                   </div>
-                  <div style={styles.metaItem}>
-                    <FaCalendarAlt style={{...styles.icon, color: '#6b7280'}} />
-                    <span>{edu.periodo}</span>
+
+                  <div style={styles.experienceList}>
+                    <div
+                      style={styles.experienceItem}
+                      onMouseEnter={(e) => {
+                        if (!isTouchDevice) {
+                          Object.assign(e.currentTarget.style, getEducationItemHoverStyles());
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isTouchDevice) {
+                          Object.assign(e.currentTarget.style, getEducationItemLeaveStyles());
+                        }
+                      }}
+                    >
+                      <div style={styles.jobTitle}>Tecnologia da Informação/Sistemas da Informação</div>
+                      <div style={styles.company}>Estácio • Pernambuco, Brasil</div>
+                      <div style={styles.period}>
+                        <FaCalendarAlt style={{ fontSize: getResponsiveFontSize(0.65, 0.9), opacity: 0.7 }} />
+                        abr 2021 - dez 2023
+                      </div>
+                    </div>
+
+                    <div
+                      style={styles.experienceItem}
+                      onMouseEnter={(e) => {
+                        if (!isTouchDevice) {
+                          Object.assign(e.currentTarget.style, getEducationItemHoverStyles());
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isTouchDevice) {
+                          Object.assign(e.currentTarget.style, getEducationItemLeaveStyles());
+                        }
+                      }}
+                    >
+                      <div style={styles.jobTitle}>Tecnologia da Informação/Sistemas da Informação</div>
+                      <div style={styles.company}>SENAI Pernambuco • Pernambuco, Brasil</div>
+                      <div style={styles.period}>
+                        <FaCalendarAlt style={{ fontSize: getResponsiveFontSize(0.65, 0.9), opacity: 0.7 }} />
+                        fev 2012 - dez 2014
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                {/* Resumo */}
+                <div style={styles.summaryBox}>
+                  <div style={styles.sectionHeader}>
+                    <FaTrophy style={{ ...styles.icon, color: '#f59e0b' }} />
+                    <h4 style={styles.sectionTitleInCard}>
+                      Resumo
+                    </h4>
+                  </div>
+
+                  <p style={styles.summaryText}>
+                    Especialista em Automação Industrial e Desenvolvedor Full-Stack com 10+ anos de experiência em projetos industriais complexos. Atuação consolidada em grandes cervejarias como AB InBev, Sagres e Font Salem.
+                  </p>
+
+                  <div style={styles.statsRow}>
+                    <div style={styles.statItem}>
+                      <span style={styles.statNumber}>10+</span>
+                      <span style={styles.statLabel}>Anos</span>
+                    </div>
+                    <div style={styles.statItem}>
+                      <span style={styles.statNumber}>5</span>
+                      <span style={styles.statLabel}>Empresas</span>
+                    </div>
+                    <div style={styles.statItem}>
+                      <span style={styles.statNumber}>2</span>
+                      <span style={styles.statLabel}>Países</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-            ))}
-          </div>
-        </div>
 
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </section>
   );
