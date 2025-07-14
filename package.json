@@ -8,8 +8,10 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "clean": "rm -rf dist && rm -rf node_modules/.vite",
+    "predeploy": "npm run clean && npm run build",
+    "deploy": "gh-pages -d dist --dotfiles",
+    "deploy:force": "gh-pages -d dist --dotfiles --force-orphan"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
