@@ -33,5 +33,5 @@ export default defineConfig({
       overlay: true
     }
   },
-  base: './' // Atualizado para o nome correto do repositório
+  base: '/portfolio-danilo/' // Atualizado para o nome correto do repositório
 })
