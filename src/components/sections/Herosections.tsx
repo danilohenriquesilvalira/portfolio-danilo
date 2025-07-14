@@ -4,7 +4,7 @@ import '../../styles/herosection.css';
 const Herosections = () => {
   // Estado para debug da tela - You can remove this useState and useEffect if you only need to hide the display.
   // If you might need this logic for other purposes in the future, you can keep them.
-  const [screenInfo, setScreenInfo] = useState({
+  const [_screenInfo, setScreenInfo] = useState({ // Added underscore here
     width: 0,
     height: 0,
     breakpoint: ''
@@ -70,17 +70,17 @@ const Herosections = () => {
         zIndex: 9999,
         border: '1px solid #333'
       }}>
-        <div><strong>TELA:</strong> {screenInfo.width} x {screenInfo.height}</div>
+        <div><strong>TELA:</strong> {_screenInfo.width} x {_screenInfo.height}</div>
         <div><strong>BREAKPOINT:</strong> <span style={{
-          color: screenInfo.breakpoint === 'MOBILE' ? '#00ff00' : '#ffffff'
-        }}>{screenInfo.breakpoint}</span></div>
+          color: _screenInfo.breakpoint === 'MOBILE' ? '#00ff00' : '#ffffff'
+        }}>{_screenInfo.breakpoint}</span></div>
         <div><strong>RANGE:</strong> {
-          screenInfo.breakpoint === 'MOBILE' ? '0-767px' :
-          screenInfo.breakpoint === 'TABLET' ? '768-1023px' :
-          screenInfo.breakpoint === 'NOTEBOOK' ? '1024-1440px' :
-          screenInfo.breakpoint === 'DESKTOP' ? '1441-1920px' :
-          screenInfo.breakpoint === '4K' ? '1921-2559px' :
-          screenInfo.breakpoint === 'ULTRA-WIDE' ? '2560px+' : 'N/A'
+          _screenInfo.breakpoint === 'MOBILE' ? '0-767px' :
+          _screenInfo.breakpoint === 'TABLET' ? '768-1023px' :
+          _screenInfo.breakpoint === 'NOTEBOOK' ? '1024-1440px' :
+          _screenInfo.breakpoint === 'DESKTOP' ? '1441-1920px' :
+          _screenInfo.breakpoint === '4K' ? '1921-2559px' :
+          _screenInfo.breakpoint === 'ULTRA-WIDE' ? '2560px+' : 'N/A'
         }</div>
       </div>
       */}

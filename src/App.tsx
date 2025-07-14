@@ -3,12 +3,8 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ScrollToTop from './components/common/ScrollToTop';
 
-// Páginas principais
+// Apenas a página principal
 import Home from './pages/Home';
-import Experience from './pages/Experience';
-import Contact from './pages/Contact';
-import NotFound from './pages/NotFound';
-
 
 function App() {
   return (
@@ -16,14 +12,10 @@ function App() {
       <div className="bg-primary min-h-screen">
         <Navbar />
         <Routes>
-          {/* Páginas principais */}
+          {/* Página única com todas as seções */}
           <Route path="/" element={<Home />} />
-          <Route path="/experiencia" element={<Experience />} />
-          <Route path="/contato" element={<Contact />} />
-          
-          
-          {/* Fallback para rotas não encontradas */}
-          <Route path="*" element={<NotFound />} />
+          {/* Qualquer rota não encontrada redireciona para Home */}
+          <Route path="*" element={<Home />} />
         </Routes>
         <Footer />
         <ScrollToTop />

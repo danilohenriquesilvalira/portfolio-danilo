@@ -190,7 +190,7 @@ const Navbar = () => {
     }
   };
 
-  const handleLinkClick = (id: string, path: string) => {
+  const handleLinkClick = (id: string) => {
     setActive(id);
     setToggle(false);
 
@@ -273,7 +273,7 @@ const Navbar = () => {
           className={`${logoStyles.container} hover:opacity-80 pt-2`}
           onClick={(e) => {
             e.preventDefault();
-            handleLinkClick('home', '#home');
+            handleLinkClick('home');
           }}
         >
           <div className={`${logoStyles.icon} ${logoStyles.transform}`}>
@@ -293,7 +293,7 @@ const Navbar = () => {
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
-                    handleLinkClick(link.id, link.path);
+                    handleLinkClick(link.id);
                   }}
                 >
                   {link.title}
@@ -413,7 +413,7 @@ const Navbar = () => {
                               }`}
                               onClick={(e) => {
                                 e.preventDefault();
-                                handleLinkClick(link.id, link.path);
+                                handleLinkClick(link.id);
                               }}
                               style={{
                                 animationDelay: `${index * 0.1}s`,
