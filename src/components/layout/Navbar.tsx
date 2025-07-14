@@ -18,7 +18,7 @@ const navLinks: NavLink[] = [
   { title: 'Início', id: 'home', path: '#home' },
   { title: 'Experiência', id: 'experiencia', path: '#experiencia' },
   { title: 'Projetos', id: 'projects', path: '#projects' },
-  { title: 'Tech Stack', id: 'techstack', path: '#tech-expertise' },
+  { title: 'Tech Stack', id: 'tech-expertise', path: '#tech-expertise' },
   { title: 'Contatos', id: 'contact', path: '#contact' },
 ];
 
@@ -31,9 +31,8 @@ const Navbar = () => {
     breakpoint: 'xs'
   });
 
-  // Simulando detecção de rota ativa para demonstração
+  // Detecta seção ativa baseada no scroll
   useEffect(() => {
-    // Detecta seção ativa baseada no scroll
     const handleScroll = () => {
       const sections = navLinks.map(link => link.id);
       const scrollPosition = window.scrollY + 100;
@@ -48,10 +47,10 @@ const Navbar = () => {
       for (let i = sections.length - 1; i >= 0; i--) {
         const sectionId = sections[i];
         const element = document.getElementById(sectionId);
-        
+
         if (element) {
           const offsetTop = element.offsetTop;
-          
+
           if (scrollPosition >= offsetTop - 150) {
             setActive(sectionId);
             break;
@@ -79,7 +78,7 @@ const Navbar = () => {
     const updateScreenSize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      
+
       let breakpoint: ScreenSize['breakpoint'] = 'xs';
       if (width >= 2560) breakpoint = '4xl';
       else if (width >= 1921) breakpoint = '3xl';
@@ -88,20 +87,20 @@ const Navbar = () => {
       else if (width >= 1024) breakpoint = 'lg';
       else if (width >= 768) breakpoint = 'md';
       else if (width >= 480) breakpoint = 'sm';
-      
+
       setScreenSize({ width, height, breakpoint });
     };
 
     updateScreenSize();
     window.addEventListener('resize', updateScreenSize);
-    
+
     return () => window.removeEventListener('resize', updateScreenSize);
   }, []);
 
   // Função para obter estilos do logo baseado no breakpoint
   const getLogoStyles = () => {
     const baseStyles = "flex items-start text-decoration-none transition-all duration-300 relative z-10";
-    
+
     switch (screenSize.breakpoint) {
       case '4xl':
         return {
@@ -133,21 +132,22 @@ const Navbar = () => {
           icon: "w-16 h-16 flex items-center justify-center bg-transparent border-none transition-all duration-300 p-1 relative flex-shrink-0",
           transform: "transform translate-y-[-5px]"
         };
-      default:
+      default: // xs, sm, md (mobile and tablet)
         return {
           container: baseStyles,
-          icon: "w-12 h-12 flex items-center justify-center bg-transparent border-none transition-all duration-300 p-1 relative flex-shrink-0",
-          transform: ""
+          icon: "w-16 h-16 flex items-center justify-center bg-transparent border-none transition-all duration-300 p-1 relative flex-shrink-0",
+          // Ajustado: Move o logo um pouco para baixo no mobile
+          transform: "transform -translate-y-2"
         };
     }
   };
 
   // Função para obter estilos do desktop navigation
   const getDesktopNavStyles = () => {
-    const isDesktop = screenSize.breakpoint === 'lg' || screenSize.breakpoint === 'xl' || 
-                     screenSize.breakpoint === '2xl' || screenSize.breakpoint === '3xl' || 
-                     screenSize.breakpoint === '4xl';
-    
+    const isDesktop = screenSize.breakpoint === 'lg' || screenSize.breakpoint === 'xl' ||
+                       screenSize.breakpoint === '2xl' || screenSize.breakpoint === '3xl' ||
+                       screenSize.breakpoint === '4xl';
+
     if (!isDesktop) return { display: 'none' };
 
     switch (screenSize.breakpoint) {
@@ -193,38 +193,42 @@ const Navbar = () => {
   const handleLinkClick = (id: string, path: string) => {
     setActive(id);
     setToggle(false);
-    
-    // Scroll suave para a seção
-    const targetElement = document.getElementById(id);
-    if (targetElement) {
-      const offsetTop = targetElement.offsetTop - 80; // Ajuste para navbar fixed
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-      
-      // Atualiza hash na URL
-      window.history.pushState(null, '', `#${id}`);
-    } else if (id === 'home') {
+
+    if (id === 'home') {
       // Se for home, volta ao topo
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
       window.history.pushState(null, '', '/');
+    } else {
+      // Para outras seções, busca pelo ID
+      const targetElement = document.getElementById(id);
+      
+      if (targetElement) {
+        const offsetTop = targetElement.offsetTop - 80; // Ajuste para navbar fixed
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+        // Atualiza hash na URL
+        window.history.pushState(null, '', `#${id}`);
+      } else {
+        console.log(`Seção '${id}' não encontrada. Verifique se o ID existe no Home.tsx`);
+      }
     }
   };
 
   const logoStyles = getLogoStyles();
   const desktopStyles = getDesktopNavStyles();
-  const isDesktop = screenSize.breakpoint === 'lg' || screenSize.breakpoint === 'xl' || 
-                   screenSize.breakpoint === '2xl' || screenSize.breakpoint === '3xl' || 
-                   screenSize.breakpoint === '4xl';
+  const isDesktop = screenSize.breakpoint === 'lg' || screenSize.breakpoint === 'xl' ||
+                       screenSize.breakpoint === '2xl' || screenSize.breakpoint === '3xl' ||
+                       screenSize.breakpoint === '4xl';
 
   const LogoSVG = ({ className = "" }: { className?: string }) => (
-    <svg 
-      viewBox="0 0 29 29" 
-      fill="none" 
+    <svg
+      viewBox="0 0 29 29"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`w-full h-full transition-all duration-300 ${className}`}
     >
@@ -250,19 +254,19 @@ const Navbar = () => {
 
   return (
     <nav className="absolute top-0 left-0 right-0 z-50 w-full flex items-center py-4 bg-transparent font-['Poppins']">
-      <div 
+      <div
         className="w-full flex justify-between items-start max-w-screen-xl mx-auto min-h-16 pt-4"
         style={{
           padding: screenSize.breakpoint === 'xs' ? '0 0.5rem' :
-                  screenSize.breakpoint === 'sm' ? '0 1rem' :
-                  screenSize.breakpoint === 'md' ? '0 1.5rem' :
-                  screenSize.breakpoint === 'lg' ? '0 1.5rem' :
-                  screenSize.breakpoint === 'xl' ? '0 1.5rem' :
-                  screenSize.breakpoint === '2xl' ? '0 0rem' :
-                  screenSize.breakpoint === '3xl' ? '0 0rem' : '0 3rem'
+                   screenSize.breakpoint === 'sm' ? '0 1rem' :
+                   screenSize.breakpoint === 'md' ? '0 1.5rem' :
+                   screenSize.breakpoint === 'lg' ? '0 1.5rem' :
+                   screenSize.breakpoint === 'xl' ? '0 1.5rem' :
+                   screenSize.breakpoint === '2xl' ? '0 0rem' :
+                   screenSize.breakpoint === '3xl' ? '0 0rem' : '0 3rem'
         }}
       >
-        
+
         {/* Logo */}
         <a
           href="#home"
@@ -299,33 +303,33 @@ const Navbar = () => {
                 </a>
               </li>
             ))}
-            
+
             {/* Social Links Desktop */}
-            <div 
+            <div
               className={`ml-6 flex ${desktopStyles.gap} items-start border-l border-gray-600 pl-6 pt-4 h-auto justify-center ${
-                screenSize.breakpoint === '2xl' || screenSize.breakpoint === '3xl' || screenSize.breakpoint === '4xl' 
+                screenSize.breakpoint === '2xl' || screenSize.breakpoint === '3xl' || screenSize.breakpoint === '4xl'
                   ? 'transform translate-y-[-12px]' : 'transform translate-y-[-8px]'
               }`}
             >
-              <a 
-                href="https://linkedin.com/in/danilo-lira-82b17516b" 
-                target="_blank" 
+              <a
+                href="https://linkedin.com/in/danilo-lira-82b17516b"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-300 no-underline transition-all duration-300 w-8 h-8 rounded-full flex items-center justify-center text-lg flex-shrink-0 hover:text-white hover:bg-white hover:bg-opacity-10"
                 aria-label="LinkedIn"
               >
                 <FaLinkedin />
               </a>
-              <a 
-                href="https://github.com/danilohenriquesilvalira" 
-                target="_blank" 
+              <a
+                href="https://github.com/danilohenriquesilvalira"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-300 no-underline transition-all duration-300 w-8 h-8 rounded-full flex items-center justify-center text-lg flex-shrink-0 hover:text-white hover:bg-white hover:bg-opacity-10"
                 aria-label="GitHub"
               >
                 <FaGithub />
               </a>
-              <a 
+              <a
                 href="mailto:contato@danilolira.com"
                 className="text-gray-300 no-underline transition-all duration-300 w-8 h-8 rounded-full flex items-center justify-center text-lg flex-shrink-0 hover:text-white hover:bg-white hover:bg-opacity-10"
                 aria-label="Email"
@@ -347,17 +351,17 @@ const Navbar = () => {
               aria-label={toggle ? "Fechar menu" : "Abrir menu"}
             >
               <div className="flex flex-col justify-center items-center w-5 h-5 relative">
-                <span 
+                <span
                   className={`block h-0.5 w-full bg-white rounded-sm transition-all duration-300 my-0.5 ${
                     toggle ? 'rotate-45 translate-y-0.5 bg-gray-800' : ''
                   }`}
                 />
-                <span 
+                <span
                   className={`block h-0.5 w-full bg-white rounded-sm transition-all duration-300 my-0.5 ${
                     toggle ? 'opacity-0 bg-gray-800' : ''
                   }`}
                 />
-                <span 
+                <span
                   className={`block h-0.5 w-full bg-white rounded-sm transition-all duration-300 my-0.5 ${
                     toggle ? '-rotate-45 -translate-y-1.5 bg-gray-800' : ''
                   }`}
@@ -368,95 +372,98 @@ const Navbar = () => {
             {toggle && (
               <>
                 {/* Backdrop */}
-                <div 
+                <div
                   className="fixed inset-0 bg-black bg-opacity-50 z-40"
                   onClick={() => setToggle(false)}
                 />
-                
+
                 {/* Mobile Menu */}
-                <div className="fixed top-0 right-0 h-screen w-80 bg-gray-900 bg-opacity-97 backdrop-blur-3xl z-50 border-l border-gray-600 border-opacity-30 shadow-2xl">
+                <div className="fixed top-0 right-0 h-screen w-80 bg-gray-900 bg-opacity-95 backdrop-blur-3xl z-50 border-l border-white border-opacity-10 shadow-2xl"
+                     style={{
+                       background: 'rgba(17, 24, 39, 0.95)',
+                       backdropFilter: 'blur(20px)',
+                       borderLeft: '1px solid rgba(255, 255, 255, 0.1)'
+                     }}>
                   <div className="flex flex-col h-full">
-                    
+
                     {/* Mobile Header */}
-                    <div className="flex items-center justify-between p-6 border-b border-gray-600 border-opacity-40">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center bg-transparent border-none transition-all duration-300 p-0.5 relative flex-shrink-0">
-                          <LogoSVG />
-                        </div>
+                    <div className="flex items-center justify-between p-6 border-b border-white border-opacity-10">
+                      <div className="flex items-center">
                         <span className="text-white font-semibold text-lg">Menu</span>
                       </div>
                       <button
                         onClick={() => setToggle(false)}
-                        className="w-9 h-9 rounded-full flex items-center justify-center text-gray-300 bg-transparent border-none cursor-pointer transition-all duration-300 hover:text-white hover:bg-gray-600 hover:bg-opacity-40"
+                        className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-300 bg-white bg-opacity-10 border border-white border-opacity-20 cursor-pointer transition-all duration-300 hover:text-white hover:bg-white hover:bg-opacity-20"
                       >
                         <FaTimes />
                       </button>
                     </div>
-                    
+
                     {/* Mobile Links */}
-                    <div className="flex-1 px-5 py-8">
-                      <ul className="list-none m-0 p-0 flex flex-col gap-3">
+                    <div className="flex-1 px-6 py-8">
+                      <ul className="list-none m-0 p-0 flex flex-col gap-4">
                         {navLinks.map((link, index) => (
-                          <li key={link.id}>
+                          <li key={link.id} className="w-full">
                             <a
                               href={link.path}
-                              className={`flex items-center gap-4 py-4 px-6 rounded-2xl font-medium text-base text-gray-300 no-underline transition-all duration-300 hover:text-white hover:bg-gray-600 hover:bg-opacity-40 hover:translate-x-1 ${
-                                active === link.id ? 'text-white bg-gray-600 bg-opacity-50 border border-gray-500 shadow-lg' : ''
+                              className={`w-full flex items-center gap-4 py-4 px-6 rounded-xl font-medium text-base no-underline transition-all duration-300 transform hover:translate-x-1 ${
+                                active === link.id 
+                                  ? 'text-white bg-white bg-opacity-10 border border-white border-opacity-20 shadow-lg' 
+                                  : 'text-gray-300 hover:text-white hover:bg-white hover:bg-opacity-5'
                               }`}
                               onClick={(e) => {
                                 e.preventDefault();
                                 handleLinkClick(link.id, link.path);
                               }}
-                              style={{ 
+                              style={{
                                 animationDelay: `${index * 0.1}s`,
-                                transform: 'translateX(0)',
-                                opacity: 1
+                                animation: 'slideInRight 0.3s ease-out forwards'
                               }}
                             >
-                              <span 
-                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                                  active === link.id ? 'bg-white shadow-lg' : 'bg-gray-400'
+                              <span
+                                className={`w-3 h-3 rounded-full flex-shrink-0 transition-all duration-300 ${
+                                  active === link.id ? 'bg-white shadow-md' : 'bg-gray-500'
                                 }`}
                               />
-                              {link.title}
+                              <span className="flex-1">{link.title}</span>
                             </a>
                           </li>
                         ))}
                       </ul>
                     </div>
-                    
+
                     {/* Mobile Social */}
-                    <div className="p-6 border-t border-gray-600 border-opacity-40">
+                    <div className="p-6 border-t border-white border-opacity-10">
                       <p className="text-gray-300 text-sm m-0 mb-6 text-center font-medium">Conecte-se comigo</p>
-                      <div className="flex justify-center gap-5">
-                        <a 
-                          href="https://linkedin.com/in/danilo-lira-82b17516b" 
-                          target="_blank" 
+                      <div className="flex justify-center gap-6">
+                        <a
+                          href="https://linkedin.com/in/danilo-lira-82b17516b"
+                          target="_blank"
                           rel="noopener noreferrer"
-                          className="w-12 h-12 rounded-2xl bg-gray-600 bg-opacity-40 flex items-center justify-center text-gray-300 no-underline text-xl transition-all duration-300 hover:text-white hover:bg-gray-500 hover:scale-110"
+                          className="w-12 h-12 rounded-xl bg-white bg-opacity-10 border border-white border-opacity-20 flex items-center justify-center text-gray-300 no-underline text-xl transition-all duration-300 hover:text-white hover:bg-white hover:bg-opacity-20 hover:scale-110"
                           aria-label="LinkedIn"
                         >
                           <FaLinkedin />
                         </a>
-                        <a 
-                          href="https://github.com/danilohenriquesilvalira" 
-                          target="_blank" 
+                        <a
+                          href="https://github.com/danilohenriquesilvalira"
+                          target="_blank"
                           rel="noopener noreferrer"
-                          className="w-12 h-12 rounded-2xl bg-gray-600 bg-opacity-40 flex items-center justify-center text-gray-300 no-underline text-xl transition-all duration-300 hover:text-white hover:bg-gray-500 hover:scale-110"
+                          className="w-12 h-12 rounded-xl bg-white bg-opacity-10 border border-white border-opacity-20 flex items-center justify-center text-gray-300 no-underline text-xl transition-all duration-300 hover:text-white hover:bg-white hover:bg-opacity-20 hover:scale-110"
                           aria-label="GitHub"
                         >
                           <FaGithub />
                         </a>
-                        <a 
+                        <a
                           href="mailto:contato@danilolira.com"
-                          className="w-12 h-12 rounded-2xl bg-gray-600 bg-opacity-40 flex items-center justify-center text-gray-300 no-underline text-xl transition-all duration-300 hover:text-white hover:bg-gray-500 hover:scale-110"
+                          className="w-12 h-12 rounded-xl bg-white bg-opacity-10 border border-white border-opacity-20 flex items-center justify-center text-gray-300 no-underline text-xl transition-all duration-300 hover:text-white hover:bg-white hover:bg-opacity-20 hover:scale-110"
                           aria-label="Email"
                         >
                           <FaEnvelope />
                         </a>
                       </div>
                     </div>
-                    
+
                   </div>
                 </div>
               </>

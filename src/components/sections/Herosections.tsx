@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import '../../styles/herosection.css';
 
 const Herosections = () => {
-  // Estado para debug da tela
+  // Estado para debug da tela - You can remove this useState and useEffect if you only need to hide the display.
+  // If you might need this logic for other purposes in the future, you can keep them.
   const [screenInfo, setScreenInfo] = useState({
     width: 0,
     height: 0,
@@ -20,7 +21,7 @@ const Herosections = () => {
     return 'UNKNOWN';
   };
 
-  // Hook para monitorar o resize da tela
+  // Hook para monitorar o resize da tela - You can remove this useEffect as well if you're not using screenInfo elsewhere.
   useEffect(() => {
     const updateScreenInfo = () => {
       const width = window.innerWidth;
@@ -44,7 +45,6 @@ const Herosections = () => {
 
   // Função para scroll até a seção de projetos
   const scrollToProjects = () => {
-    // Implementar scroll para seção de projetos
     const projectsSection = document.getElementById('projects');
     if (projectsSection) {
       projectsSection.scrollIntoView({ behavior: 'smooth' });
@@ -53,8 +53,10 @@ const Herosections = () => {
 
   return (
     <section className="hero-section">
-      
-      {/* DEBUG SCREEN INFO - Canto superior */}
+      {/* DEBUG SCREEN INFO - Canto superior 
+        Para inibir a exibição, comente ou remova o bloco abaixo.
+      */}
+      {/*
       <div style={{
         position: 'fixed',
         top: '10px',
@@ -81,6 +83,7 @@ const Herosections = () => {
           screenInfo.breakpoint === 'ULTRA-WIDE' ? '2560px+' : 'N/A'
         }</div>
       </div>
+      */}
 
       {/* Gradiente responsivo */}
       <div className="hero-gradient" />

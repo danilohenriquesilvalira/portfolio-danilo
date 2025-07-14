@@ -125,15 +125,15 @@ const TechExpertise = () => {
     }
   };
 
-  // Responsividade melhorada
+  // Responsividade melhorada - MOBILE MAIS COMPACTO
   const getGridColumns = () => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
-      if (width <= 480) return 'repeat(2, 1fr)';
-      if (width <= 768) return 'repeat(3, 1fr)';
-      if (width <= 1024) return 'repeat(4, 1fr)';
-      if (width <= 1200) return 'repeat(5, 1fr)';
-      if (width <= 1440) return 'repeat(6, 1fr)';
+      if (width <= 480) return 'repeat(3, 1fr)';    // MOBILE: 3 colunas (antes eram 2) ✅
+      if (width <= 768) return 'repeat(4, 1fr)';    // TABLET PEQUENO: 4 colunas (antes eram 3) ✅
+      if (width <= 1024) return 'repeat(5, 1fr)';   // TABLET: 5 colunas (antes eram 4) ✅
+      if (width <= 1200) return 'repeat(5, 1fr)';   // Mantido
+      if (width <= 1440) return 'repeat(6, 1fr)';   // Mantido
     }
     return 'repeat(7, 1fr)';
   };
@@ -141,11 +141,11 @@ const TechExpertise = () => {
   const getIconSize = () => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
-      if (width <= 480) return { width: '50px', height: '50px' };
-      if (width <= 768) return { width: '60px', height: '60px' };
-      if (width <= 1024) return { width: '70px', height: '70px' };
-      if (width <= 1440) return { width: '80px', height: '80px' };
-      if (width <= 1920) return { width: '90px', height: '90px' };
+      if (width <= 480) return { width: '45px', height: '45px' };  // MOBILE: menor para compactar ✅
+      if (width <= 768) return { width: '55px', height: '55px' };  // TABLET PEQUENO: reduzido ✅
+      if (width <= 1024) return { width: '65px', height: '65px' }; // TABLET: reduzido ✅
+      if (width <= 1440) return { width: '80px', height: '80px' }; // Mantido
+      if (width <= 1920) return { width: '90px', height: '90px' }; // Mantido
       if (width <= 2560) return { width: '110px', height: '110px' }; // 2K
       if (width <= 3840) return { width: '130px', height: '130px' }; // 4K
       return { width: '150px', height: '150px' }; // 5K+
@@ -156,13 +156,13 @@ const TechExpertise = () => {
   const getGap = () => {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
-      if (width <= 480) return '2rem 1rem';
-      if (width <= 768) return '2.5rem 1.5rem';
-      if (width <= 1440) return '3rem 2rem';
-      if (width <= 1920) return '3.5rem 2.5rem';  // Full HD
-      if (width <= 2560) return '4rem 3rem';      // 2K
-      if (width <= 3840) return '4.5rem 3.5rem';  // 4K
-      return '5rem 4rem';                          // 5K+
+      if (width <= 480) return '1.5rem 0.8rem';     // MOBILE: gap muito reduzido ✅
+      if (width <= 768) return '2rem 1rem';         // TABLET PEQUENO: gap reduzido ✅
+      if (width <= 1440) return '3rem 2rem';        // Mantido
+      if (width <= 1920) return '3.5rem 2.5rem';    // Full HD
+      if (width <= 2560) return '4rem 3rem';        // 2K
+      if (width <= 3840) return '4.5rem 3.5rem';    // 4K
+      return '5rem 4rem';                            // 5K+
     }
     return '3rem 2rem';
   };

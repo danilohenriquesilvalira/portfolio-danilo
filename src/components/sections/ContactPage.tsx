@@ -677,7 +677,7 @@ const ContactPage = () => {
                         onMouseEnter={(e) => e.currentTarget.style.color = '#f3f4f6'}
                         onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
                       >
-                        contato@danilolira.com
+                        danilosilvalira@hotmail.com
                       </a>
                     </div>
                   </div>

@@ -3,7 +3,7 @@ import Herosections from "../components/sections/Herosections";
 import TechExpertise from "../components/sections/TechExpertise";
 import Experiencia from "../components/sections/Experiencia";
 import ProjectsPage from "../components/sections/ProjectsPage";
-import ContactPage from "../components/sections/ContactPage"; // 👈 Adicione essa linha
+import ContactPage from "../components/sections/ContactPage";
 
 const Home = () => {
   // Scroll to top when component mounts
@@ -88,40 +88,40 @@ const Home = () => {
     <main style={styles.main}>
       <div style={styles.sectionContainer}>
         
-        {/* Hero Section */}
-        <section>
+        {/* Hero Section - ID: home */}
+        <section id="home">
           <Herosections />
         </section>
         
         {/* Espaçamento dinâmico Hero → Tech */}
         <div style={modernSpacing.heroToTechSpacing}></div>
         
-        {/* Tech Section */}
-        <section>
+        {/* Tech Section - ID: tech-expertise */}
+        <section id="tech-expertise">
           <TechExpertise />
         </section>
         
         {/* Espaçamento Tech → Experiência */}
         <div style={modernSpacing.sectionSpacing}></div>
         
-        {/* Experience Section */}
-        <section>
+        {/* Experience Section - ID: experiencia */}
+        <section id="experiencia">
           <Experiencia />
         </section>
         
         {/* Espaçamento Experiência → Projetos */}
         <div style={modernSpacing.sectionSpacing}></div>
         
-        {/* Projects Section */}
-        <section>
+        {/* Projects Section - ID: projects */}
+        <section id="projects">
           <ProjectsPage />
         </section>
         
         {/* Espaçamento Projetos → Contato */}
         <div style={modernSpacing.sectionSpacing}></div>
         
-        {/* Contact Section */}
-        <section>
+        {/* Contact Section - ID: contact */}
+        <section id="contact">
           <ContactPage />
         </section>
         

@@ -1,5 +1,5 @@
 import { FaCalendarAlt, FaGraduationCap, FaBriefcase, FaTrophy } from 'react-icons/fa';
-import { CSSProperties, useEffect, useState } from 'react'; // Importar useState
+import { CSSProperties, useEffect, useState } from 'react';
 
 const Experiencia = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -12,20 +12,18 @@ const Experiencia = () => {
     document.head.appendChild(link);
 
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Define o estado isMobile
+      setIsMobile(window.innerWidth <= 768);
     };
 
     const handleTouchDetect = () => {
-      // Verifica se o navegador suporta eventos de toque
       setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
     };
 
     if (typeof window !== 'undefined') {
       window.addEventListener('resize', handleResize);
-      // Adiciona um listener para detectar o primeiro toque e definir isTouchDevice
       window.addEventListener('touchstart', handleTouchDetect, { once: true });
-      handleResize(); // Executa na montagem inicial
-      handleTouchDetect(); // Executa na montagem inicial
+      handleResize();
+      handleTouchDetect();
     }
 
     return () => {
@@ -48,16 +46,15 @@ const Experiencia = () => {
   };
 
   const getGridColumns = () => {
-    return isMobile ? '1fr' : '1fr 1fr'; // Usa o estado isMobile
+    return isMobile ? '1fr' : '1fr 1fr';
   };
 
   const getResponsiveFontSize = (desktopSize: number, mobileFactor: number = 0.8) => {
     return isMobile ? `${desktopSize * mobileFactor}rem` : `${desktopSize}rem`;
   };
 
-  // Funções para os estilos de hover, agora condicionais
   const getExperienceItemHoverStyles = () => (
-    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio para desativar o hover
+    isTouchDevice ? {} : {
       borderLeft: '3px solid #3b82f6',
       paddingLeft: '1rem',
       transform: 'translateX(5px)',
@@ -65,7 +62,7 @@ const Experiencia = () => {
   );
 
   const getExperienceItemLeaveStyles = () => (
-    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio
+    isTouchDevice ? {} : {
       borderLeft: 'none',
       paddingLeft: '0',
       transform: 'translateX(0)',
@@ -73,7 +70,7 @@ const Experiencia = () => {
   );
 
   const getEducationItemHoverStyles = () => (
-    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio para desativar o hover
+    isTouchDevice ? {} : {
       borderLeft: '3px solid #10b981',
       paddingLeft: '1rem',
       transform: 'translateX(5px)',
@@ -81,7 +78,7 @@ const Experiencia = () => {
   );
 
   const getEducationItemLeaveStyles = () => (
-    isTouchDevice ? {} : { // Se for um dispositivo de toque, retorna um objeto vazio
+    isTouchDevice ? {} : {
       borderLeft: 'none',
       paddingLeft: '0',
       transform: 'translateX(0)',
@@ -100,7 +97,7 @@ const Experiencia = () => {
       padding: '0 2rem'
     },
     sectionTitle: {
-      fontSize: getResponsiveFontSize(3, 0.7), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(3, 0.7),
       fontWeight: '700',
       color: '#ffffff',
       textAlign: 'center' as const,
@@ -114,6 +111,7 @@ const Experiencia = () => {
       margin: '0 auto',
       padding: '1rem'
     },
+    // Card com bordas modernas e efeito glow sutil
     blackCard: {
       background: 'linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)',
       borderTopLeftRadius: '20px',
@@ -123,8 +121,10 @@ const Experiencia = () => {
       padding: getContentPadding(),
       boxShadow: '0 25px 50px rgba(0, 0, 0, 0.6)',
       position: 'relative' as const,
-      zIndex: 10
+      zIndex: 10,
+      border: '1px solid rgba(255, 255, 255, 0.15)',
     },
+    // Card branco com borda sutil também
     whiteCard: {
       position: 'absolute' as const,
       bottom: '-20px',
@@ -137,8 +137,9 @@ const Experiencia = () => {
       borderTopRightRadius: '50px',
       borderBottomLeftRadius: '50px',
       zIndex: 1,
-      display: isMobile ? 'none' : 'block', // Oculta em mobile
+      display: isMobile ? 'none' : 'block',
     },
+    // Card de fundo com efeito mais sutil
     backgroundCard: {
       position: 'absolute' as const,
       bottom: '-30px',
@@ -151,24 +152,24 @@ const Experiencia = () => {
       borderTopRightRadius: '50px',
       borderBottomLeftRadius: '50px',
       zIndex: 0,
-      display: isMobile ? 'none' : 'block', // Oculta em mobile
+      display: isMobile ? 'none' : 'block',
     },
     contentGrid: {
       display: 'grid',
       gridTemplateColumns: getGridColumns(),
-      gap: isMobile ? '1.5rem' : '2rem', // Reduz o gap no mobile
+      gap: isMobile ? '1.5rem' : '2rem',
       alignItems: 'start'
     },
     leftColumn: {
       display: 'flex',
       flexDirection: 'column' as const,
-      gap: isMobile ? '1rem' : '1.5rem', // Reduz o gap no mobile
+      gap: isMobile ? '1rem' : '1.5rem',
       height: '100%'
     },
     rightColumn: {
       display: 'flex',
       flexDirection: 'column' as const,
-      gap: isMobile ? '1rem' : '1.5rem', // Reduz o gap no mobile
+      gap: isMobile ? '1rem' : '1.5rem',
       height: '100%'
     },
     sectionHeader: {
@@ -178,7 +179,7 @@ const Experiencia = () => {
       marginBottom: '1rem'
     },
     sectionTitleInCard: {
-      fontSize: getResponsiveFontSize(1.3, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(1.3, 0.9),
       fontWeight: '600',
       color: '#ffffff',
       fontFamily: "'Montserrat', sans-serif"
@@ -186,7 +187,7 @@ const Experiencia = () => {
     experienceList: {
       display: 'flex',
       flexDirection: 'column' as const,
-      gap: isMobile ? '0.8rem' : '1rem', // Reduz o gap no mobile
+      gap: isMobile ? '0.8rem' : '1rem',
       flex: 1
     },
     experienceItem: {
@@ -195,36 +196,37 @@ const Experiencia = () => {
       padding: '1rem 0',
       border: 'none',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-      transition: isTouchDevice ? 'none' : 'all 0.3s ease' // Desativa transição em toque
+      transition: isTouchDevice ? 'none' : 'all 0.3s ease'
     },
     jobTitle: {
-      fontSize: getResponsiveFontSize(1, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(1, 0.9),
       fontWeight: '600',
       color: '#ffffff',
       marginBottom: '0.4rem',
       lineHeight: '1.3'
     },
     company: {
-      fontSize: getResponsiveFontSize(0.85, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(0.85, 0.9),
       color: '#e2e8f0',
       marginBottom: '0.4rem',
       fontWeight: '400'
     },
     period: {
-      fontSize: getResponsiveFontSize(0.75, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(0.75, 0.9),
       color: '#cbd5e1',
       display: 'flex',
       alignItems: 'center',
       gap: '0.4rem'
     },
+    // Box de resumo com bordas modernas também
     summaryBox: {
       background: 'rgba(255, 255, 255, 0.08)',
       borderRadius: '12px',
-      padding: isMobile ? '1rem' : '1.5rem', // Reduz padding no mobile
+      padding: isMobile ? '1rem' : '1.5rem',
       border: '1px solid rgba(255, 255, 255, 0.15)'
     },
     summaryText: {
-      fontSize: getResponsiveFontSize(0.85, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(0.85, 0.9),
       color: '#d1d5db',
       lineHeight: '1.6',
       marginBottom: '1.5rem'
@@ -239,18 +241,18 @@ const Experiencia = () => {
       textAlign: 'center' as const
     },
     statNumber: {
-      fontSize: getResponsiveFontSize(1.4, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(1.4, 0.9),
       fontWeight: '700',
       color: '#ffffff',
       display: 'block'
     },
     statLabel: {
-      fontSize: getResponsiveFontSize(0.75, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(0.75, 0.9),
       color: '#e2e8f0',
       marginTop: '0.3rem'
     },
     icon: {
-      fontSize: getResponsiveFontSize(1.2, 0.9), // Ajustado para mobile
+      fontSize: getResponsiveFontSize(1.2, 0.9),
       opacity: 0.9
     }
   };
@@ -258,19 +260,16 @@ const Experiencia = () => {
   return (
     <section style={styles.section} id="experiencia">
       <div style={styles.container}>
-
         <h2 style={styles.sectionTitle}>
           Experiência & Formação
         </h2>
 
         <div style={styles.mainCard}>
-
           {/* Card Branco Decorativo - Oculto em mobile */}
           <div style={styles.whiteCard} />
 
           {/* Card Preto Principal (frente) */}
           <div style={styles.blackCard}>
-
             <div style={styles.contentGrid}>
 
               {/* Coluna Esquerda - Experiências */}
@@ -415,7 +414,7 @@ const Experiencia = () => {
                         }
                       }}
                     >
-                      <div style={styles.jobTitle}>Tecnologia da Informação/Sistemas da Informação</div>
+                      <div style={styles.jobTitle}>Tecnico em Automação Industrial</div>
                       <div style={styles.company}>SENAI Pernambuco • Pernambuco, Brasil</div>
                       <div style={styles.period}>
                         <FaCalendarAlt style={{ fontSize: getResponsiveFontSize(0.65, 0.9), opacity: 0.7 }} />
@@ -457,7 +456,6 @@ const Experiencia = () => {
               </div>
 
             </div>
-
           </div>
 
         </div>
